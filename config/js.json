@@ -1,0 +1,6 @@
+[
+    "src/js/util/globals.js",
+    "src/js/util/resizer.js",
+
+    "src/js/main.js"
+]
