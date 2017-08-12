@@ -8,10 +8,10 @@ onresize = function() {
         h,
         s = D.querySelector('#cc').style;
 
-    if(ar <= br){
+    if (ar <= br) {
         w = mw;
         h = w / br;
-    }else{
+    } else {
         h = mh;
         w = h * br;
     }

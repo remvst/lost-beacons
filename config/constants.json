@@ -1,6 +1,7 @@
 {
     "true": 1,
     "false": 1,
+    "const": "let", 
 
     "CANVAS_WIDTH": 800,
     "CANVAS_HEIGHT": 800

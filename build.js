@@ -31,7 +31,7 @@ compiler.run((tasks) => {
         }
 
         if(uglify){
-            sequence.push(tasks.uglifyJS());
+            sequence.push(tasks.uglifyES());
         }
 
         return tasks.sequence(sequence);
