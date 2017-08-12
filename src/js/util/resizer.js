@@ -1,4 +1,4 @@
-onresize = function() {
+onresize = () => {
     var mw = innerWidth,
         mh = innerHeight,
 

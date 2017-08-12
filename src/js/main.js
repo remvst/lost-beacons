@@ -1,4 +1,4 @@
-onload = function() {
+onload = () => {
     C = D.querySelector('canvas');
     C.width = CANVAS_WIDTH;
     C.height = CANVAS_HEIGHT;
