@@ -3,17 +3,7 @@ class World {
     constructor() {
         W = this;
 
-        W.map = [
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        ];
+        W.map = generate();
 
         W.polygons = [];
 
@@ -60,6 +50,14 @@ class World {
         }).forEach(p => p.render());
 
         R.restore();
+    }
+
+    get width() {
+        return W.map[0].length * GRID_SIZE;
+    }
+
+    get height() {
+        return W.map.length * GRID_SIZE;
     }
 
 }
