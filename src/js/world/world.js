@@ -55,6 +55,14 @@ class World {
             return dist(b.center, V.center) - dist(a.center, V.center);
         }).forEach(p => p.render());
 
+        if (G.selection) {
+            R.strokeStyle = 'white';
+            R.fillStyle = 'rgba(0,0,0,0.1)';
+            R.lineWidth = 1;
+            R.fillRect(G.selection.x, G.selection.y, G.selection.width, G.selection.height);
+            R.strokeRect(G.selection.x, G.selection.y, G.selection.width, G.selection.height);
+        }
+
         R.restore();
     }
 
