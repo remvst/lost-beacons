@@ -50,6 +50,23 @@ class Game {
                 if (target) {
                     usedPositions.push(target);
                     unit.goto(target);
+
+                    let circle;
+                    W.add(circle = {
+                        'render': () => {
+                            R.save();
+                            R.translate(target.x, target.y);
+                            R.scale(circle.a, circle.a);
+                            R.globalAlpha = circle.a;
+                            R.strokeStyle = '#0f0';
+                            R.beginPath();
+                            R.arc(0, 0, 5, 0, Math.PI * 2, true);
+                            R.stroke();
+                            R.restore(this.a);
+                        }
+                    }, RENDERABLE);
+
+                    interp(circle, 'a', 1, 0, 0.3, 0, 0, () => W.remove(circle));
                 } else {
                     console.log('wtg');
                 }

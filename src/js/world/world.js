@@ -104,9 +104,11 @@ class World {
     }
 
     hasObstacle(x, y){
-        const row = ~~(y / GRID_SIZE);
-        const col = ~~(x / GRID_SIZE);
-        return W.map[row] && W.map[row][col];
+        if (W.isOut(x, y)) {
+            return true;
+        }
+
+        return W.map[~~(y / GRID_SIZE)][~~(x / GRID_SIZE)];
     }
 
     hasObstacleAtCell(cell) {
@@ -313,75 +315,44 @@ class World {
         }
     }
 
-    cellsAroundCell(cell, radius = 0) {
+    positionsAround(position, radius, minDistance) {
         if (!radius) {
-            return [cell];
+            return [position];
         }
 
+        const perimeter = 2 * Math.PI * radius;
+        const divisions = ~~(perimeter / minDistance);
+
         const positions = [];
-        for (let k = 0 ; k <= radius * 2 ; k++) {
+        for (let i = 0 ; i < divisions ; i++) {
+            const angle = (i / divisions) * 2 * Math.PI;
             positions.push({
-                'row': cell.row - radius,
-                'col': cell.col - radius + k
-            });
-
-            positions.push({
-                'row': cell.row + radius,
-                'col': cell.col - radius + k
-            });
-
-            positions.push({
-                'row': cell.row - radius + k,
-                'col': cell.col - radius
-            });
-
-            positions.push({
-                'row': cell.row - radius + k,
-                'col': cell.col + radius
+                'x': position.x + Math.cos(angle) * radius,
+                'y': position.y + Math.sin(angle) * radius
             });
         }
 
         return positions;
     }
 
-    firstFreePositionsAround(position, forbidden) {
-        const startCell = {
-            'row': ~~(position.y / GRID_SIZE),
-            'col': ~~(position.x / GRID_SIZE)
-        };
-
-        const forbiddenCells = forbidden.map(p => {
-            return {
-                'row': ~~(p.y / GRID_SIZE),
-                'col': ~~(p.x / GRID_SIZE)
-            };
-        });
-
-        for (let radius = 0 ; ; radius++) {
-            const cells = W.cellsAroundCell(startCell, radius)
-                // Is this cell even available
-                .filter(cell => {
-                    return !W.hasObstacleAtCell(cell) &&
-                        // Check if within bounds
-                        W.map[cell.row] &&
-                        cell.col < W.map[cell.row].length;
-                })
-                // Is this cell in the forbidden list?
-                .filter(cell => {
-                    return !forbiddenCells.filter(forbiddenCell => {
-                        return cell.row == forbiddenCell.row && cell.col == forbiddenCell.col;
+    firstFreePositionsAround(position, forbidden, forbiddenRadius = GRID_SIZE) {
+        for (let radius = 0 ; radius < GRID_SIZE * 10 ; radius += forbiddenRadius) {
+            const positions = W.positionsAround(position, radius, forbiddenRadius)
+                // Is this position even available?
+                .filter(position => !W.hasObstacle(position.x, position.y))
+                // Is this position in the forbidden list?
+                .filter(position => {
+                    return !forbidden.filter(forbiddenPosition => {
+                        return forbiddenPosition.x == position.x && forbiddenPosition.y == position.y;
                     }).length;
                 });
 
-            if (cells.length) {
-                return cells.map(cell => {
-                    return {
-                        'x': (cell.col + 0.5) * GRID_SIZE,
-                        'y': (cell.row + 0.5) * GRID_SIZE
-                    };
-                });
+            if (positions.length) {
+                return positions;
             }
         }
+
+        return [];
     }
 
 }

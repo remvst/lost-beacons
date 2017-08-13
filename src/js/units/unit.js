@@ -98,9 +98,14 @@ class Unit {
     }
 
     goto(pt) {
-        this.path = W.findPath(this, pt, position => {
-            return dist(position, pt) <= GRID_SIZE / 2
-        }) || this.path;
+        const path = W.findPath(this, pt, position => {
+            return dist(position, pt) <= GRID_SIZE / 2;
+        });
+
+        if (path) {
+            path[path.length - 1] = pt;
+            this.path = path;
+        }
     }
 
     gotoShootable(pt) {
