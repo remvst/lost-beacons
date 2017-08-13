@@ -318,4 +318,75 @@ class World {
         }
     }
 
+    cellsAroundCell(cell, radius = 0) {
+        if (!radius) {
+            return [cell];
+        }
+
+        const positions = [];
+        for (let k = 0 ; k <= radius * 2 ; k++) {
+            positions.push({
+                'row': cell.row - radius,
+                'col': cell.col - radius + k
+            });
+
+            positions.push({
+                'row': cell.row + radius,
+                'col': cell.col - radius + k
+            });
+
+            positions.push({
+                'row': cell.row - radius + k,
+                'col': cell.col - radius
+            });
+
+            positions.push({
+                'row': cell.row - radius + k,
+                'col': cell.col + radius
+            });
+        }
+
+        return positions;
+    }
+
+    firstFreePositionsAround(position, forbidden, condition) {
+        const startCell = {
+            'row': ~~(position.y / GRID_SIZE),
+            'col': ~~(position.x / GRID_SIZE)
+        };
+
+        const forbiddenCells = forbidden.map(p => {
+            return {
+                'row': ~~(p.y / GRID_SIZE),
+                'col': ~~(p.x / GRID_SIZE)
+            };
+        });
+
+        for (let radius = 0 ; ; radius++) {
+            const cells = W.cellsAroundCell(startCell, radius)
+                // Is this cell even available
+                .filter(cell => {
+                    return !W.hasObstacleAtCell(cell) &&
+                        // Check if within bounds
+                        W.map[cell.row] &&
+                        cell.col < W.map[cell.row].length;
+                })
+                // Is this cell in the forbidden list?
+                .filter(cell => {
+                    return !forbiddenCells.filter(forbiddenCell => {
+                        return cell.row == forbiddenCell.row && cell.col == forbiddenCell.col;
+                    }).length;
+                });
+
+            if (cells.length) {
+                return cells.map(cell => {
+                    return {
+                        'x': (cell.col + 0.5) * GRID_SIZE,
+                        'y': (cell.row + 0.5) * GRID_SIZE
+                    };
+                });
+            }
+        }
+    }
+
 }

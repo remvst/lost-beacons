@@ -42,7 +42,18 @@ class Game {
 
     select(s) {
         if (Math.abs(s.width || 0) < 5 && Math.abs(s.height || 0) < 5) {
-            G.selectedUnits.forEach(unit => unit.gotoShootable(s));
+            const usedPositions = [];
+            G.selectedUnits.forEach(unit => {
+                const target = W.firstFreePositionsAround(s, usedPositions)
+                    .sort((a, b) => dist(a, unit) - dist(b, unit))[0];
+
+                if (target) {
+                    usedPositions.push(target);
+                    unit.goto(target);
+                } else {
+                    console.log('wtg');
+                }
+            });
             return;
         }
 

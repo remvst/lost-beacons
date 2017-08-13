@@ -98,7 +98,7 @@ class Unit {
 
     goto(pt) {
         this.path = W.findPath(this, pt, position => {
-            return dist(position, pt) <= GRID_SIZE
+            return dist(position, pt) <= GRID_SIZE / 2
         }) || this.path;
     }
 

@@ -1,0 +1,13 @@
+{
+    "unused": true,
+    "esversion": 6,
+    "globals": {
+        "D": true,
+        "w": true,
+        "C": true,
+        "R": true,
+        "G": true,
+        "V": true,
+        "W": true
+    }
+}
