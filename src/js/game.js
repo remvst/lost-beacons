@@ -6,6 +6,8 @@ class Game {
         new World();
         new Camera();
 
+        G.selectedUnits = [];
+
         // Start cycle()
         let lf = Date.now();
         let frame = () => {
@@ -32,6 +34,16 @@ class Game {
 
         // Render things
         W.render();
+    }
+
+    select(s) {
+        if (!Math.abs(s.width) || !Math.abs(s.height)) {
+            
+        }
+
+        G.selectedUnits = W.elements.filter(e => {
+            return between(s.x, e.x, s.x + s.width) && between(s.y, e.y, s.y + s.height);
+        });
     }
 
 }

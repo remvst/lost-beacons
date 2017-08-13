@@ -3,13 +3,19 @@
     "src/js/util/resizer.js",
     "src/js/util/round.js",
     "src/js/util/dist.js",
+    "src/js/util/array-remove.js",
+    "src/js/util/between.js",
+
+    "src/js/units/unit.js",
 
     "src/js/world/world.js",
     "src/js/world/camera.js",
     "src/js/world/polygon.js",
     "src/js/world/cube.js",
+    "src/js/world/generate.js",
 
     "src/js/keyboard.js",
+    "src/js/mouse.js",
     "src/js/game.js",
     "src/js/main.js"
 ]

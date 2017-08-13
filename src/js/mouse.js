@@ -1,8 +1,8 @@
 function eventCoords(e) {
     let r = C.getBoundingClientRect();
     return {
-        'x': CANVAS_WIDTH * (e.pageX - r.left) / r.width - V.x,
-        'y': CANVAS_HEIGHT * (e.pageY - r.top) / r.height - V.y
+        'x': CANVAS_WIDTH * (e.pageX - r.left) / r.width + V.x,
+        'y': CANVAS_HEIGHT * (e.pageY - r.top) / r.height + V.y
     };
 }
 
@@ -23,5 +23,8 @@ onmousemove = e => {
 };
 
 onmouseup = () => {
+    if (G.selection) {
+        G.select(G.selection);
+    }
     G.selection = null;
 };
