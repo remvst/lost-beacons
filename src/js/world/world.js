@@ -10,15 +10,12 @@ class World {
         W.cyclables = [];
         W.renderables = [];
 
-        let unit1 = new Unit();
-        unit1.x = GRID_SIZE * 4.5;
-        unit1.y = GRID_SIZE * 4.5;
-        this.add(unit1, CYCLABLE | RENDERABLE);
-
-        let unit2 = new Unit();
-        unit2.x = GRID_SIZE * 5.5;
-        unit2.y = GRID_SIZE * 4.5;
-        this.add(unit2, CYCLABLE | RENDERABLE);
+        for (let i = 0 ; i < 10 ; i++) {
+            let unit = new Unit();
+            unit.x = GRID_SIZE * (4.5 + i);
+            unit.y = GRID_SIZE * 4.5;
+            this.add(unit, CYCLABLE | RENDERABLE);
+        }
 
         W.map = generate();
         W.polygons = [];

@@ -42,7 +42,12 @@ class Game {
 
     select(s) {
         if (Math.abs(s.width || 0) < 5 && Math.abs(s.height || 0) < 5) {
-            const usedPositions = [];
+
+            // Preventing selected units from going to a position that is already taken by another unit
+            const usedPositions = W.cyclables.filter(e => {
+                return e.team && G.selectedUnits.indexOf(e) < 0;
+            });
+
             G.selectedUnits.forEach(unit => {
                 let target;
                 while (true) {
