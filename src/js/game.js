@@ -27,6 +27,7 @@ class Game {
 
     cycle(e) {
         // TODO cycle things
+        V.cycle(e);
 
         // V.x += e * 100;
         // V.y += e * 150;

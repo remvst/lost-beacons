@@ -9,6 +9,7 @@
     "src/js/world/polygon.js",
     "src/js/world/cube.js",
 
+    "src/js/keyboard.js",
     "src/js/game.js",
     "src/js/main.js"
 ]
