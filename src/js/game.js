@@ -44,32 +44,37 @@ class Game {
         if (Math.abs(s.width || 0) < 5 && Math.abs(s.height || 0) < 5) {
             const usedPositions = [];
             G.selectedUnits.forEach(unit => {
-                const target = W.firstFreePositionsAround(s, usedPositions)
-                    .sort((a, b) => dist(a, unit) - dist(b, unit))[0];
+                let target;
+                while (true) {
+                    target = W.firstFreePositionsAround(s, usedPositions, UNIT_RADIUS)
+                        .sort((a, b) => dist(a, unit) - dist(b, unit))[0];
 
-                if (target) {
-                    usedPositions.push(target);
-                    unit.goto(target);
-
-                    let circle;
-                    W.add(circle = {
-                        'render': () => {
-                            R.save();
-                            R.translate(target.x, target.y);
-                            R.scale(circle.a, circle.a);
-                            R.globalAlpha = circle.a;
-                            R.strokeStyle = '#0f0';
-                            R.beginPath();
-                            R.arc(0, 0, 5, 0, Math.PI * 2, true);
-                            R.stroke();
-                            R.restore(this.a);
+                    if (target) {
+                        usedPositions.push(target);
+                        if (unit.goto(target)) {
+                            break;
                         }
-                    }, RENDERABLE);
 
-                    interp(circle, 'a', 1, 0, 0.3, 0, 0, () => W.remove(circle));
-                } else {
-                    console.log('wtg');
+                    }
                 }
+
+                // Quick effect to show where we're going
+                let circle;
+                W.add(circle = {
+                    'render': () => {
+                        R.save();
+                        R.translate(target.x, target.y);
+                        R.scale(circle.a, circle.a);
+                        R.globalAlpha = circle.a;
+                        R.strokeStyle = '#0f0';
+                        R.beginPath();
+                        R.arc(0, 0, 5, 0, Math.PI * 2, true);
+                        R.stroke();
+                        R.restore(this.a);
+                    }
+                }, RENDERABLE);
+
+                interp(circle, 'a', 1, 0, 0.3, 0, 0, () => W.remove(circle));
             });
             return;
         }

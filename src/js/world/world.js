@@ -100,15 +100,22 @@ class World {
     }
 
     isOut(x, y) {
-        return x < 0 || x > this.width || y < 0 || y > this.height;
+        return x < 0 || x > W.width || y < 0 || y > W.height;
     }
 
-    hasObstacle(x, y){
-        if (W.isOut(x, y)) {
-            return true;
-        }
+    hasObstacle(x, y, radius = 0) {
+        return [
+            {'x': x - radius, 'y': y - radius},
+            {'x': x - radius, 'y': y + radius},
+            {'x': x + radius, 'y': y - radius},
+            {'x': x + radius, 'y': y + radius}
+        ].filter(pt => {
+            return W.pointInObstacle(pt); // TODO don't really need the function here, leaving for clarity
+        }).length;
+    }
 
-        return W.map[~~(y / GRID_SIZE)][~~(x / GRID_SIZE)];
+    pointInObstacle(pt) {
+        return W.isOut(pt.x, pt.y) || W.map[~~(pt.y / GRID_SIZE)][~~(pt.x / GRID_SIZE)];
     }
 
     hasObstacleAtCell(cell) {
@@ -339,13 +346,17 @@ class World {
         for (let radius = 0 ; radius < GRID_SIZE * 10 ; radius += forbiddenRadius) {
             const positions = W.positionsAround(position, radius, forbiddenRadius)
                 // Is this position even available?
-                .filter(position => !W.hasObstacle(position.x, position.y))
+                .filter(position => !W.hasObstacle(position.x, position.y, forbiddenRadius))
                 // Is this position in the forbidden list?
                 .filter(position => {
                     return !forbidden.filter(forbiddenPosition => {
-                        return forbiddenPosition.x == position.x && forbiddenPosition.y == position.y;
+                        return dist(forbiddenPosition, position) < forbiddenRadius;
                     }).length;
                 });
+
+            if (radius === 0) {
+
+            }
 
             if (positions.length) {
                 return positions;

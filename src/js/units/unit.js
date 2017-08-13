@@ -105,6 +105,7 @@ class Unit {
         if (path) {
             path[path.length - 1] = pt;
             this.path = path;
+            return true;
         }
     }
 
