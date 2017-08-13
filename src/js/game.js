@@ -38,7 +38,7 @@ class Game {
 
     select(s) {
         if (!Math.abs(s.width) || !Math.abs(s.height)) {
-
+            G.selectedUnits.forEach(unit => unit.goto(s));
         }
 
         G.selectedUnits = W.elements.filter(e => {

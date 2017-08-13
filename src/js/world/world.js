@@ -151,7 +151,7 @@ class World {
             expandable.splice(expandIndex, 1);
 
             // Check if destination
-            if (distP(expandedCell.row, expandedCell.col, end.row, end.col) < 3) { // are we within shooting radius?
+            if (distP(expandedCell.row, expandedCell.col, end.row, end.col) < 1) { // are we within shooting radius?
                 return expandedCell; // TODO use raycasting instead
             }
 
