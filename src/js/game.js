@@ -3,6 +3,8 @@ class Game {
     constructor() {
         G = this;
 
+        G.t = 0;
+
         new World();
         new Camera();
 
@@ -28,6 +30,8 @@ class Game {
     }
 
     cycle(e) {
+        G.t += e;
+
         // Game loop things
         W.elements.forEach(x => x.cycle(e));
         V.cycle(e);

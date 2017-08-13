@@ -14,6 +14,11 @@ class World {
         unit1.y = GRID_SIZE * 4.5;
         this.add(unit1);
 
+        let unit2 = new Unit();
+        unit2.x = GRID_SIZE * 5.5;
+        unit2.y = GRID_SIZE * 4.5;
+        this.add(unit2);
+
         W.map = generate();
         W.polygons = [];
 
@@ -98,6 +103,19 @@ class World {
 
     hasObstacleAtCell(cell) {
         return W.map[cell.row] && W.map[cell.row][cell.col];
+    }
+
+    hasElement(x, y) {
+        const p = { 'x': x, 'y': y };
+        for (let i = 0 ; i < W.elements.length ; i++) {
+            if (dist(W.elements[i], p) < GRID_SIZE / 3) {
+                return true;
+            }
+        }
+    }
+
+    hasElementAtCell(row, col) {
+        return W.hasElement((row + 0.5) * GRID_SIZE, (row + 0.5) * GRID_SIZE)
     }
 
     /**
