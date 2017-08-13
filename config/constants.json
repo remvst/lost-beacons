@@ -12,5 +12,6 @@
 
     "CAMERA_SPEED": 200,
 
-    "UNIT_SPEED": 200
+    "UNIT_SPEED": 200,
+    "UNIT_ANGULAR_SPEED": 3
 }

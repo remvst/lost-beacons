@@ -96,6 +96,10 @@ class World {
         return W.map[row] && W.map[row][col];
     }
 
+    hasObstacleAtCell(cell) {
+        return W.map[cell.row] && W.map[cell.row][cell.col];
+    }
+
     /**
      * @param startPosition: Start position (x, y)
      * @param endPosition: End position (x, y)
@@ -157,17 +161,36 @@ class World {
 
             expandedMap[expandedCell.row][expandedCell.col] = 1;
 
+            const top = {'row': expandedCell.row - 1, 'col': expandedCell.col};
+            const bottom = {'row': expandedCell.row + 1, 'col': expandedCell.col};
+            const left = {'row': expandedCell.row, 'col': expandedCell.col - 1};
+            const right = {'row': expandedCell.row, 'col': expandedCell.col + 1};
+
+            const obstacleTop = this.hasObstacleAtCell(top);
+            const obstacleBottom = this.hasObstacleAtCell(bottom);
+            const obstacleLeft = this.hasObstacleAtCell(left);
+            const obstacleRight = this.hasObstacleAtCell(right);
+
+            const neighbors = [top, bottom, left, right];
+
+            if (!obstacleTop && !obstacleLeft) {
+                neighbors.unshift({'row': top.row, 'col': left.col});
+            }
+
+            if (!obstacleTop && !obstacleRight) {
+                neighbors.unshift({'row': top.row, 'col': right.col});
+            }
+
+            if (!obstacleBottom && !obstacleLeft) {
+                neighbors.unshift({'row': bottom.row, 'col': left.col});
+            }
+
+            if (!obstacleBottom && !obstacleRight) {
+                neighbors.unshift({'row': bottom.row, 'col': right.col});
+            }
+
             // Not target, let's expanded from that cell!
-            [
-                {'row': expandedCell.row + 1, 'col': expandedCell.col + 1},
-                {'row': expandedCell.row + 1, 'col': expandedCell.col - 1},
-                {'row': expandedCell.row - 1, 'col': expandedCell.col + 1},
-                {'row': expandedCell.row + 1, 'col': expandedCell.col - 1},
-                {'row': expandedCell.row + 1, 'col': expandedCell.col},
-                {'row': expandedCell.row - 1, 'col': expandedCell.col},
-                {'row': expandedCell.row, 'col': expandedCell.col + 1},
-                {'row': expandedCell.row, 'col': expandedCell.col - 1}
-            ].forEach(x => {
+            neighbors.forEach(x => {
                 if (
                     x.row < 0 ||
                     x.col < 0 ||
