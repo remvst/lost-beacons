@@ -15,5 +15,5 @@ onload = () => {
 
     onresize();
 
-    // new Game();
+    new Game();
 };

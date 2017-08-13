@@ -2,5 +2,8 @@
     "src/js/util/globals.js",
     "src/js/util/resizer.js",
 
+    "src/js/world/world.js",
+
+    "src/js/game.js",
     "src/js/main.js"
 ]
