@@ -1,4 +1,9 @@
 // Distance between points a and b
 function dist(a, b) {
-    return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+    return distP(a.x, a.y, b.x, b.y);
+}
+
+// Distance between (x1, y1) and (x2, y2)
+function distP(x1, y1, x2, y2) {
+    return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 }

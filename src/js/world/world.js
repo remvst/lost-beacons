@@ -1,3 +1,7 @@
+function copyMap(map) {
+    return map.map(row => row.slice());
+}
+
 class World {
 
     constructor() {
@@ -80,6 +84,118 @@ class World {
 
     remove() {
         W.elements.remove(element);
+    }
+
+    isOut(x, y) {
+        return x < 0 || x > this.width || y < 0 || y > this.height;
+    }
+
+    hasObstacle(x, y){
+        const row = ~~(y / GRID_SIZE);
+        const col = ~~(x / GRID_SIZE);
+        return W.map[row] && W.map[row][col];
+    }
+
+    /**
+     * @param startPosition: Start position (x, y)
+     * @param endPosition: End position (x, y)
+     */
+    findPath(start, end) {
+        let solution = W.aStar({
+            'row': ~~(start.y / GRID_SIZE),
+            'col': ~~(start.x / GRID_SIZE)
+        }, {
+            'row': ~~(end.y / GRID_SIZE),
+            'col': ~~(end.x / GRID_SIZE)
+        });
+
+        if (solution) {
+            const path = [];
+            while (solution) {
+                path.unshift({
+                    'x': (solution.col + 0.5) * GRID_SIZE,
+                    'y': (solution.row + 0.5) * GRID_SIZE
+                });
+                solution = solution.parent;
+            }
+
+            return path;
+        }
+    }
+
+    /**
+     * @param start: Start position (row, col)
+     * @param end: End position (row, col)
+     */
+    aStar(start, end) {
+        const map = W.map;
+
+        const expandable = [start];
+        const expandedMap = copyMap(map);
+
+        start.distance = 0;
+
+        while (expandable.length) {
+            // Picking the cell that is the closest to the target and has the least distance from the start
+            let expandIndex,
+                expandDist = Number.MAX_VALUE;
+            expandable.forEach((x, i) => {
+                const dist = x.distance + distP(x.row, x.col, end.row, end.col);
+                if (dist < expandDist) {
+                    expandDist = dist;
+                    expandIndex = i;
+                }
+            });
+
+            let expandedCell = expandable[expandIndex];
+            expandable.splice(expandIndex, 1);
+
+            // Check if destination
+            if (distP(expandedCell.row, expandedCell.col, end.row, end.col) < 3) { // are we within shooting radius?
+                return expandedCell; // TODO use raycasting instead
+            }
+
+            expandedMap[expandedCell.row][expandedCell.col] = 1;
+
+            // Not target, let's expanded from that cell!
+            [
+                {'row': expandedCell.row + 1, 'col': expandedCell.col + 1},
+                {'row': expandedCell.row + 1, 'col': expandedCell.col - 1},
+                {'row': expandedCell.row - 1, 'col': expandedCell.col + 1},
+                {'row': expandedCell.row + 1, 'col': expandedCell.col - 1},
+                {'row': expandedCell.row + 1, 'col': expandedCell.col},
+                {'row': expandedCell.row - 1, 'col': expandedCell.col},
+                {'row': expandedCell.row, 'col': expandedCell.col + 1},
+                {'row': expandedCell.row, 'col': expandedCell.col - 1}
+            ].forEach(x => {
+                if (
+                    x.row < 0 ||
+                    x.col < 0 ||
+                    x.row >= map.length ||
+                    x.col >= map[0].length ||
+                    expandedMap[x.row][x.col]
+                ) {
+                    return;
+                }
+
+                x.parent = expandedCell;
+                x.distance = expandedCell.distance + distP(x.row, x.col, expandedCell.row, expandedCell.col);
+
+                const existing = expandedMap[x.row][x.col];
+                if (isNaN(existing)) {
+                    if (existing.distance > x.distance) {
+                        existing.distance = x.distance;
+                        existing.parent = x.parent;
+                        // In a perfect world we would also update its children since we found a shorter path but fuck it this seems to work
+                    }
+
+                    return;
+                }
+
+                expandedMap[x.row][x.col] = expandedCell;
+                expandable.push(x);
+            });
+        }
     }
 
 }
