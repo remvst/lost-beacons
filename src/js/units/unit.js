@@ -12,32 +12,20 @@ class Unit {
     }
 
     cycle(e) {
-        // TODO
         const target = this.path[0];
         if (target) {
             const distance = dist(this, target);
 
             if (distance > 0) {
-                const angle = Math.atan2(target.y - this.y, target.x - this.x);
+                this.angle = Math.atan2(target.y - this.y, target.x - this.x);
 
-                const angleDiff = normalizeAngle(angle - this.angle);
-                const maxAngleDiff = normalizeAngle(UNIT_ANGULAR_SPEED * e);
+                const appliedDistance = Math.min(distance, UNIT_SPEED * e);
 
-                const appliedAngleDiff = between(-maxAngleDiff, angleDiff, -maxAngleDiff);
-                this.angle += appliedAngleDiff;
-
-                this.angle = angle;
-
-                    const maxDistance = UNIT_SPEED * e;
-
-                    this.x += Math.min(distance, maxDistance) * Math.cos(angle);
-                    this.y += Math.min(distance, maxDistance) * Math.sin(angle);
+                this.x += appliedDistance * Math.cos(this.angle);
+                this.y += appliedDistance * Math.sin(this.angle);
             } else {
                 this.path.shift();
             }
-
-            // if (Math.abs(appliedAngleDiff) < 0.2) {
-            // }
         }
 
     }
@@ -52,7 +40,9 @@ class Unit {
     }
 
     goto(pt) {
-        this.path = W.findPath(this, pt) || this.path;
+        this.path = W.findPath(this, pt, position => {
+            return dist(position, pt) <= GRID_SIZE
+        }) || this.path;
     }
 
 }

@@ -103,15 +103,19 @@ class World {
     /**
      * @param startPosition: Start position (x, y)
      * @param endPosition: End position (x, y)
+     * @param endCondition: Function that should return true if the position is considered final
      */
-    findPath(start, end) {
+    findPath(start, end, endCondition) {
         let solution = W.aStar({
             'row': ~~(start.y / GRID_SIZE),
             'col': ~~(start.x / GRID_SIZE)
         }, {
             'row': ~~(end.y / GRID_SIZE),
             'col': ~~(end.x / GRID_SIZE)
-        });
+        }, cell => endCondition({
+            'x': (cell.col + 0.5) * GRID_SIZE,
+            'y': (cell.row + 0.5) * GRID_SIZE
+        }));
 
         if (solution) {
             const path = [];
@@ -130,8 +134,9 @@ class World {
     /**
      * @param start: Start position (row, col)
      * @param end: End position (row, col)
+     * @param endCondition: Function that should return true if the position is considered final
      */
-    aStar(start, end) {
+    aStar(start, end, endCondition) {
         const map = W.map;
 
         const expandable = [start];
@@ -155,7 +160,7 @@ class World {
             expandable.splice(expandIndex, 1);
 
             // Check if destination
-            if (distP(expandedCell.row, expandedCell.col, end.row, end.col) < 1) { // are we within shooting radius?
+            if (endCondition(expandedCell)) { // are we within shooting radius?
                 return expandedCell; // TODO use raycasting instead
             }
 
