@@ -37,12 +37,13 @@ class Game {
     }
 
     select(s) {
-        if (!Math.abs(s.width) || !Math.abs(s.height)) {
-            G.selectedUnits.forEach(unit => unit.goto(s));
+        if (Math.abs(s.width || 0) < 5 && Math.abs(s.height || 0) < 5) {
+            G.selectedUnits.forEach(unit => unit.gotoShootable(s));
+            return;
         }
 
         G.selectedUnits = W.elements.filter(e => {
-            return between(s.x, e.x, s.x + s.width) && between(s.y, e.y, s.y + s.height);
+            return isBetween(s.x, e.x, s.x + s.width) && isBetween(s.y, e.y, s.y + s.height);
         });
     }
 

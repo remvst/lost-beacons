@@ -226,4 +226,78 @@ class World {
         }
     }
 
+    /**
+     * Casts a ray and returns the collision or null
+     * @param start The position at which the ray should be fired from
+     * @param angle The angle at which the ray should be fired
+     * @param maxDistance The maximum distance the ray should be cast to
+     * @return The point at which the ray hit an obstacle, or null if none or too far
+     */
+    castRay(start, angle, maxDistance) {
+        const castHorizontal = W.castAgainstHorizontal(start.x, start.y, angle);
+        const castVertical = W.castAgainstVertical(start.x, start.y, angle);
+
+        let cast;
+        if (!castHorizontal) {
+            cast = castVertical;
+        } else if (!castVertical) {
+            cast = castHorizontal;
+        } else {
+            const dHorizontal = dist(start, castHorizontal);
+            const dVertical = dist(start, castVertical);
+            cast = dHorizontal < dVertical ? castHorizontal : castVertical;
+        }
+
+        return maxDistance && (!cast || dist(start, cast)) > maxDistance
+            ? {
+                'x': start.x + Math.cos(angle) * maxDistance,
+                'y': start.y + Math.sin(angle) * maxDistance
+            }
+            : cast;
+    }
+
+    castAgainstHorizontal(startX, startY, angle) {
+        const pointingDown = Math.sin(angle) > 0;
+
+        const y = ~~(startY / GRID_SIZE) * GRID_SIZE + (pointingDown ? GRID_SIZE : -0.0001);
+        const x = startX + (y - startY) / Math.tan(angle);
+
+        const yStep = pointingDown ? GRID_SIZE : -GRID_SIZE;
+        const xStep = yStep / Math.tan(angle);
+
+        return W.doCast(x, y, xStep, yStep);
+    }
+
+    castAgainstVertical(startX, startY, angle) {
+        const pointingRight = Math.cos(angle) > 0;
+
+        const x = ~~(startX / GRID_SIZE) * GRID_SIZE + (pointingRight ? GRID_SIZE : -0.0001);
+        const y = startY + (x - startX) * Math.tan(angle);
+
+        const xStep = pointingRight ? GRID_SIZE : -GRID_SIZE;
+        const yStep = xStep * Math.tan(angle);
+
+        return W.doCast(x, y, xStep, yStep);
+    }
+
+    doCast(startX, startY, xStep, yStep) {
+        let x = startX,
+            y = startY;
+
+        for (var i = 0 ; i < 100 ; i++) {
+            if (W.isOut(x, y)) {
+                // Out of bounds
+                return null;
+            }
+
+            if (W.hasObstacle(x, y)) {
+                // Hit an obstacle!
+                return { 'x': x, 'y': y };
+            }
+
+            x += xStep;
+            y += yStep;
+        }
+    }
+
 }
