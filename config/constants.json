@@ -1,8 +1,12 @@
 {
     "true": 1,
     "false": 1,
-    "const": "let", 
+    "const": "let",
 
     "CANVAS_WIDTH": 800,
-    "CANVAS_HEIGHT": 800
+    "CANVAS_HEIGHT": 800,
+
+    "GRID_SIZE": 50,
+    "GRID_COLOR": "'#479'",
+    "PERSPECTIVE": 800
 }

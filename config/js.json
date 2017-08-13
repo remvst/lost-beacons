@@ -1,8 +1,13 @@
 [
     "src/js/util/globals.js",
     "src/js/util/resizer.js",
+    "src/js/util/round.js",
+    "src/js/util/dist.js",
 
     "src/js/world/world.js",
+    "src/js/world/camera.js",
+    "src/js/world/polygon.js",
+    "src/js/world/cube.js",
 
     "src/js/game.js",
     "src/js/main.js"
