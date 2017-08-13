@@ -7,17 +7,18 @@ class World {
     constructor() {
         W = this;
 
-        W.elements = [];
+        W.cyclables = [];
+        W.renderables = [];
 
         let unit1 = new Unit();
         unit1.x = GRID_SIZE * 4.5;
         unit1.y = GRID_SIZE * 4.5;
-        this.add(unit1);
+        this.add(unit1, CYCLABLE | RENDERABLE);
 
         let unit2 = new Unit();
         unit2.x = GRID_SIZE * 5.5;
         unit2.y = GRID_SIZE * 4.5;
-        this.add(unit2);
+        this.add(unit2, CYCLABLE | RENDERABLE);
 
         W.map = generate();
         W.polygons = [];
@@ -33,7 +34,7 @@ class World {
 
         // Filter out polygons that are pretty much the same
         W.polygons = W.polygons.filter(a => {
-            return !W.polygons.filter(b => a !== b && a.isSame(b)).length
+            return !W.polygons.filter(b => a !== b && a.isSame(b)).length;
         });
     }
 
@@ -52,7 +53,7 @@ class World {
             R.fillRect(V.x, y, CANVAS_WIDTH, 1);
         }
 
-        W.elements.forEach(e => e.render());
+        W.renderables.forEach(e => e.render());
 
         W.polygons.filter(function(p) {
             if (Math.abs(p.center.x - V.center.x) > CANVAS_WIDTH / 2 + GRID_SIZE / 2 ||
@@ -83,12 +84,19 @@ class World {
         return W.map.length * GRID_SIZE;
     }
 
-    add(element) {
-        W.elements.push(element);
+    add(element, types) {
+        if (types & CYCLABLE) {
+            W.cyclables.push(element);
+        }
+
+        if (types & RENDERABLE) {
+            W.renderables.push(element);
+        }
     }
 
-    remove() {
-        W.elements.remove(element);
+    remove(element) {
+        W.cyclables.remove(element);
+        W.renderables.remove(element);
     }
 
     isOut(x, y) {
@@ -103,19 +111,6 @@ class World {
 
     hasObstacleAtCell(cell) {
         return W.map[cell.row] && W.map[cell.row][cell.col];
-    }
-
-    hasElement(x, y) {
-        const p = { 'x': x, 'y': y };
-        for (let i = 0 ; i < W.elements.length ; i++) {
-            if (dist(W.elements[i], p) < GRID_SIZE / 3) {
-                return true;
-            }
-        }
-    }
-
-    hasElementAtCell(row, col) {
-        return W.hasElement((row + 0.5) * GRID_SIZE, (row + 0.5) * GRID_SIZE)
     }
 
     /**
@@ -349,7 +344,7 @@ class World {
         return positions;
     }
 
-    firstFreePositionsAround(position, forbidden, condition) {
+    firstFreePositionsAround(position, forbidden) {
         const startCell = {
             'row': ~~(position.y / GRID_SIZE),
             'col': ~~(position.x / GRID_SIZE)

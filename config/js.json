@@ -6,6 +6,9 @@
     "src/js/util/array-remove.js",
     "src/js/util/between.js",
     "src/js/util/normalize-angle.js",
+    "src/js/util/interp.js",
+
+    "src/js/graphics/particle.js",
 
     "src/js/units/unit.js",
 

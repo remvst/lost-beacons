@@ -33,7 +33,7 @@ class Game {
         G.t += e;
 
         // Game loop things
-        W.elements.forEach(x => x.cycle(e));
+        W.cyclables.forEach(x => x.cycle(e));
         V.cycle(e);
 
         // Render things
@@ -57,8 +57,10 @@ class Game {
             return;
         }
 
-        G.selectedUnits = W.elements.filter(e => {
-            return isBetween(s.x, e.x, s.x + s.width) && isBetween(s.y, e.y, s.y + s.height);
+        G.selectedUnits = W.cyclables.filter(e => {
+            return e.team === PLAYER_TEAM &&
+                isBetween(s.x, e.x, s.x + s.width) &&
+                isBetween(s.y, e.y, s.y + s.height);
         });
     }
 

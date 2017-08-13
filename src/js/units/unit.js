@@ -5,6 +5,7 @@ class Unit {
         this.x = 0;
         this.y = 0;
         this.color = '#4c2';
+        this.team = PLAYER_TEAM;
 
         this.path = [];
 
@@ -40,7 +41,7 @@ class Unit {
 
         const pxSize = 5;
         const amplitude = pxSize / 2;
-        const sin = Math.sin(G.t * Math.PI * 2 * 2);
+        let sin = Math.sin(G.t * Math.PI * 2 * 2);
         if (!this.moving) {
             sin = 0;
         }

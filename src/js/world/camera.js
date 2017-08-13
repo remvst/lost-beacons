@@ -41,4 +41,9 @@ class Camera {
         };
     }
 
+    contains(x, y, delta) {
+        return isBetween(this.x - delta, x, this.x + CANVAS_WIDTH + delta) &&
+            isBetween(this.y - delta, y, this.y + CANVAS_HEIGHT + delta);
+    }
+
 }

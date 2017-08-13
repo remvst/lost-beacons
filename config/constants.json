@@ -13,5 +13,12 @@
     "CAMERA_SPEED": 200,
 
     "UNIT_SPEED": 150,
-    "UNIT_ANGULAR_SPEED": 3
+    "UNIT_ANGULAR_SPEED": 3,
+
+    "CYCLABLE": 1,
+    "RENDERABLE": 2,
+    "UNIT": 4,
+
+    "PLAYER_TEAM": 1,
+    "ENEMY_TEAM": 2
 }
