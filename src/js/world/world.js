@@ -3,8 +3,14 @@ class World {
     constructor() {
         W = this;
 
-        W.map = generate();
+        W.elements = [];
 
+        let unit1 = new Unit();
+        unit1.x = GRID_SIZE * 4.5;
+        unit1.y = GRID_SIZE * 4.5;
+        this.add(unit1);
+
+        W.map = generate();
         W.polygons = [];
 
         // TODO maybe use reduce?
@@ -37,7 +43,7 @@ class World {
             R.fillRect(V.x, y, CANVAS_WIDTH, 1);
         }
 
-        // TODO draw elements
+        W.elements.forEach(e => e.render());
 
         W.polygons.filter(function(p) {
             if (Math.abs(p.center.x - V.center.x) > CANVAS_WIDTH / 2 + GRID_SIZE / 2 ||
@@ -58,6 +64,14 @@ class World {
 
     get height() {
         return W.map.length * GRID_SIZE;
+    }
+
+    add(element) {
+        W.elements.push(element);
+    }
+
+    remove() {
+        W.elements.remove(element);
     }
 
 }

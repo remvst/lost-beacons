@@ -26,12 +26,11 @@ class Game {
     }
 
     cycle(e) {
-        // TODO cycle things
+        // Game loop things
+        W.elements.forEach(x => x.cycle(e));
         V.cycle(e);
 
-        // V.x += e * 100;
-        // V.y += e * 150;
-
+        // Render things
         W.render();
     }
 

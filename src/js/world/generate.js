@@ -46,7 +46,7 @@ function generate() {
     }
 
     map = coat(map, 3, 0);
-    map = coat(map, 1, 1);
+    map = coat(map, 3, 1);
 
     return map;
 }
