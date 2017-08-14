@@ -5,42 +5,30 @@ class Unit {
         this.x = 0;
         this.y = 0;
         this.team = PLAYER_TEAM;
+        this.target = null;
 
         this.path = [];
 
         this.angle = 0;
         this.moving = false;
+
+        this.setBehavior(new Idle());
+    }
+
+    closestVisibleTarget() {
+        return W.cyclables
+            .filter(c => c.team && c.team != this.team)
+            .filter(c => dist(c, this) < UNIT_ATTACK_RADIUS)
+            .filter(c => !W.hasObstacleBetween(this, c))
+            .sort((a, b) => dist(this, a) - dist(this, b))[0];
     }
 
     cycle(e) {
-        const target = this.path[0];
-        if (target) {
-            const distance = dist(this, target);
-
-            this.moving = distance > 0;
-
-            if (distance > 0) {
-                this.angle = Math.atan2(target.y - this.y, target.x - this.x);
-
-                const appliedDistance = Math.min(distance, UNIT_SPEED * e);
-
-                this.x += appliedDistance * Math.cos(this.angle);
-                this.y += appliedDistance * Math.sin(this.angle);
-            } else {
-                this.path.shift();
-            }
-        }
-
+        this.behavior.cycle(e);
     }
 
     render() {
-        R.globalAlpha = 0.1;
-        R.beginPath();
-        R.strokeStyle = this.team.body;
-        R.lineWidth = 4;
-        R.moveTo(this.x, this.y);
-        this.path.forEach(step => R.lineTo(step.x, step.y));
-        R.stroke();
+        this.behavior.render();
 
         R.globalAlpha = 1;
 
@@ -109,9 +97,15 @@ class Unit {
         if (path) {
             path[path.length - 1] = pt;
             path.shift(); // kinda risky, but the first step is very often a step back
-            this.path = path;
+            this.setBehavior(new FollowPath(path));
             return true;
         }
+    }
+
+    setBehavior(b) {
+        b.unit = this;
+        b.nextReconsideration = 1; // yolo
+        this.behavior = b;
     }
 
     gotoShootable(pt) {
