@@ -156,6 +156,9 @@ class World {
                 solution = solution.parent;
             }
 
+            path[path.length - 1] = {'x': end.x, 'y': end.y};
+            path.shift(); // kinda risky, but the first step is very often a step back
+
             return path;
         }
     }

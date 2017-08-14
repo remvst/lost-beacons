@@ -12,16 +12,7 @@ class AttackFollow extends Behavior {
             // TODO also check that target is alive
             this.subBehavior = new AttackStill(this.target);
         } else {
-            const path = W.findPath(this.unit, this.target, position => {
-                return dist(position, this.target) <= GRID_SIZE / 2;
-            });
-
-            if (path) {
-                // TODO put these in World
-                path[path.length - 1] = {'x': this.target.x, 'y': this.target.y};
-                path.shift(); // kinda risky, but the first step is very often a step back
-                this.subBehavior = new FollowPath(path);
-            }
+            this.subBehavior = new Reach(this.target);
         }
     }
 

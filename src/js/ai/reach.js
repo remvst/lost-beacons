@@ -1,11 +1,17 @@
-class FollowPath extends Behavior {
+class Reach extends Behavior {
 
-    constructor(path) {
+    constructor(target) {
         super();
-        this.path = path;
+        this.target = target;
     }
 
     cycle(e) {
+        if (!this.path) {
+            this.path = W.findPath(this.unit, this.target, position => {
+                return dist(position, this.target) <= GRID_SIZE / 2;
+            }) || [];
+        }
+
         const nextPosition = this.path[0];
         if (nextPosition) {
             const distance = dist(this.unit, nextPosition);
