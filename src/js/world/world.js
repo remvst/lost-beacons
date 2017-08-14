@@ -10,14 +10,14 @@ class World {
         W.cyclables = [];
         W.renderables = [];
 
-        for (let i = 0 ; i < 30 ; i++) {
+        for (let i = 0 ; i < 1 ; i++) {
             let unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 4.5;
             this.add(unit, CYCLABLE | RENDERABLE);
         }
 
-        for (let i = 0 ; i < 30 ; i++) {
+        for (let i = 0 ; i < 5 ; i++) {
             let unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 6.5;
@@ -365,6 +365,14 @@ class World {
         }
 
         return [];
+    }
+
+    hasObstacleBetween(a, b) {
+        const d = dist(a, b);
+        const cast = W.castRay(a, angleBetween(a, b), d);
+        const castDist = dist(a, cast);
+        // console.log(castDist, d);
+        return dist(a, cast) < d;
     }
 
 }

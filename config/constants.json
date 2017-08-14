@@ -20,6 +20,7 @@
     "UNIT_SPEED": 150,
     "UNIT_ANGULAR_SPEED": 3,
     "UNIT_RADIUS": 25,
+    "UNIT_ATTACK_RADIUS": 200,
 
     "CYCLABLE": 1,
     "RENDERABLE": 2,

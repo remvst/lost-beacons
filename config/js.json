@@ -8,6 +8,7 @@
     "src/js/util/normalize-angle.js",
     "src/js/util/interp.js",
     "src/js/util/rand.js",
+    "src/js/util/angle-between.js",
 
     "src/js/graphics/particle.js",
 
