@@ -343,17 +343,13 @@ class World {
         for (let radius = 0 ; radius < GRID_SIZE * 10 ; radius += forbiddenRadius) {
             const positions = W.positionsAround(position, radius, forbiddenRadius)
                 // Is this position even available?
-                .filter(position => !W.hasObstacle(position.x, position.y, forbiddenRadius))
+                .filter(position => !W.hasObstacle(position.x, position.y, forbiddenRadius / 2))
                 // Is this position in the forbidden list?
                 .filter(position => {
                     return !forbidden.filter(forbiddenPosition => {
                         return dist(forbiddenPosition, position) < forbiddenRadius;
                     }).length;
                 });
-
-            if (radius === 0) {
-
-            }
 
             if (positions.length) {
                 return positions;

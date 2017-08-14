@@ -52,7 +52,17 @@ class Game {
                 let target;
                 while (true) {
                     target = W.firstFreePositionsAround(s, usedPositions, UNIT_RADIUS)
-                        .sort((a, b) => dist(a, unit) - dist(b, unit))[0];
+                        .sort((a, b) => {
+                            const visibleFromA = W.castRay(a, Math.atan2(s.y - a.y, s.x - a.x), GRID_SIZE * 10) >= dist(a, s);
+                            const visibleFromB = W.castRay(a, Math.atan2(s.y - b.y, s.x - b.x), GRID_SIZE * 10) >= dist(b, s);
+
+                            if (visibleFromA != visibleFromB) {
+                                return visibleFromA ? -1 : 1;
+                            }
+
+                            // Both positions can see the target, so let's just pick whichever one is closer
+                            return dist(a, s) - dist(b, s);
+                        })[0];
 
                     if (target) {
                         usedPositions.push(target);

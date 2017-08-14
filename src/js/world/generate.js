@@ -22,9 +22,9 @@ function coat(map, width, x) {
 
 function generate() {
     const map = [];
-    for (let i = 0 ; i < 25 ; i++) {
+    for (let i = 0 ; i < GRID_ROWS ; i++) {
         map.push([]);
-        for (var j = 0 ; j < 25 ; j++) {
+        for (let j = 0 ; j < GRID_COLS ; j++) {
             map[i][j] = 0;
         }
     }
@@ -41,12 +41,9 @@ function generate() {
         }
     }
 
-    for (let i = 0 ; i < 40 ; i++) {
-        expand(~~(Math.random() * map.length), ~~(Math.random() * map[0].length), 5);
+    for (let i = 0 ; i < OBSTACLES ; i++) {
+        expand(~~(Math.random() * map.length), ~~(Math.random() * map[0].length), OBSTACLE_EXPAND_ITERATIONS);
     }
 
-    map = coat(map, 3, 0);
-    map = coat(map, 3, 1);
-
-    return map;
+    return coat(coat(map, 3, 0), 3, 1);
 }
