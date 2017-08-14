@@ -47,4 +47,9 @@ class Reach extends Behavior {
         stroke();
     }
 
+    reservedPosition() {
+        const last = this.path[this.path.length - 1];
+        return {'x': last.x, 'y': last.y};
+    }
+
 }

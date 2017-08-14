@@ -24,4 +24,8 @@ class Behavior {
 
     }
 
+    reservedPosition() {
+        return {'x': this.unit.x, 'y': this.unit.y};
+    }
+
 }

@@ -46,4 +46,8 @@ class AttackFollow extends Behavior {
         this.subBehavior.render();
     }
 
+    reservedPosition() {
+        return this.subBehavior.reservedPosition();
+    }
+
 }
