@@ -43,38 +43,12 @@ class Game {
     select(s) {
         if (Math.abs(s.width || 0) < 5 && Math.abs(s.height || 0) < 5) {
 
-            // Preventing selected units from going to a position that is already taken by another unit
-            const usedPositions = W.cyclables.filter(e => {
-                return e.team && G.selectedUnits.indexOf(e) < 0;
-            });
-
             G.selectedUnits.forEach(unit => {
-                let target;
-                while (true) {
-                    target = W.firstFreePositionsAround(s, usedPositions, UNIT_RADIUS)
-                        .sort((a, b) => {
-                            const visibleFromA = W.castRay(a, Math.atan2(s.y - a.y, s.x - a.x), GRID_SIZE * 10) >= dist(a, s);
-                            const visibleFromB = W.castRay(a, Math.atan2(s.y - b.y, s.x - b.x), GRID_SIZE * 10) >= dist(b, s);
-
-                            if (visibleFromA != visibleFromB) {
-                                return visibleFromA ? -1 : 1;
-                            }
-
-                            // Both positions can see the target, so let's just pick whichever one is closer
-                            return dist(a, s) - dist(b, s);
-                        })[0];
-
-                    if (target) {
-                        usedPositions.push(target);
-                        if (unit.goto(target)) {
-                            break;
-                        }
-
-                    }
-                }
+                unit.goto(s);
 
                 // Quick effect to show where we're going
                 let circle;
+                let target = unit.behavior.reservedPosition();
                 W.add(circle = {
                     'render': () => {
                         R.save();
@@ -82,6 +56,7 @@ class Game {
                         R.scale(circle.a, circle.a);
                         R.globalAlpha = circle.a;
                         R.strokeStyle = '#0f0';
+                        R.lineWidth = 1;
                         R.beginPath();
                         R.arc(0, 0, 5, 0, Math.PI * 2, true);
                         R.stroke();

@@ -5,7 +5,6 @@ class Unit {
         this.x = 0;
         this.y = 0;
         this.team = PLAYER_TEAM;
-        this.target = null;
 
         this.path = [];
 
@@ -91,16 +90,7 @@ class Unit {
     }
 
     goto(pt) {
-        const path = W.findPath(this, pt, position => {
-            return dist(position, pt) <= GRID_SIZE / 2;
-        });
-
-        if (path) {
-            path[path.length - 1] = pt;
-            path.shift(); // kinda risky, but the first step is very often a step back
-            this.setBehavior(new Reach(pt));
-            return true;
-        }
+        this.setBehavior(new Reach(pt));
     }
 
     setBehavior(b) {
