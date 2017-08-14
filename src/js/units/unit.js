@@ -104,6 +104,7 @@ class Unit {
 
         if (path) {
             path[path.length - 1] = pt;
+            path.shift(); // kinda risky, but the first step is very often a step back
             this.path = path;
             return true;
         }
