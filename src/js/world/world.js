@@ -23,6 +23,8 @@ class World {
             unit.y = GRID_SIZE * 6.5;
             unit.team = ENEMY_TEAM;
             this.add(unit, CYCLABLE | RENDERABLE);
+
+            unit.setBehavior(new AttackFollow(W.cyclables[0]));
         }
 
         W.map = generate();

@@ -24,6 +24,7 @@ class Unit {
     }
 
     cycle(e) {
+        this.moving = false;
         this.behavior.cycle(e);
     }
 

@@ -10,7 +10,7 @@ class FollowPath extends Behavior {
         if (nextPosition) {
             const distance = dist(this.unit, nextPosition);
 
-            this.unit.moving = distance > 0;
+            this.unit.moving = true;
 
             if (distance > 0) {
                 this.unit.angle = Math.atan2(nextPosition.y - this.unit.y, nextPosition.x - this.unit.x);
@@ -38,4 +38,5 @@ class FollowPath extends Behavior {
         this.path.forEach(step => lineTo(step.x, step.y));
         stroke();
     }
+
 }
