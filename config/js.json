@@ -8,11 +8,18 @@
     "src/js/util/normalize-angle.js",
     "src/js/util/interp.js",
     "src/js/util/rand.js",
+    "src/js/util/pick.js",
     "src/js/util/angle-between.js",
 
     "src/js/graphics/particle.js",
 
     "src/js/units/unit.js",
+
+    "src/js/ai/behavior.js",
+    "src/js/ai/idle.js",
+    "src/js/ai/attack-still.js",
+    "src/js/ai/attack-follow.js",
+    "src/js/ai/follow-path.js",
 
     "src/js/world/world.js",
     "src/js/world/camera.js",
