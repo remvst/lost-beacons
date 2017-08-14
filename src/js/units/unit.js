@@ -35,6 +35,16 @@ class Unit {
     }
 
     render() {
+        R.globalAlpha = 0.1;
+        R.beginPath();
+        R.strokeStyle = '#0f0';
+        R.lineWidth = 4;
+        R.moveTo(this.x, this.y);
+        this.path.forEach(step => R.lineTo(step.x, step.y));
+        R.stroke();
+
+        R.globalAlpha = 1;
+
         R.save();
         R.translate(this.x, this.y);
         R.rotate(this.angle);
