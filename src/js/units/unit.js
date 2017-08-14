@@ -32,9 +32,9 @@ class Unit {
 
         R.globalAlpha = 1;
 
-        R.save();
-        R.translate(this.x, this.y);
-        R.rotate(this.angle);
+        save();
+        translate(this.x, this.y);
+        rotate(this.angle);
 
         const pxSize = 5;
         const amplitude = pxSize / 2;
@@ -45,48 +45,48 @@ class Unit {
 
         var offset = sin * amplitude;
 
-        R.translate(-pxSize * 1.5, -pxSize * 2.5);
+        translate(-pxSize * 1.5, -pxSize * 2.5);
 
         // Legs
-        R.save();
-        R.translate(pxSize, 0);
-        R.scale(sin, 1);
+        save();
+        translate(pxSize, 0);
+        scale(sin, 1);
         R.fillStyle = this.team.leg;
-        R.fillRect(0, pxSize, pxSize * 3, pxSize); // left
-        R.fillRect(0, pxSize * 3, -pxSize * 3, pxSize); // right
-        R.restore();
+        fillRect(0, pxSize, pxSize * 3, pxSize); // left
+        fillRect(0, pxSize * 3, -pxSize * 3, pxSize); // right
+        restore();
 
         // Left arm
-        R.save();
-        R.translate(offset, 0);
+        save();
+        translate(offset, 0);
         R.fillStyle = this.team.body;
-        R.fillRect(pxSize, 0, pxSize * 2, pxSize);
+        fillRect(pxSize, 0, pxSize * 2, pxSize);
         R.fillStyle = this.team.leg;
-        R.fillRect(pxSize * 2, pxSize, pxSize * 2, pxSize);
-        R.restore();
+        fillRect(pxSize * 2, pxSize, pxSize * 2, pxSize);
+        restore();
 
         // Right arm
-        R.save();
-        R.translate(-offset, 0);
+        save();
+        translate(-offset, 0);
         R.fillStyle = this.team.body;
-        R.fillRect(pxSize, pxSize * 4, pxSize * 2, pxSize);
+        fillRect(pxSize, pxSize * 4, pxSize * 2, pxSize);
         R.fillStyle = this.team.leg;
-        R.fillRect(pxSize * 2, pxSize * 3, pxSize * 2, pxSize);
-        R.restore();
+        fillRect(pxSize * 2, pxSize * 3, pxSize * 2, pxSize);
+        restore();
 
         // Main body
         R.fillStyle = this.team.body;
-        R.fillRect(0, pxSize, pxSize * 2, pxSize * 3);
+        fillRect(0, pxSize, pxSize * 2, pxSize * 3);
 
         // Gun
         R.fillStyle = '#000';
-        R.fillRect(pxSize * 3, pxSize * 2, pxSize * 3, pxSize);
+        fillRect(pxSize * 3, pxSize * 2, pxSize * 3, pxSize);
 
         // Head
         R.fillStyle = this.team.head;
-        R.fillRect(pxSize, pxSize, pxSize * 2, pxSize * 3);
+        fillRect(pxSize, pxSize, pxSize * 2, pxSize * 3);
 
-        R.restore();
+        restore();
     }
 
     goto(pt) {
