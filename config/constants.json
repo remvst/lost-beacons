@@ -23,8 +23,5 @@
 
     "CYCLABLE": 1,
     "RENDERABLE": 2,
-    "UNIT": 4,
-
-    "PLAYER_TEAM": 1,
-    "ENEMY_TEAM": 2
+    "UNIT": 4
 }

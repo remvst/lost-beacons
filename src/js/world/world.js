@@ -10,10 +10,18 @@ class World {
         W.cyclables = [];
         W.renderables = [];
 
-        for (let i = 0 ; i < 10 ; i++) {
+        for (let i = 0 ; i < 30 ; i++) {
             let unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 4.5;
+            this.add(unit, CYCLABLE | RENDERABLE);
+        }
+
+        for (let i = 0 ; i < 30 ; i++) {
+            let unit = new Unit();
+            unit.x = GRID_SIZE * (4.5 + i);
+            unit.y = GRID_SIZE * 6.5;
+            unit.team = ENEMY_TEAM;
             this.add(unit, CYCLABLE | RENDERABLE);
         }
 

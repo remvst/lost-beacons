@@ -4,7 +4,6 @@ class Unit {
         // Might be able to gut these if they're set from the outside
         this.x = 0;
         this.y = 0;
-        this.color = '#4c2';
         this.team = PLAYER_TEAM;
 
         this.path = [];
@@ -37,7 +36,7 @@ class Unit {
     render() {
         R.globalAlpha = 0.1;
         R.beginPath();
-        R.strokeStyle = '#0f0';
+        R.strokeStyle = this.team.body;
         R.lineWidth = 4;
         R.moveTo(this.x, this.y);
         this.path.forEach(step => R.lineTo(step.x, step.y));
@@ -57,11 +56,6 @@ class Unit {
         }
 
         var offset = sin * amplitude;
-        // var invertedOffset = amplitude - offset;
-        var bodyColor = '#48cd25';
-        var gloveColor = '#308d16';
-        var headColor = '#2ffc7e';
-        var legColor = '#308d16';
 
         R.translate(-pxSize * 1.5, -pxSize * 2.5);
 
@@ -69,7 +63,7 @@ class Unit {
         R.save();
         R.translate(pxSize, 0);
         R.scale(sin, 1);
-        R.fillStyle = legColor;
+        R.fillStyle = this.team.leg;
         R.fillRect(0, pxSize, pxSize * 3, pxSize); // left
         R.fillRect(0, pxSize * 3, -pxSize * 3, pxSize); // right
         R.restore();
@@ -77,23 +71,23 @@ class Unit {
         // Left arm
         R.save();
         R.translate(offset, 0);
-        R.fillStyle = bodyColor;
+        R.fillStyle = this.team.body;
         R.fillRect(pxSize, 0, pxSize * 2, pxSize);
-        R.fillStyle = gloveColor;
+        R.fillStyle = this.team.leg;
         R.fillRect(pxSize * 2, pxSize, pxSize * 2, pxSize);
         R.restore();
 
         // Right arm
         R.save();
         R.translate(-offset, 0);
-        R.fillStyle = bodyColor;
+        R.fillStyle = this.team.body;
         R.fillRect(pxSize, pxSize * 4, pxSize * 2, pxSize);
-        R.fillStyle = gloveColor;
+        R.fillStyle = this.team.leg;
         R.fillRect(pxSize * 2, pxSize * 3, pxSize * 2, pxSize);
         R.restore();
 
         // Main body
-        R.fillStyle = bodyColor;
+        R.fillStyle = this.team.body;
         R.fillRect(0, pxSize, pxSize * 2, pxSize * 3);
 
         // Gun
@@ -101,7 +95,7 @@ class Unit {
         R.fillRect(pxSize * 3, pxSize * 2, pxSize * 3, pxSize);
 
         // Head
-        R.fillStyle = headColor;
+        R.fillStyle = this.team.head;
         R.fillRect(pxSize, pxSize, pxSize * 2, pxSize * 3);
 
         R.restore();
