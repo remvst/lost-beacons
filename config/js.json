@@ -19,7 +19,7 @@
     "src/js/ai/idle.js",
     "src/js/ai/attack-still.js",
     "src/js/ai/attack-follow.js",
-    "src/js/ai/follow-path.js",
+    "src/js/ai/reach.js",
 
     "src/js/world/world.js",
     "src/js/world/camera.js",
