@@ -104,9 +104,8 @@ class Unit {
     }
 
     setBehavior(b) {
-        b.unit = this;
-        b.nextReconsideration = 1; // yolo
         this.behavior = b;
+        b.attach(this);
     }
 
     gotoShootable(pt) {

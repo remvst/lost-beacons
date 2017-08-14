@@ -3,7 +3,13 @@ class AttackFollow extends Behavior {
     constructor(target) {
         super();
         this.target = target;
+    }
+
+    attach(unit) {
+        super.attach(unit);
+
         this.nextCheck = 0;
+        this.updateSubBehavior();
     }
 
     updateSubBehavior() {
@@ -14,6 +20,8 @@ class AttackFollow extends Behavior {
         } else {
             this.subBehavior = new Reach(this.target);
         }
+
+        this.subBehavior.attach(this.unit);
     }
 
     cycle(e) {

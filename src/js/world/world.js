@@ -10,23 +10,6 @@ class World {
         W.cyclables = [];
         W.renderables = [];
 
-        for (let i = 0 ; i < 1 ; i++) {
-            let unit = new Unit();
-            unit.x = GRID_SIZE * (4.5 + i);
-            unit.y = GRID_SIZE * 4.5;
-            this.add(unit, CYCLABLE | RENDERABLE);
-        }
-
-        for (let i = 0 ; i < 5 ; i++) {
-            let unit = new Unit();
-            unit.x = GRID_SIZE * (4.5 + i);
-            unit.y = GRID_SIZE * 6.5;
-            unit.team = ENEMY_TEAM;
-            this.add(unit, CYCLABLE | RENDERABLE);
-
-            unit.setBehavior(new AttackFollow(W.cyclables[0]));
-        }
-
         W.map = generate();
         W.polygons = [];
 
@@ -43,6 +26,23 @@ class World {
         W.polygons = W.polygons.filter(a => {
             return !W.polygons.filter(b => a !== b && a.isSame(b)).length;
         });
+
+        for (let i = 0 ; i < 1 ; i++) {
+            let unit = new Unit();
+            unit.x = GRID_SIZE * (4.5 + i);
+            unit.y = GRID_SIZE * 4.5;
+            this.add(unit, CYCLABLE | RENDERABLE);
+        }
+
+        for (let i = 0 ; i < 5 ; i++) {
+            let unit = new Unit();
+            unit.x = GRID_SIZE * (4.5 + i);
+            unit.y = GRID_SIZE * 6.5;
+            unit.team = ENEMY_TEAM;
+            this.add(unit, CYCLABLE | RENDERABLE);
+
+            unit.setBehavior(new AttackFollow(W.cyclables[0]));
+        }
     }
 
     render() {

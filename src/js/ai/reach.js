@@ -5,13 +5,15 @@ class Reach extends Behavior {
         this.target = target;
     }
 
-    cycle(e) {
-        if (!this.path) {
-            this.path = W.findPath(this.unit, this.target, position => {
-                return dist(position, this.target) <= GRID_SIZE / 2;
-            }) || [];
-        }
+    attach(unit) {
+        super.attach(unit);
 
+        this.path = W.findPath(this.unit, this.target, position => {
+            return dist(position, this.target) <= GRID_SIZE / 2;
+        }) || [];
+    }
+
+    cycle(e) {
         const nextPosition = this.path[0];
         if (nextPosition) {
             const distance = dist(this.unit, nextPosition);

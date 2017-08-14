@@ -1,7 +1,8 @@
 class Behavior {
 
-    constructor() {
+    attach(unit) {
         this.nextReconsideration = 1;
+        this.unit = unit;
     }
 
     cycle(e) {
