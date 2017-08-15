@@ -51,6 +51,11 @@
         "w",
         "x",
         "y",
-        "z"
+        "z",
+        "body",
+        "behavior",
+        "wrap",
+        "angle",
+        "selection"
     ]
 }
