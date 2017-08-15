@@ -53,6 +53,7 @@
         "y",
         "z",
         "body",
+        "head",
         "behavior",
         "wrap",
         "angle",
