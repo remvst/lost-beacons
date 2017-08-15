@@ -43,7 +43,7 @@ class Game {
     select(s) {
         if (Math.abs(s.width || 0) < 5 && Math.abs(s.height || 0) < 5) {
 
-            G.selectedUnits.forEach(unit => {
+            G.selectedUnits.filter(unit => !unit.dead).forEach(unit => {
                 unit.goto(s);
 
                 // Quick effect to show where we're going
