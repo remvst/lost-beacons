@@ -55,7 +55,7 @@ class Reach extends Behavior {
     }
 
     reconsider() {
-        return this.path.length ? new Idle() : this;
+        return this.path.length ? this : new Idle();
     }
 
     render() {
