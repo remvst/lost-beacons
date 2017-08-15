@@ -23,6 +23,10 @@ class Unit {
 
     hurt(amount) {
         this.health = Math.max(0, this.health - amount * this.hurtFactor);
+
+        if (this.dead) {
+            W.remove(this);
+        }
     }
 
     closestVisibleTarget() {
@@ -34,10 +38,6 @@ class Unit {
     }
 
     cycle(e) {
-        if (this.dead) {
-            W.remove(this);
-        }
-
         this.moving = false;
         this.behavior.cycle(e);
     }
