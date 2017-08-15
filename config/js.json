@@ -20,6 +20,7 @@
     "src/js/ai/attack-still.js",
     "src/js/ai/chase.js",
     "src/js/ai/reach.js",
+    "src/js/ai/autonomous.js",
 
     "src/js/cursors/cursor.js",
     "src/js/cursors/attack-cursor.js",

@@ -42,6 +42,7 @@ class World {
             this.add(unit, CYCLABLE | RENDERABLE);
 
             // unit.setBehavior(new AttackFollow(W.cyclables[0]));
+            unit.setBehavior(new Autonomous(W.cyclables[0]));
         }
     }
 
@@ -393,6 +394,13 @@ class World {
             interp(polygon, 'perspective', polygon.perspective * 10, polygon.perspective, random() * 0.5 + 0.5, 0);
             interp(polygon, 'alpha', 0, 1, random() * 0.5 + 0.5, 0);
         });
+    }
+
+    healthInArea(point, team, radius) {
+        return this.cyclables
+            .filter(c => c.team && c.team == team)
+            .filter(unit => dist(unit, point) < radius)
+            .reduce((health, unit) => health + unit.health, 0);
     }
 
 }
