@@ -25,7 +25,7 @@ class Behavior {
             R.fillStyle = '#f00';
             R.font = '10pt Arial';
             R.textAlign = 'center';
-            fillText(this.constructor.name, this.unit.x, this.unit.y + 50);
+            fillText(this.constructor.name, this.unit.x, this.unit.y + 25);
         }
     }
 
