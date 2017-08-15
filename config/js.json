@@ -18,7 +18,7 @@
     "src/js/ai/behavior.js",
     "src/js/ai/idle.js",
     "src/js/ai/attack-still.js",
-    "src/js/ai/attack-follow.js",
+    "src/js/ai/chase.js",
     "src/js/ai/reach.js",
 
     "src/js/world/world.js",

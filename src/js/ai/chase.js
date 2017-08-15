@@ -1,4 +1,4 @@
-class AttackFollow extends Behavior {
+class Chase extends Behavior {
 
     constructor(target) {
         super();
