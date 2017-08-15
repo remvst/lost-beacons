@@ -3,7 +3,7 @@ class AttackStill extends Behavior {
     constructor(target) {
         super();
         this.target = target;
-        this.nextShot = 1;
+        this.nextShot = rand(0.2, 1);
     }
 
     cycle(e) {
