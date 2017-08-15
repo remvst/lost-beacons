@@ -18,11 +18,11 @@ class Unit {
     }
 
     get dead() {
-        return this.health <= 0;
+        return !this.health;
     }
 
     hurt(amount) {
-        this.health -= amount * this.hurtFactor;
+        this.health = Math.max(0, this.health - amount * this.hurtFactor);
     }
 
     closestVisibleTarget() {
