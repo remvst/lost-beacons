@@ -13,10 +13,6 @@ function eventCoords(e) {
 
 onmousedown = e => {
     MOUSE_POSITION = eventCoords(e);
-    // G.selection = {
-    //     'x': MOUSE_POSITION.x + V.x,
-    //     'y': MOUSE_POSITION.y + V.y
-    // };
 
     G.cursor.down({
         'x': MOUSE_POSITION.x + V.x,
@@ -26,10 +22,6 @@ onmousedown = e => {
 
 onmousemove = e => {
     MOUSE_POSITION = eventCoords(e);
-    // if (G.selection) {
-    //     G.selection.width = MOUSE_POSITION.x + V.x - G.selection.x;
-    //     G.selection.height = MOUSE_POSITION.y + V.y - G.selection.y;
-    // }
 
     G.cursor.move({
         'x': MOUSE_POSITION.x + V.x,
@@ -42,9 +34,4 @@ onmouseup = () => {
         'x': MOUSE_POSITION.x + V.x,
         'y': MOUSE_POSITION.y + V.y
     });
-
-    // if (G.selection) {
-    //     G.select(G.selection);
-    // }
-    // G.selection = null;
 };
