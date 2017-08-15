@@ -56,6 +56,13 @@
         "behavior",
         "wrap",
         "angle",
-        "selection"
+        "selection",
+        "target",
+        "path",
+        "step",
+        "color",
+        "perspective",
+        "position",
+        "expand"
     ]
 }
