@@ -37,8 +37,17 @@ class AttackCursor extends Cursor {
     }
 
     track(target) {
+        this.target = target;
         this.x = target.x;
         this.y = target.y;
+    }
+
+    down() {
+        if (this.target) {
+            G.selectionCursor.units.forEach(unit => {
+                unit.setBehavior(new Chase(this.target));
+            });
+        }
     }
 
 }
