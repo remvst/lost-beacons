@@ -8,28 +8,30 @@ class Reach extends Behavior {
     attach(unit) {
         super.attach(unit);
 
-        this.target = W.firstFreePositionsAround(
-            this.target,
-            W.cyclables
-                .filter(c => c.team)
-                .filter(c => c !== this.unit)
-                .map(c => c.behavior.reservedPosition()),
-            UNIT_RADIUS
-        ).sort((a, b) => {
-            const visibleFromA = W.castRay(a, Math.atan2(this.target.y - a.y, this.target.x - a.x), GRID_SIZE * 10) >= dist(a, this.target);
-            const visibleFromB = W.castRay(a, Math.atan2(this.target.y - b.y, this.target.x - b.x), GRID_SIZE * 10) >= dist(b, this.target);
+        if (!this.path) {
+            this.target = W.firstFreePositionsAround(
+                this.target,
+                W.cyclables
+                    .filter(c => c.team)
+                    .filter(c => c !== this.unit)
+                    .map(c => c.behavior.reservedPosition()),
+                UNIT_RADIUS
+            ).sort((a, b) => {
+                const visibleFromA = W.castRay(a, Math.atan2(this.target.y - a.y, this.target.x - a.x), GRID_SIZE * 10) >= dist(a, this.target);
+                const visibleFromB = W.castRay(a, Math.atan2(this.target.y - b.y, this.target.x - b.x), GRID_SIZE * 10) >= dist(b, this.target);
 
-            if (visibleFromA != visibleFromB) {
-                return visibleFromA ? -1 : 1;
-            }
+                if (visibleFromA != visibleFromB) {
+                    return visibleFromA ? -1 : 1;
+                }
 
-            // Both positions can see the target, so let's just pick whichever one is closer
-            return dist(a, this.target) - dist(b, this.target);
-        })[0];
+                // Both positions can see the target, so let's just pick whichever one is closer
+                return dist(a, this.target) - dist(b, this.target);
+            })[0];
 
-        this.path = W.findPath(this.unit, this.target, position => {
-            return dist(position, this.target) <= GRID_SIZE;
-        }) || [];
+            this.path = W.findPath(this.unit, this.target, position => {
+                return dist(position, this.target) <= GRID_SIZE;
+            }) || [];
+        }
     }
 
     cycle(e) {
