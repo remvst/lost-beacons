@@ -380,4 +380,16 @@ class World {
         return dist(a, cast) < d;
     }
 
+    animatePolygons() {
+        function easeOutBack(t, b, c, d) {
+            const s = 1.70158;
+            return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
+        }
+
+        this.polygons.forEach(polygon => {
+            interp(polygon, 'perspective', polygon.perspective * 10, polygon.perspective, Math.random() * 0.5 + 0.5, 0);
+            interp(polygon, 'alpha', 0, 1, Math.random() * 0.5 + 0.5, 0);
+        });
+    }
+
 }

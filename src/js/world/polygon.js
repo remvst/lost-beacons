@@ -1,14 +1,3 @@
-// Returns the 2D coordinates of a 3D point
-function pointCoords(pt) {
-    // TODO gut these vars
-    var dX = pt.x - V.center.x,
-        dY = pt.y - V.center.y;
-    return {
-        'x': pt.x + dX / PERSPECTIVE * pt.z,
-        'y': pt.y + dY / PERSPECTIVE * pt.z
-    };
-}
-
 function avgProp(array, property) {
     return array.reduce((t, e) => {
         return t + e[property];
@@ -21,11 +10,25 @@ class Polygon {
         this.pts = pts;
         this.color = color;
         this.renderCondition = renderCondition;
+        this.alpha = 1;
 
         this.center = {
             'x': avgProp(pts, 'x'),
             'y': avgProp(pts, 'y'),
             'z': avgProp(pts, 'z'),
+        };
+
+        this.perspective = PERSPECTIVE;
+    }
+
+    // Returns the 2D coordinates of a 3D point
+    pointCoords(pt) {
+        // TODO gut these vars
+        const dX = pt.x - V.center.x;
+        const dY = pt.y - V.center.y;
+        return {
+            'x': pt.x + dX / this.perspective * pt.z,
+            'y': pt.y + dY / this.perspective * pt.z
         };
     }
 
@@ -35,18 +38,21 @@ class Polygon {
     }
 
     render() {
+        R.save();
+        R.globalAlpha = this.alpha;
         R.fillStyle = this.color;
         R.strokeStyle = GRID_COLOR;
         R.lineWidth = 2;
         R.lineJoin = 'round';
         R.beginPath();
-        this.pts.map(pointCoords).forEach((p, i) => {
+        this.pts.map(p => this.pointCoords(p)).forEach((p, i) => {
             if (!i) R.moveTo(p.x, p.y);
             else R.lineTo(p.x, p.y);
         });
         R.closePath();
         R.fill();
         R.stroke();
+        R.restore();
     }
 
 }
