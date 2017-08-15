@@ -7,6 +7,11 @@ onload = () => {
 
     // Shortcut for all canvas methods
     const p = CanvasRenderingContext2D.prototype;
+    p.wrap = function(f) {
+        this.save();
+        f();
+        this.restore();
+    };
     Object.getOwnPropertyNames(p).forEach(n => {
         if (R[n] && R[n].call) {
             w[n] = p[n].bind(R);

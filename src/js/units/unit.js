@@ -68,74 +68,90 @@ class Unit {
     }
 
     render() {
-        this.behavior.render();
+        wrap(() => this.behavior.render());
 
-        R.globalAlpha = 1;
-
-        save();
         translate(this.x, this.y);
         rotate(this.angle);
 
-        const pxSize = 5;
-        const amplitude = pxSize / 2;
-        let sin = Math.sin(G.t * Math.PI * 2 * 2);
-        if (!this.moving) {
-            sin = 0;
-        }
+        const sin = this.moving ? Math.sin(G.t * Math.PI * 4) : 0;
+        const offset = sin * (UNIT_PX_SIZE / 2);
 
-        var offset = sin * amplitude;
-
-        translate(-pxSize * 1.5, -pxSize * 2.5);
+        translate(-UNIT_PX_SIZE * 1.5, -UNIT_PX_SIZE * 2.5);
 
         // Legs
-        save();
-        translate(pxSize, 0);
-        scale(sin, 1);
-        R.fillStyle = this.team.leg;
-        fillRect(0, pxSize, pxSize * 3, pxSize); // left
-        fillRect(0, pxSize * 3, -pxSize * 3, pxSize); // right
-        restore();
+        wrap(() => {
+            translate(UNIT_PX_SIZE, 0);
+            scale(sin, 1);
+            R.fillStyle = this.team.leg;
+            fillRect(0, UNIT_PX_SIZE, UNIT_PX_SIZE * 3, UNIT_PX_SIZE); // left
+            fillRect(0, UNIT_PX_SIZE * 3, -UNIT_PX_SIZE * 3, UNIT_PX_SIZE); // right
+        });
 
         // Left arm
-        save();
-        translate(offset, 0);
-        R.fillStyle = this.team.body;
-        fillRect(pxSize, 0, pxSize * 2, pxSize);
-        R.fillStyle = this.team.leg;
-        fillRect(pxSize * 2, pxSize, pxSize * 2, pxSize);
-        restore();
+        wrap(() => {
+            translate(offset, 0);
+            R.fillStyle = this.team.body;
+            fillRect(UNIT_PX_SIZE, 0, UNIT_PX_SIZE * 2, UNIT_PX_SIZE);
+            R.fillStyle = this.team.leg;
+            fillRect(UNIT_PX_SIZE * 2, UNIT_PX_SIZE, UNIT_PX_SIZE * 2, UNIT_PX_SIZE);
+        });
 
         // Right arm
-        save();
-        translate(-offset, 0);
-        R.fillStyle = this.team.body;
-        fillRect(pxSize, pxSize * 4, pxSize * 2, pxSize);
-        R.fillStyle = this.team.leg;
-        fillRect(pxSize * 2, pxSize * 3, pxSize * 2, pxSize);
-        restore();
+        wrap(() => {
+            translate(-offset, 0);
+            R.fillStyle = this.team.body;
+            fillRect(UNIT_PX_SIZE, UNIT_PX_SIZE * 4, UNIT_PX_SIZE * 2, UNIT_PX_SIZE);
+            R.fillStyle = this.team.leg;
+            fillRect(UNIT_PX_SIZE * 2, UNIT_PX_SIZE * 3, UNIT_PX_SIZE * 2, UNIT_PX_SIZE);
+        });
 
         // Main body
         R.fillStyle = this.team.body;
-        fillRect(0, pxSize, pxSize * 2, pxSize * 3);
+        fillRect(0, UNIT_PX_SIZE, UNIT_PX_SIZE * 2, UNIT_PX_SIZE * 3);
 
         // Gun
         R.fillStyle = '#000';
-        fillRect(pxSize * 3, pxSize * 2, pxSize * 3, pxSize);
+        fillRect(UNIT_PX_SIZE * 3, UNIT_PX_SIZE * 2, UNIT_PX_SIZE * 3, UNIT_PX_SIZE);
 
         // Head
         R.fillStyle = this.team.head;
-        fillRect(pxSize, pxSize, pxSize * 2, pxSize * 3);
-
-        restore();
+        fillRect(UNIT_PX_SIZE, UNIT_PX_SIZE, UNIT_PX_SIZE * 2, UNIT_PX_SIZE * 3);
     }
 
     postRender() {
+        translate(this.x, this.y);
+
         // Second render pass, add health gauge
         R.fillStyle = '#000';
-        fillRect(this.x - evaluate(HEALTH_GAUGE_WIDTH / 2) - 1, this.y - evaluate(HEALTH_GAUGE_RADIUS) - 1, evaluate(HEALTH_GAUGE_WIDTH + 2), evaluate(HEALTH_GAUGE_HEIGHT + 2));
+        fillRect(
+            evaluate(-HEALTH_GAUGE_WIDTH / 2) - 1,
+            -HEALTH_GAUGE_RADIUS - 1,
+            evaluate(HEALTH_GAUGE_WIDTH + 2),
+            evaluate(HEALTH_GAUGE_HEIGHT + 2)
+        );
 
         R.fillStyle = this.health > 0.3 ? '#0f0' : '#f00';
-        fillRect(this.x - evaluate(HEALTH_GAUGE_WIDTH / 2), this.y - HEALTH_GAUGE_RADIUS, HEALTH_GAUGE_WIDTH * this.health, HEALTH_GAUGE_HEIGHT);
+        fillRect(
+            evaluate(-HEALTH_GAUGE_WIDTH / 2),
+            -HEALTH_GAUGE_RADIUS,
+            HEALTH_GAUGE_WIDTH * this.health,
+            HEALTH_GAUGE_HEIGHT
+        );
+
+        if (this.isSelected()) {
+            R.fillStyle = '#fff';
+
+            for (let i = 0 ; i < 4 ; i++) {
+                const a = (i / 4) * Math.PI * 2 + Math.PI / 4;
+
+                save();
+                translate(Math.cos(a) * SELECTED_EFFECT_RADIUS, Math.sin(a) * SELECTED_EFFECT_RADIUS);
+                rotate(a + Math.PI * 3 / 4);
+                fillRect(0, 0, 1, SELECTED_EFFECT_SIZE);
+                fillRect(0, 0, SELECTED_EFFECT_SIZE, 1);
+                restore();
+            }
+        }
     }
 
     goto(pt) {
@@ -158,6 +174,10 @@ class Unit {
 
             return dist(cast, position) > dist(pt, position);
         }) || [];
+    }
+
+    isSelected() {
+        return G.selectedUnits.indexOf(this) >= 0;
     }
 
 }

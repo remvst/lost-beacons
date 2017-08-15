@@ -60,7 +60,7 @@ class World {
             R.fillRect(V.x, y, CANVAS_WIDTH, 1);
         }
 
-        W.renderables.forEach(e => e.render());
+        W.renderables.forEach(e => wrap(() => e.render()));
 
         W.polygons.filter(function(p) {
             if (Math.abs(p.center.x - V.center.x) > CANVAS_WIDTH / 2 + GRID_SIZE / 2 ||
@@ -80,7 +80,7 @@ class World {
             R.strokeRect(G.selection.x, G.selection.y, G.selection.width, G.selection.height);
         }
 
-        W.renderables.forEach(e => e.postRender && e.postRender());
+        W.renderables.forEach(e => e.postRender && wrap(() => e.postRender()));
 
         R.restore();
     }
