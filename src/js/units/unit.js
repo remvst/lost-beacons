@@ -149,7 +149,7 @@ class Unit {
             };
 
             let i = 4;
-            while (--i) {
+            while (i--) {
                 wrap(corner((i / 4) * PI * 2 + PI / 4));
             }
         }
