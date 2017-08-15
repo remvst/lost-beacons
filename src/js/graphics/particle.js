@@ -16,11 +16,11 @@ function particle(s, c, as) {
     }, RENDERABLE | FIRST);
 
     // Interpolations
-    as.forEach(function(a, id){
+    as.forEach((a, i) => {
         const args = [p].concat(a);
 
         // Add the remove callback
-        if(!id){
+        if(!i){
             args[7] = () => W.remove(p);
         }
 
