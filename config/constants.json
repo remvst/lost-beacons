@@ -24,7 +24,7 @@
 
     "CYCLABLE": 1,
     "RENDERABLE": 2,
-    "UNIT": 4,
+    "FIRST": 4,
 
     "HEALTH_GAUGE_WIDTH": 40,
     "HEALTH_GAUGE_HEIGHT": 5,

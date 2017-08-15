@@ -13,7 +13,7 @@ function particle(s, c, as) {
             R.fillStyle = p.c;
             R.fillRect(p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
         }
-    }, RENDERABLE);
+    }, RENDERABLE | FIRST);
 
     // Interpolations
     as.forEach(function(a, id){
