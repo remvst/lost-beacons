@@ -72,7 +72,7 @@ class Game {
         } else if (unit && unit.team === ENEMY_TEAM) {
             newCursor = G.attackCursor;
             newCursor.track(unit);
-        } else if (G.selectionCursor.units.length && !W.hasObstacle(p.x, p.y)) {
+        } else if (G.selectionCursor.units.length) {
             newCursor = G.reachCursor;
             newCursor.track(p);
         } else {
