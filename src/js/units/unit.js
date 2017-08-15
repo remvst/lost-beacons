@@ -22,7 +22,17 @@ class Unit {
     }
 
     hurt(amount) {
-        this.health = Math.max(0, this.health - amount * this.hurtFactor);
+        this.health -= amount * this.hurtFactor;
+        if (this.health < 0.1) {
+            this.health = 0;
+        }
+
+        const d = rand(0.4, 0.8);
+        particle(0, this.team.body, [
+            ['s', 10, 0, d],
+            ['x', this.x, this.x + rand(-50, 50), d],
+            ['y', this.y, this.y + rand(-50, 50), d]
+        ]);
 
         if (this.dead) {
             W.remove(this);
