@@ -27,7 +27,7 @@ class World {
             return !W.polygons.filter(b => a !== b && a.isSame(b)).length;
         });
 
-        for (let i = 0 ; i < 1 ; i++) {
+        for (let i = 0 ; i < 15 ; i++) {
             let unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 4.5;
@@ -41,7 +41,7 @@ class World {
             unit.team = ENEMY_TEAM;
             this.add(unit, CYCLABLE | RENDERABLE);
 
-            unit.setBehavior(new AttackFollow(W.cyclables[0]));
+            // unit.setBehavior(new AttackFollow(W.cyclables[0]));
         }
     }
 
@@ -94,12 +94,14 @@ class World {
     }
 
     add(element, types) {
+        const method = types & FIRST ? 'unshift' : 'push';
+
         if (types & CYCLABLE) {
-            W.cyclables.push(element);
+            W.cyclables[method](element);
         }
 
         if (types & RENDERABLE) {
-            W.renderables.push(element);
+            W.renderables[method](element);
         }
     }
 
