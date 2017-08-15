@@ -27,4 +27,6 @@ function particle(s, c, as) {
         // Apply the interpolation
         interp.apply(0, args);
     });
+
+    return p;
 }

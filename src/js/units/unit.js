@@ -27,15 +27,30 @@ class Unit {
             this.health = 0;
         }
 
-        const d = rand(0.4, 0.8);
-        particle(0, this.team.body, [
-            ['s', 10, 0, d],
-            ['x', this.x, this.x + rand(-50, 50), d],
-            ['y', this.y, this.y + rand(-50, 50), d]
-        ]);
+        let particles = 1;
 
         if (this.dead) {
             W.remove(this);
+            particles = 20;
+
+            let k = 20;
+            while (k--) {
+                const d = rand(3, 4);
+                let p = particle(0, this.team.body, [
+                    ['s', rand(4, 8), 0, 0.1, d],
+                ]);
+                p.x = this.x + rand(-15, 15);
+                p.y = this.y + rand(-15, 15);
+            }
+        }
+
+        while (particles--) {
+            const d = rand(0.6, 1);
+            particle(0, this.team.body, [
+                ['s', 10, 0, d],
+                ['x', this.x + rand(-10, 10), this.x + rand(-50, 50), d],
+                ['y', this.y + rand(-10, 10), this.y + rand(-50, 50), d]
+            ]);
         }
     }
 
