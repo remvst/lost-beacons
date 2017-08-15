@@ -12,6 +12,8 @@ class AttackStill extends Behavior {
 
         // Shoot
         if ((this.nextShot -= e) <= 0 && !this.target.dead) {
+            this.nextShot = 1;
+
             const d = dist(this.unit, this.target);
             const impact = W.castRay(this.unit, angleBetween(this.unit, this.target), d);
 
