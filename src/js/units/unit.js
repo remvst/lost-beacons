@@ -141,15 +141,16 @@ class Unit {
         if (this.isSelected()) {
             R.fillStyle = '#fff';
 
-            for (let i = 0 ; i < 4 ; i++) {
-                const a = (i / 4) * Math.PI * 2 + Math.PI / 4;
-
-                save();
+            const corner = a => () => {
                 translate(Math.cos(a) * SELECTED_EFFECT_RADIUS, Math.sin(a) * SELECTED_EFFECT_RADIUS);
                 rotate(a + Math.PI * 3 / 4);
                 fillRect(0, 0, 1, SELECTED_EFFECT_SIZE);
                 fillRect(0, 0, SELECTED_EFFECT_SIZE, 1);
-                restore();
+            };
+
+            let i = 4;
+            while (--i) {
+                wrap(corner((i / 4) * Math.PI * 2 + Math.PI / 4));
             }
         }
     }

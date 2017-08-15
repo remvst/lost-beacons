@@ -46,43 +46,46 @@ class World {
     }
 
     render() {
-        R.fillStyle = '#0e3b54';
-        R.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        R.save();
-        R.translate(-V.x, -V.y);
+        wrap(() => {
+            R.fillStyle = '#0e3b54';
+            fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        R.fillStyle = GRID_COLOR;
-        for (let x = round(V.x, GRID_SIZE) ; x < V.x + CANVAS_WIDTH ; x += GRID_SIZE) {
-            R.fillRect(x, V.y, 1, CANVAS_HEIGHT);
-        }
-        for (let y = round(V.y, GRID_SIZE) ; y < V.y + CANVAS_HEIGHT ; y += GRID_SIZE) {
-            R.fillRect(V.x, y, CANVAS_WIDTH, 1);
-        }
+            translate(-V.x, -V.y);
 
-        W.renderables.forEach(e => wrap(() => e.render()));
-
-        W.polygons.filter(function(p) {
-            if (Math.abs(p.center.x - V.center.x) > CANVAS_WIDTH / 2 + GRID_SIZE / 2 ||
-                Math.abs(p.center.y - V.center.y) > CANVAS_HEIGHT / 2 + GRID_SIZE / 2) {
-                return false;
+            // Grid on the floor
+            R.fillStyle = GRID_COLOR;
+            for (let x = round(V.x, GRID_SIZE) ; x < V.x + CANVAS_WIDTH ; x += GRID_SIZE) {
+                fillRect(x, V.y, 1, CANVAS_HEIGHT);
             }
-            return p.renderCondition(V.center);
-        }).sort((a, b) => {
-            return dist(b.center, V.center) - dist(a.center, V.center);
-        }).forEach(p => p.render());
+            for (let y = round(V.y, GRID_SIZE) ; y < V.y + CANVAS_HEIGHT ; y += GRID_SIZE) {
+                fillRect(V.x, y, CANVAS_WIDTH, 1);
+            }
 
-        if (G.selection) {
-            R.strokeStyle = 'white';
-            R.fillStyle = 'rgba(0,0,0,0.1)';
-            R.lineWidth = 1;
-            R.fillRect(G.selection.x, G.selection.y, G.selection.width, G.selection.height);
-            R.strokeRect(G.selection.x, G.selection.y, G.selection.width, G.selection.height);
-        }
+            // Renderables (units, particles...)
+            W.renderables.forEach(e => wrap(() => e.render()));
 
-        W.renderables.forEach(e => e.postRender && wrap(() => e.postRender()));
+            // Polygons (obstacles)
+            W.polygons.filter(function(p) {
+                if (Math.abs(p.center.x - V.center.x) > CANVAS_WIDTH / 2 + GRID_SIZE / 2 ||
+                    Math.abs(p.center.y - V.center.y) > CANVAS_HEIGHT / 2 + GRID_SIZE / 2) {
+                    return false;
+                }
+                return p.renderCondition(V.center);
+            }).sort((a, b) => {
+                return dist(b.center, V.center) - dist(a.center, V.center);
+            }).forEach(p => p.render());
 
-        R.restore();
+            if (G.selection) {
+                R.strokeStyle = 'white';
+                R.fillStyle = 'rgba(0,0,0,0.1)';
+                R.lineWidth = 1;
+                fillRect(G.selection.x, G.selection.y, G.selection.width, G.selection.height);
+                strokeRect(G.selection.x, G.selection.y, G.selection.width, G.selection.height);
+            }
+
+            W.renderables.forEach(e => e.postRender && wrap(() => e.postRender()));
+        });
     }
 
     get width() {

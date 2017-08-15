@@ -23,12 +23,9 @@ class Polygon {
 
     // Returns the 2D coordinates of a 3D point
     pointCoords(pt) {
-        // TODO gut these vars
-        const dX = pt.x - V.center.x;
-        const dY = pt.y - V.center.y;
         return {
-            'x': pt.x + dX / this.perspective * pt.z,
-            'y': pt.y + dY / this.perspective * pt.z
+            'x': pt.x + (pt.x - V.center.x) / this.perspective * pt.z,
+            'y': pt.y + (pt.y - V.center.y) / this.perspective * pt.z
         };
     }
 
@@ -38,21 +35,21 @@ class Polygon {
     }
 
     render() {
-        R.save();
-        R.globalAlpha = this.alpha;
-        R.fillStyle = this.color;
-        R.strokeStyle = GRID_COLOR;
-        R.lineWidth = 2;
-        R.lineJoin = 'round';
-        R.beginPath();
-        this.pts.map(p => this.pointCoords(p)).forEach((p, i) => {
-            if (!i) R.moveTo(p.x, p.y);
-            else R.lineTo(p.x, p.y);
+        wrap(() => {
+            R.globalAlpha = this.alpha;
+            R.fillStyle = this.color;
+            R.strokeStyle = GRID_COLOR;
+            R.lineWidth = 2;
+            R.lineJoin = 'round';
+            beginPath();
+            this.pts.map(p => this.pointCoords(p)).forEach((p, i) => {
+                if (!i) moveTo(p.x, p.y);
+                else lineTo(p.x, p.y);
+            });
+            closePath();
+            fill();
+            stroke();
         });
-        R.closePath();
-        R.fill();
-        R.stroke();
-        R.restore();
     }
 
 }

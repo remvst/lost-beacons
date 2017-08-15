@@ -55,7 +55,6 @@ class Game {
                 let target = unit.behavior.reservedPosition();
                 W.add(circle = {
                     'render': () => {
-                        R.save();
                         R.translate(target.x, target.y);
                         R.scale(circle.a, circle.a);
                         R.globalAlpha = circle.a;
@@ -64,7 +63,6 @@ class Game {
                         R.beginPath();
                         R.arc(0, 0, 5, 0, Math.PI * 2, true);
                         R.stroke();
-                        R.restore(this.a);
                     }
                 }, RENDERABLE);
 
