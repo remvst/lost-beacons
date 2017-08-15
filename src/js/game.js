@@ -13,6 +13,7 @@ class Game {
         // Initialize cursors
         G.cursor = G.defaultCursor = new Cursor();
         G.attackCursor = new AttackCursor();
+        G.reachCursor = new ReachCursor();
 
         // Add a proxy object that will call render on the current cursor
         W.add({
@@ -93,7 +94,10 @@ class Game {
 
         if (unit && unit.team === ENEMY_TEAM) {
             G.cursor = G.attackCursor;
-            G.cursor.follow(unit);
+            G.cursor.track(unit);
+        } else if (G.selectedUnits.length && !W.hasObstacle(p.x, p.y)) {
+            G.cursor = G.reachCursor;
+            G.cursor.track(p);
         } else {
             G.cursor = G.defaultCursor;
         }

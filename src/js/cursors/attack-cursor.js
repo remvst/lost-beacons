@@ -33,26 +33,10 @@ class AttackCursor extends Cursor {
             }
         });
 
-        const a = -PI / 3;
-        const r1 = 30;
-        const r2 = 60;
-        const r3 = 30;
-
-        R.lineWidth = 2;
-        beginPath();
-        moveTo(cos(a) * r1, sin(a) * r1);
-        lineTo(cos(a) * r2, sin(a) * r2);
-        lineTo(cos(a) * r2 + r3, sin(a) * r2);
-        stroke();
-
-        R.font = 'bold 10pt Courier New';
-        R.textBaseline = 'middle';
-        R.shadowColor = '#000';
-        R.shadowOffsetY = 1;
-        fillText('ATTACK()', cos(a) * r2 + r3 + 10, sin(a) * r2);
+        this.renderLabel(nomangle('ATTACK()'));
     }
 
-    follow(target) {
+    track(target) {
         this.x = target.x;
         this.y = target.y;
     }

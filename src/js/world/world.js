@@ -118,6 +118,10 @@ class World {
     }
 
     hasObstacle(x, y, radius = 0) {
+        if (!radius) {
+            return W.pointInObstacle({'x': x, 'y': y});
+        }
+
         return [
             {'x': x - radius, 'y': y - radius},
             {'x': x - radius, 'y': y + radius},
