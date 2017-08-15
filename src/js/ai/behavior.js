@@ -9,7 +9,7 @@ class Behavior {
         this.nextReconsideration -= e;
         if (
             this.nextReconsideration < 0 &&
-            this.unit.behavior === this.behavior // useful when used as a subBehavior
+            this.unit.behavior === this // useful when used as a subBehavior
         ) {
             this.unit.setBehavior(this.reconsider());
         }

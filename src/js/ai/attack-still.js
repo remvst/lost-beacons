@@ -11,7 +11,7 @@ class AttackStill extends Behavior {
         this.unit.angle = angleBetween(this.unit, this.target);
 
         // Shoot
-        if ((this.nextShot -= e) <= 0) {
+        if ((this.nextShot -= e) <= 0 && !this.target.dead) {
             const d = dist(this.unit, this.target);
             const impact = W.castRay(this.unit, angleBetween(this.unit, this.target), d);
 
@@ -41,7 +41,6 @@ class AttackStill extends Behavior {
     reconsider() {
         if (!this.target.dead && !W.hasObstacleBetween(this.unit, this.target)) {
             // Target is still visible, keep attacking it
-            // TODO also check that target is alive
             return this;
         }
 

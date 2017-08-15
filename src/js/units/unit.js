@@ -34,6 +34,10 @@ class Unit {
     }
 
     cycle(e) {
+        if (this.dead) {
+            W.remove(this);
+        }
+
         this.moving = false;
         this.behavior.cycle(e);
     }
