@@ -21,6 +21,9 @@
     "src/js/ai/chase.js",
     "src/js/ai/reach.js",
 
+    "src/js/cursors/cursor.js",
+    "src/js/cursors/attack-cursor.js",
+
     "src/js/world/world.js",
     "src/js/world/camera.js",
     "src/js/world/polygon.js",

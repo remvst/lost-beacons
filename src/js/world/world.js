@@ -37,7 +37,7 @@ class World {
         for (let i = 0 ; i < 5 ; i++) {
             let unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
-            unit.y = GRID_SIZE * 6.5;
+            unit.y = GRID_SIZE * 10.5;
             unit.team = ENEMY_TEAM;
             this.add(unit, CYCLABLE | RENDERABLE);
 
