@@ -33,6 +33,8 @@ class Reach extends Behavior {
     }
 
     cycle(e) {
+        super.cycle(e);
+
         const nextPosition = this.path[0];
         if (nextPosition) {
             const distance = dist(this.unit, nextPosition);
@@ -57,6 +59,10 @@ class Reach extends Behavior {
     }
 
     render() {
+        if (DEBUG) {
+            super.render();
+        }
+
         R.globalAlpha = 0.1;
         beginPath();
         R.strokeStyle = this.unit.team.body;

@@ -11,11 +11,15 @@ class AttackStill extends Behavior {
         this.unit.angle = angleBetween(this.unit, this.target);
 
         // Shoot
-        if ((this.nextShot -= e) <= 0 && !this.target.dead) {
+        if (
+            (this.nextShot -= e) <= 0 &&
+            !this.target.dead &&
+            dist(this.unit, this.target) < UNIT_ATTACK_RADIUS &&
+            !W.hasObstacleBetween(this.unit, this.target)
+        ) {
             this.nextShot = 1;
 
-            const d = dist(this.unit, this.target);
-            const impact = W.castRay(this.unit, angleBetween(this.unit, this.target), d);
+            const impact = {'x': this.target.x, 'y': this.target.y};
 
             let view = {
                 'alpha': 1,
@@ -33,15 +37,16 @@ class AttackStill extends Behavior {
 
             interp(view, 'alpha', 0.5, 0, 0.1, 0, null, () => W.remove(view));
 
-            // The impact was on the target, it's a hit!
-            if (dist(this.unit, impact) >= d) {
-                this.target.hurt(SHOT_DAMAGE);
-            }
+            this.target.hurt(SHOT_DAMAGE);
         }
     }
 
     reconsider() {
-        if (!this.target.dead && !W.hasObstacleBetween(this.unit, this.target)) {
+        if (
+            !this.target.dead &&
+            dist(this.unit, this.target) < UNIT_ATTACK_RADIUS &&
+            !W.hasObstacleBetween(this.unit, this.target)
+        ) {
             // Target is still visible, keep attacking it
             return this;
         }
