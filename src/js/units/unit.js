@@ -11,7 +11,18 @@ class Unit {
         this.angle = 0;
         this.moving = false;
 
+        this.health = 1;
+        this.hurtFactor = 1;
+
         this.setBehavior(new Idle());
+    }
+
+    get dead() {
+        return this.health <= 0;
+    }
+
+    hurt(amount) {
+        this.health -= amount * this.hurtFactor;
     }
 
     closestVisibleTarget() {
@@ -87,6 +98,15 @@ class Unit {
         fillRect(pxSize, pxSize, pxSize * 2, pxSize * 3);
 
         restore();
+    }
+
+    postRender() {
+        // Second render pass, add health gauge
+        R.fillStyle = '#000';
+        fillRect(this.x - evaluate(HEALTH_GAUGE_WIDTH / 2) - 1, this.y - evaluate(HEALTH_GAUGE_RADIUS) - 1, evaluate(HEALTH_GAUGE_WIDTH + 2), evaluate(HEALTH_GAUGE_HEIGHT + 2));
+
+        R.fillStyle = this.health > 0.3 ? '#0f0' : '#f00';
+        fillRect(this.x - evaluate(HEALTH_GAUGE_WIDTH / 2), this.y - HEALTH_GAUGE_RADIUS, HEALTH_GAUGE_WIDTH * this.health, HEALTH_GAUGE_HEIGHT);
     }
 
     goto(pt) {

@@ -80,6 +80,8 @@ class World {
             R.strokeRect(G.selection.x, G.selection.y, G.selection.width, G.selection.height);
         }
 
+        W.renderables.forEach(e => e.postRender && e.postRender());
+
         R.restore();
     }
 
