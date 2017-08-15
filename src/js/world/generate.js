@@ -33,16 +33,16 @@ function generate() {
         if (n > 0 && !isNaN(map[row] && map[row][col])) {
             map[row][col] = 1;
 
-            if (Math.random() < 0.5) {
-                expand(row + (Math.random() < 0.5 ? 1 : -1), col, n - 1);
+            if (random() < 0.5) {
+                expand(row + (random() < 0.5 ? 1 : -1), col, n - 1);
             } else {
-                expand(row, col + (Math.random() < 0.5 ? 1 : -1), n - 1);
+                expand(row, col + (random() < 0.5 ? 1 : -1), n - 1);
             }
         }
     }
 
     for (let i = 0 ; i < OBSTACLES ; i++) {
-        expand(~~(Math.random() * map.length), ~~(Math.random() * map[0].length), OBSTACLE_EXPAND_ITERATIONS);
+        expand(~~(random() * map.length), ~~(random() * map[0].length), OBSTACLE_EXPAND_ITERATIONS);
     }
 
     return coat(coat(map, 3, 0), 3, 1);

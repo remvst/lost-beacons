@@ -67,8 +67,8 @@ class World {
 
             // Polygons (obstacles)
             W.polygons.filter(function(p) {
-                if (Math.abs(p.center.x - V.center.x) > CANVAS_WIDTH / 2 + GRID_SIZE / 2 ||
-                    Math.abs(p.center.y - V.center.y) > CANVAS_HEIGHT / 2 + GRID_SIZE / 2) {
+                if (abs(p.center.x - V.center.x) > CANVAS_WIDTH / 2 + GRID_SIZE / 2 ||
+                    abs(p.center.y - V.center.y) > CANVAS_HEIGHT / 2 + GRID_SIZE / 2) {
                     return false;
                 }
                 return p.renderCondition(V.center);
@@ -289,32 +289,32 @@ class World {
 
         return maxDistance && (!cast || dist(start, cast)) > maxDistance
             ? {
-                'x': start.x + Math.cos(angle) * maxDistance,
-                'y': start.y + Math.sin(angle) * maxDistance
+                'x': start.x + cos(angle) * maxDistance,
+                'y': start.y + sin(angle) * maxDistance
             }
             : cast;
     }
 
     castAgainstHorizontal(startX, startY, angle) {
-        const pointingDown = Math.sin(angle) > 0;
+        const pointingDown = sin(angle) > 0;
 
         const y = ~~(startY / GRID_SIZE) * GRID_SIZE + (pointingDown ? GRID_SIZE : -0.0001);
-        const x = startX + (y - startY) / Math.tan(angle);
+        const x = startX + (y - startY) / tan(angle);
 
         const yStep = pointingDown ? GRID_SIZE : -GRID_SIZE;
-        const xStep = yStep / Math.tan(angle);
+        const xStep = yStep / tan(angle);
 
         return W.doCast(x, y, xStep, yStep);
     }
 
     castAgainstVertical(startX, startY, angle) {
-        const pointingRight = Math.cos(angle) > 0;
+        const pointingRight = cos(angle) > 0;
 
         const x = ~~(startX / GRID_SIZE) * GRID_SIZE + (pointingRight ? GRID_SIZE : -0.0001);
-        const y = startY + (x - startX) * Math.tan(angle);
+        const y = startY + (x - startX) * tan(angle);
 
         const xStep = pointingRight ? GRID_SIZE : -GRID_SIZE;
-        const yStep = xStep * Math.tan(angle);
+        const yStep = xStep * tan(angle);
 
         return W.doCast(x, y, xStep, yStep);
     }
@@ -344,15 +344,15 @@ class World {
             return [position];
         }
 
-        const perimeter = 2 * Math.PI * radius;
+        const perimeter = 2 * PI * radius;
         const divisions = ~~(perimeter / minDistance);
 
         const positions = [];
         for (let i = 0 ; i < divisions ; i++) {
-            const angle = (i / divisions) * 2 * Math.PI;
+            const angle = (i / divisions) * 2 * PI;
             positions.push({
-                'x': position.x + Math.cos(angle) * radius,
-                'y': position.y + Math.sin(angle) * radius
+                'x': position.x + cos(angle) * radius,
+                'y': position.y + sin(angle) * radius
             });
         }
 
@@ -394,8 +394,8 @@ class World {
         }
 
         this.polygons.forEach(polygon => {
-            interp(polygon, 'perspective', polygon.perspective * 10, polygon.perspective, Math.random() * 0.5 + 0.5, 0);
-            interp(polygon, 'alpha', 0, 1, Math.random() * 0.5 + 0.5, 0);
+            interp(polygon, 'perspective', polygon.perspective * 10, polygon.perspective, random() * 0.5 + 0.5, 0);
+            interp(polygon, 'alpha', 0, 1, random() * 0.5 + 0.5, 0);
         });
     }
 

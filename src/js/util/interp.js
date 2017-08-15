@@ -18,7 +18,7 @@ function interp(o, p, a, b, d, l, f, e) {
                 i.l -= e;
                 i.o[i.p] = i.a;
             } else {
-                i.t = Math.min(i.d, i.t + e);
+                i.t = min(i.d, i.t + e);
                 i.o[i.p] = i.f(i.t, i.a, i.b - i.a, i.d);
                 if(i.t == i.d){
                     if(i.e){

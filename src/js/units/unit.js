@@ -73,15 +73,15 @@ class Unit {
         translate(this.x, this.y);
         rotate(this.angle);
 
-        const sin = this.moving ? Math.sin(G.t * Math.PI * 4) : 0;
-        const offset = sin * (UNIT_PX_SIZE / 2);
+        const sinusoidal = this.moving ? sin(G.t * PI * 4) : 0;
+        const offset = sinusoidal * (UNIT_PX_SIZE / 2);
 
         translate(-UNIT_PX_SIZE * 1.5, -UNIT_PX_SIZE * 2.5);
 
         // Legs
         wrap(() => {
             translate(UNIT_PX_SIZE, 0);
-            scale(sin, 1);
+            scale(sinusoidal, 1);
             R.fillStyle = this.team.leg;
             fillRect(0, UNIT_PX_SIZE, UNIT_PX_SIZE * 3, UNIT_PX_SIZE); // left
             fillRect(0, UNIT_PX_SIZE * 3, -UNIT_PX_SIZE * 3, UNIT_PX_SIZE); // right
@@ -142,15 +142,15 @@ class Unit {
             R.fillStyle = '#fff';
 
             const corner = a => () => {
-                translate(Math.cos(a) * SELECTED_EFFECT_RADIUS, Math.sin(a) * SELECTED_EFFECT_RADIUS);
-                rotate(a + Math.PI * 3 / 4);
+                translate(cos(a) * SELECTED_EFFECT_RADIUS, sin(a) * SELECTED_EFFECT_RADIUS);
+                rotate(a + PI * 3 / 4);
                 fillRect(0, 0, 1, SELECTED_EFFECT_SIZE);
                 fillRect(0, 0, SELECTED_EFFECT_SIZE, 1);
             };
 
             let i = 4;
             while (--i) {
-                wrap(corner((i / 4) * Math.PI * 2 + Math.PI / 4));
+                wrap(corner((i / 4) * PI * 2 + PI / 4));
             }
         }
     }
@@ -170,7 +170,7 @@ class Unit {
                 return; // too far, no need to cast a ray
             }
 
-            const angle = Math.atan2(pt.y - position.y, pt.x - position.x);
+            const angle = atan2(pt.y - position.y, pt.x - position.x);
             const cast = W.castRay(position, angle, GRID_SIZE * 4);
 
             return dist(cast, position) > dist(pt, position);

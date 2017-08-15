@@ -18,6 +18,9 @@ onload = () => {
         }
     });
 
+    const m = Math;
+    Object.getOwnPropertyNames(m).forEach(n => w[n] = m[n]);
+
     onresize();
 
     new Game();

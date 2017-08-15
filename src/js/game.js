@@ -45,7 +45,7 @@ class Game {
     }
 
     select(s) {
-        if (Math.abs(s.width || 0) < 5 && Math.abs(s.height || 0) < 5) {
+        if (abs(s.width || 0) < 5 && abs(s.height || 0) < 5) {
 
             G.selectedUnits.filter(unit => !unit.dead).forEach(unit => {
                 unit.goto(s);
@@ -61,7 +61,7 @@ class Game {
                         R.strokeStyle = '#0f0';
                         R.lineWidth = 1;
                         R.beginPath();
-                        R.arc(0, 0, 5, 0, Math.PI * 2, true);
+                        R.arc(0, 0, 5, 0, PI * 2, true);
                         R.stroke();
                     }
                 }, RENDERABLE);
@@ -95,7 +95,7 @@ class Game {
                     R.strokeStyle = unit.team.body;
                     R.lineWidth = 10;
                     beginPath();
-                    arc(unit.x, unit.y, G.cursorRenderable.scale * UNIT_ATTACK_RADIUS, 0, Math.PI * 2, true);
+                    arc(unit.x, unit.y, G.cursorRenderable.scale * UNIT_ATTACK_RADIUS, 0, PI * 2, true);
                     fill();
                     // stroke();
                     R.globalAlpha = 1;

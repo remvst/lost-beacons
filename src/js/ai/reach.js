@@ -17,8 +17,8 @@ class Reach extends Behavior {
                     .map(c => c.behavior.reservedPosition()),
                 UNIT_RADIUS
             ).sort((a, b) => {
-                const visibleFromA = W.castRay(a, Math.atan2(this.target.y - a.y, this.target.x - a.x), GRID_SIZE * 10) >= dist(a, this.target);
-                const visibleFromB = W.castRay(a, Math.atan2(this.target.y - b.y, this.target.x - b.x), GRID_SIZE * 10) >= dist(b, this.target);
+                const visibleFromA = W.castRay(a, atan2(this.target.y - a.y, this.target.x - a.x), GRID_SIZE * 10) >= dist(a, this.target);
+                const visibleFromB = W.castRay(a, atan2(this.target.y - b.y, this.target.x - b.x), GRID_SIZE * 10) >= dist(b, this.target);
 
                 if (visibleFromA != visibleFromB) {
                     return visibleFromA ? -1 : 1;
@@ -44,12 +44,12 @@ class Reach extends Behavior {
             this.unit.moving = true;
 
             if (distance > 0) {
-                this.unit.angle = Math.atan2(nextPosition.y - this.unit.y, nextPosition.x - this.unit.x);
+                this.unit.angle = atan2(nextPosition.y - this.unit.y, nextPosition.x - this.unit.x);
 
-                const appliedDistance = Math.min(distance, UNIT_SPEED * e);
+                const appliedDistance = min(distance, UNIT_SPEED * e);
 
-                this.unit.x += appliedDistance * Math.cos(this.unit.angle);
-                this.unit.y += appliedDistance * Math.sin(this.unit.angle);
+                this.unit.x += appliedDistance * cos(this.unit.angle);
+                this.unit.y += appliedDistance * sin(this.unit.angle);
             } else {
                 this.path.shift();
             }

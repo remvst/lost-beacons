@@ -25,13 +25,13 @@ class Camera {
         }
 
         if (p.x || p.y) {
-            const angle = Math.atan2(p.y, p.x);
-            this.x += Math.cos(angle) * CAMERA_SPEED * e;
-            this.y += Math.sin(angle) * CAMERA_SPEED * e;
+            const angle = atan2(p.y, p.x);
+            this.x += cos(angle) * CAMERA_SPEED * e;
+            this.y += sin(angle) * CAMERA_SPEED * e;
         }
 
-        this.x = Math.max(0, Math.min(this.x, W.width - CANVAS_WIDTH));
-        this.y = Math.max(0, Math.min(this.y, W.height - CANVAS_HEIGHT));
+        this.x = max(0, min(this.x, W.width - CANVAS_WIDTH));
+        this.y = max(0, min(this.y, W.height - CANVAS_HEIGHT));
     }
 
     get center() {

@@ -1,3 +1,3 @@
 function pick(choices) {
-    return choices[~~(Math.random() * choices.length)];
+    return choices[~~(random() * choices.length)];
 }
