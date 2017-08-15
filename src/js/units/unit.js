@@ -178,7 +178,7 @@ class Unit {
     }
 
     isSelected() {
-        return G.selectedUnits.indexOf(this) >= 0;
+        return G.selectionCursor.units.indexOf(this) >= 0;
     }
 
 }

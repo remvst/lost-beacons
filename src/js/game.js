@@ -11,7 +11,7 @@ class Game {
         G.selectedUnits = [];
 
         // Initialize cursors
-        G.cursor = G.defaultCursor = new Cursor();
+        G.cursor = G.selectionCursor = new SelectionCursor();
         G.attackCursor = new AttackCursor();
         G.reachCursor = new ReachCursor();
 
@@ -47,93 +47,40 @@ class Game {
         W.cyclables.forEach(x => x.cycle(e));
         V.cycle(e);
 
+        G.updateCursor();
+
         // Render things
         W.render();
     }
 
-    select(s) {
-        if (abs(s.width || 0) < 5 && abs(s.height || 0) < 5) {
+    updateCursor() {
+        const p = {
+            'x': MOUSE_POSITION.x + V.x,
+            'y': MOUSE_POSITION.y + V.y
+        };
 
-            G.selectedUnits.filter(unit => !unit.dead).forEach(unit => {
-                unit.goto(s);
-
-                // Quick effect to show where we're going
-                let circle;
-                let target = unit.behavior.reservedPosition();
-                W.add(circle = {
-                    'render': () => {
-                        R.translate(target.x, target.y);
-                        R.scale(circle.a, circle.a);
-                        R.globalAlpha = circle.a;
-                        R.strokeStyle = '#0f0';
-                        R.lineWidth = 1;
-                        R.beginPath();
-                        R.arc(0, 0, 5, 0, PI * 2, true);
-                        R.stroke();
-                    }
-                }, RENDERABLE);
-
-                interp(circle, 'a', 1, 0, 0.3, 0, 0, () => W.remove(circle));
-            });
-            return;
-        }
-
-        G.selectedUnits = W.cyclables.filter(e => {
-            return e.team === PLAYER_TEAM &&
-                isBetween(s.x, e.x, s.x + s.width) &&
-                isBetween(s.y, e.y, s.y + s.height);
-        });
-    }
-
-    mouseOver(p) {
         // Reset cursor
         const unit = W.cyclables.filter(e => {
             return e.team &&
                 dist(p, e) < UNIT_RADIUS;
         }).sort((a, b) => dist(p, a) - dist(p, b))[0];
 
-        if (unit && unit.team === ENEMY_TEAM) {
-            G.cursor = G.attackCursor;
-            G.cursor.track(unit);
-        } else if (G.selectedUnits.length && !W.hasObstacle(p.x, p.y)) {
-            G.cursor = G.reachCursor;
-            G.cursor.track(p);
+        let newCursor;
+
+        if (G.cursor === G.selectionCursor && G.selectionCursor.downPosition) {
+            newCursor = G.selectionCursor;
+        } else if (unit && unit.team === ENEMY_TEAM) {
+            newCursor = G.attackCursor;
+            newCursor.track(unit);
+        } else if (G.selectionCursor.units.length && !W.hasObstacle(p.x, p.y)) {
+            newCursor = G.reachCursor;
+            newCursor.track(p);
         } else {
-            G.cursor = G.defaultCursor;
+            newCursor = G.selectionCursor;
         }
 
-        // G.cursor.x = p.x;
-        // G.cursor.y = p.y;
-
-        return;
-
-        // const unit = W.cyclables.filter(e => {
-        //     return e.team &&
-        //         dist(p, e) < UNIT_RADIUS;
-        // }).sort((a, b) => dist(p, a) - dist(p, b))[0];
-        //
-        // if (unit) {
-        //     if (unit != G.cursorRenderable.unit) {
-        //         G.cursorRenderable.scale = 0;
-        //         G.cursorRenderable.render = () => {
-        //             R.globalAlpha = 0.1;
-        //             R.fillStyle = unit.team.body;
-        //             R.strokeStyle = unit.team.body;
-        //             R.lineWidth = 10;
-        //             beginPath();
-        //             arc(unit.x, unit.y, G.cursorRenderable.scale * UNIT_ATTACK_RADIUS, 0, PI * 2, true);
-        //             fill();
-        //             // stroke();
-        //             R.globalAlpha = 1;
-        //         };
-        //
-        //         interp(G.cursorRenderable, 'scale', 0, 1, 0.2);
-        //     }
-        // } else if (!unit) {
-        //     G.cursorRenderable.render = () => 0;
-        // }
-        //
-        // G.cursorRenderable.unit = unit;
+        G.cursor = newCursor;
+        G.cursor.move(p);
     }
 
 }

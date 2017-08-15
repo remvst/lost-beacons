@@ -18,6 +18,26 @@ class Cursor {
         // implement in subclasses
     }
 
+    down(p) {
+        this.downPosition = p;
+    }
+
+    move(p) {
+        this.currentPosition = p;
+
+        if (this.downPosition && dist(this.downPosition, this.currentPosition) > SELECTION_MIN_SIZE) {
+            G.cursor = G.selectionCursor;
+            G.cursor.down(this.downPosition);
+            G.cursor.move(this.currentPosition);
+
+            this.downPosition = null;
+        }
+    }
+
+    up() {
+        this.downPosition = null;
+    }
+
     renderLabel(s) {
         function sign(x) {
             return x > 0 ? 1 : x < 0 ? - 1 : 0;
