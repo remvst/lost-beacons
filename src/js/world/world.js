@@ -55,10 +55,10 @@ class World {
 
             // Grid on the floor
             R.fillStyle = GRID_COLOR;
-            for (let x = round(V.x, GRID_SIZE) ; x < V.x + CANVAS_WIDTH ; x += GRID_SIZE) {
+            for (let x = roundP(V.x, GRID_SIZE) ; x < V.x + CANVAS_WIDTH ; x += GRID_SIZE) {
                 fillRect(x, V.y, 1, CANVAS_HEIGHT);
             }
-            for (let y = round(V.y, GRID_SIZE) ; y < V.y + CANVAS_HEIGHT ; y += GRID_SIZE) {
+            for (let y = roundP(V.y, GRID_SIZE) ; y < V.y + CANVAS_HEIGHT ; y += GRID_SIZE) {
                 fillRect(V.x, y, CANVAS_WIDTH, 1);
             }
 
