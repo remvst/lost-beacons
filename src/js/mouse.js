@@ -19,6 +19,8 @@ onmousemove = e => {
     if (G.selection) {
         G.selection.width = c.x - G.selection.x;
         G.selection.height = c.y - G.selection.y;
+    } else {
+        G.mouseOver(c);
     }
 };
 

@@ -10,6 +10,10 @@ class Game {
 
         G.selectedUnits = [];
 
+        W.add(G.cursorRenderable = {
+            'render': () => 0
+        }, RENDERABLE);
+
         // Start cycle()
         let lf = Date.now();
         let frame = () => {
@@ -74,6 +78,38 @@ class Game {
                 isBetween(s.x, e.x, s.x + s.width) &&
                 isBetween(s.y, e.y, s.y + s.height);
         });
+    }
+
+    mouseOver(p) {
+        // Reset cursor
+
+        const unit = W.cyclables.filter(e => {
+            return e.team &&
+                dist(p, e) < UNIT_RADIUS;
+        }).sort((a, b) => dist(p, a) - dist(p, b))[0];
+
+        if (unit) {
+            if (unit != G.cursorRenderable.unit) {
+                G.cursorRenderable.scale = 0;
+                G.cursorRenderable.render = () => {
+                    R.globalAlpha = 0.1;
+                    R.fillStyle = unit.team.body;
+                    R.strokeStyle = unit.team.body;
+                    R.lineWidth = 10;
+                    beginPath();
+                    arc(unit.x, unit.y, G.cursorRenderable.scale * UNIT_ATTACK_RADIUS, 0, Math.PI * 2, true);
+                    fill();
+                    // stroke();
+                    R.globalAlpha = 1;
+                };
+
+                interp(G.cursorRenderable, 'scale', 0, 1, 0.2);
+            }
+        } else if (!unit) {
+            G.cursorRenderable.render = () => 0;
+        }
+
+        G.cursorRenderable.unit = unit;
     }
 
 }
