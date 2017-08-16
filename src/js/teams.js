@@ -9,3 +9,6 @@ const ENEMY_TEAM = {
     'body': '#ef0404',
     'leg': '#5d0505'
 };
+
+PLAYER_TEAM.enemy = ENEMY_TEAM;
+ENEMY_TEAM.enemy = PLAYER_TEAM;

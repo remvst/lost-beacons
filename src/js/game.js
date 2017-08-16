@@ -67,7 +67,7 @@ class Game {
 
         let newCursor;
 
-        if (G.cursor === G.selectionCursor && G.selectionCursor.downPosition) {
+        if (G.cursor === G.selectionCursor && G.selectionCursor.downPosition || !G.selectionCursor.units.length) {
             newCursor = G.selectionCursor;
         } else if (unit && unit.team === ENEMY_TEAM) {
             newCursor = G.attackCursor;

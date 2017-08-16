@@ -27,22 +27,24 @@ class World {
             return !W.polygons.filter(b => a !== b && a.isSame(b)).length;
         });
 
-        for (let i = 0 ; i < 15 ; i++) {
+        for (let i = 0 ; i < 10 ; i++) {
             let unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 4.5;
             this.add(unit, CYCLABLE | RENDERABLE);
+
+            // unit.setBehavior(new Autonomous());s
         }
 
-        for (let i = 0 ; i < 5 ; i++) {
+        for (let i = 0 ; i < 2 ; i++) {
             let unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
-            unit.y = GRID_SIZE * 10.5;
+            unit.y = GRID_SIZE * 20.5;
             unit.team = ENEMY_TEAM;
             this.add(unit, CYCLABLE | RENDERABLE);
 
             // unit.setBehavior(new AttackFollow(W.cyclables[0]));
-            unit.setBehavior(new Autonomous(W.cyclables[0]));
+            unit.setBehavior(new Autonomous());
         }
     }
 
@@ -394,13 +396,6 @@ class World {
             interp(polygon, 'perspective', polygon.perspective * 10, polygon.perspective, random() * 0.5 + 0.5, 0);
             interp(polygon, 'alpha', 0, 1, random() * 0.5 + 0.5, 0);
         });
-    }
-
-    healthInArea(point, team, radius) {
-        return this.cyclables
-            .filter(c => c.team && c.team == team)
-            .filter(unit => dist(unit, point) < radius)
-            .reduce((health, unit) => health + unit.health, 0);
     }
 
 }

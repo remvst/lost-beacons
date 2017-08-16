@@ -2,7 +2,7 @@ class SelectionCursor extends Cursor {
 
     constructor() {
         super();
-        this.units = [];
+        this.selection = [];
     }
 
     postRender() {
@@ -29,7 +29,7 @@ class SelectionCursor extends Cursor {
         this.currentPosition = p;
 
         if (this.downPosition) {
-            this.units = W.cyclables.filter(e => {
+            this.selection = W.cyclables.filter(e => {
                 return e.team === PLAYER_TEAM &&
                     isBetween(this.downPosition.x, e.x, this.currentPosition.x) &&
                     isBetween(this.downPosition.y, e.y, this.currentPosition.y);
@@ -38,13 +38,17 @@ class SelectionCursor extends Cursor {
     }
 
     up() {
-        this.units = W.cyclables.filter(e => {
+        this.selection = W.cyclables.filter(e => {
             return e.team === PLAYER_TEAM &&
                 isBetween(this.downPosition.x, e.x, this.currentPosition.x) &&
                 isBetween(this.downPosition.y, e.y, this.currentPosition.y);
         });
 
         super.up();
+    }
+
+    get units() {
+        return this.selection.filter(unit => !unit.dead);
     }
 
 }
