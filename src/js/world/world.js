@@ -36,7 +36,7 @@ class World {
             // unit.setBehavior(new Autonomous());s
         }
 
-        for (let i = 0 ; i < 2 ; i++) {
+        for (let i = 0 ; i < 10 ; i++) {
             let unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 20.5;
