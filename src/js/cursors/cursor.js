@@ -23,12 +23,13 @@ class Cursor {
     }
 
     move(p) {
-        this.currentPosition = p;
+        this.x = p.x;
+        this.y = p.y;
 
-        if (this.downPosition && dist(this.downPosition, this.currentPosition) > SELECTION_MIN_SIZE) {
+        if (this.downPosition && dist(this.downPosition, this) > SELECTION_MIN_SIZE) {
             G.cursor = G.selectionCursor;
             G.cursor.down(this.downPosition);
-            G.cursor.move(this.currentPosition);
+            G.cursor.move(this);
 
             this.downPosition = null;
         }

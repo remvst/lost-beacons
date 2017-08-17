@@ -7,7 +7,7 @@ class AttackCursor extends Cursor {
     postRender() {
         const s = 1 - (G.t % ATTACK_CURSOR_PERIOD) / ATTACK_CURSOR_PERIOD;
 
-        translate(this.x, this.y);
+        translate(this.target.x, this.target.y);
 
         const corner = a => () => {
             translate(cos(a) * ATTACK_CURSOR_RADIUS, sin(a) * ATTACK_CURSOR_RADIUS);

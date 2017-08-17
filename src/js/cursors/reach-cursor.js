@@ -7,7 +7,7 @@ class ReachCursor extends Cursor {
     postRender() {
         const s = (G.t % REACH_CURSOR_PERIOD) / REACH_CURSOR_PERIOD;
 
-        translate(this.currentPosition.x, this.currentPosition.y);
+        translate(this.x, this.y);
 
         const cursorScale = min(1, max(0, (G.t - this.timeOnPosition - 0.1) * 10));
         scale(cursorScale, cursorScale);
@@ -23,7 +23,7 @@ class ReachCursor extends Cursor {
     }
 
     move(p) {
-        if (!this.currentPosition || p.x != this.currentPosition.x || p.y != this.currentPosition.y) {
+        if (!this || p.x != this.x || p.y != this.y) {
             this.timeOnPosition = G.t;
         }
 
@@ -34,7 +34,7 @@ class ReachCursor extends Cursor {
         super.up();
 
         G.selectionCursor.units.forEach(unit => {
-            unit.goto(this.currentPosition);
+            unit.goto(this);
 
             // Quick effect to show where we're going
             let circle;
