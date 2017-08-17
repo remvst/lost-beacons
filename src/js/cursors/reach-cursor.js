@@ -7,7 +7,10 @@ class ReachCursor extends Cursor {
     postRender() {
         const s = (G.t % REACH_CURSOR_PERIOD) / REACH_CURSOR_PERIOD;
 
-        translate(this.x, this.y);
+        translate(this.currentPosition.x, this.currentPosition.y);
+
+        const cursorScale = min(1, max(0, (G.t - this.timeOnPosition - 0.1) * 10));
+        scale(cursorScale, cursorScale);
 
         this.renderLabel(nomangle('REACH()'));
 
@@ -19,9 +22,12 @@ class ReachCursor extends Cursor {
         fill();
     }
 
-    track(target) {
-        this.x = target.x;
-        this.y = target.y;
+    move(p) {
+        if (!this.currentPosition || p.x != this.currentPosition.x || p.y != this.currentPosition.y) {
+            this.timeOnPosition = G.t;
+        }
+
+        super.move(p);
     }
 
     up() {
@@ -48,6 +54,12 @@ class ReachCursor extends Cursor {
 
             interp(circle, 'a', 1, 0, 0.3, 0, 0, () => W.remove(circle));
         });
+    }
+
+    cycle(e) {
+        this.timeOnPosition += e;
+        console.log(this.timeOnPosition);
+        super.cycle(e);
     }
 
 }
