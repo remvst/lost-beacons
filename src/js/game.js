@@ -8,8 +8,6 @@ class Game {
         new World();
         new Camera();
 
-        G.selectedUnits = [];
-
         // Initialize cursors
         G.cursor = G.selectionCursor = new SelectionCursor();
         G.attackCursor = new AttackCursor();
