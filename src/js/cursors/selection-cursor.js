@@ -6,7 +6,7 @@ class SelectionCursor extends Cursor {
     }
 
     postRender() {
-        if (this && this.downPosition && dist(this, this.downPosition)) {
+        if (this.downPosition && dist(this, this.downPosition)) {
             R.strokeStyle = '#0f0';
             R.fillStyle = 'rgba(0,255,0,0.1)';
             R.lineWidth = 1;
