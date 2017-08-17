@@ -64,8 +64,6 @@ class Autonomous extends Behavior {
             if (!this.currentDecision.done() && !this.currentDecision.bad()) {
                 return;
             }
-
-            console.log('decision was bad/done');
         }
 
         let decisions = [];
@@ -75,9 +73,7 @@ class Autonomous extends Behavior {
             const retreatBehavior = new Reach(retreatPosition);
             const retreatDecision = {
                 'label': 'retreat',
-                'start': () => {
-                    this.subBehavior = retreatBehavior;
-                },
+                'behavior': retreatBehavior,
                 'done': () => {
                     return dist(retreatBehavior.target, this.unit) <= UNIT_ATTACK_RADIUS && this.healthInArea(this.unit, this.unit.team.enemy, UNIT_ATTACK_RADIUS) == 0;
                 },
@@ -93,9 +89,7 @@ class Autonomous extends Behavior {
             const attackBehavior = new Chase(attackedUnit);
             const attackDecision = {
                 'label': 'attack',
-                'start': () => {
-                    this.subBehavior = attackBehavior;
-                },
+                'behavior': attackBehavior,
                 'done': () => {
                     return attackBehavior.target.dead;
                 },
@@ -111,9 +105,7 @@ class Autonomous extends Behavior {
             const regroupBehavior = new Chase(friend);
             const regroupDecision = {
                 'label': 'regroup',
-                'start': () => {
-                    this.subBehavior = regroupBehavior;
-                },
+                'behavior': regroupBehavior,
                 'done': () => {
                     return dist(friend, this.unit) < UNIT_ATTACK_RADIUS;
                 },
@@ -131,11 +123,8 @@ class Autonomous extends Behavior {
             return;
         }
 
-        console.log('good decisions', goodDecisions.map(d => d.label), 'decisions', decisions.map(d => d.label), 'picking', decision.label);
-        // console.log('decided to ' + decision.label);
-
         this.currentDecision = decision;
-        this.currentDecision.start();
+        this.subBehavior = this.currentDecision.behavior;
         this.subBehavior.attach(this.unit);
     }
 
