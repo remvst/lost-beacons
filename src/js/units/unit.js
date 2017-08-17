@@ -140,18 +140,7 @@ class Unit {
 
         if (this.isSelected()) {
             R.fillStyle = '#fff';
-
-            const corner = a => () => {
-                translate(cos(a) * SELECTED_EFFECT_RADIUS, sin(a) * SELECTED_EFFECT_RADIUS);
-                rotate(a + PI * 3 / 4);
-                fillRect(0, 0, 1, SELECTED_EFFECT_SIZE);
-                fillRect(0, 0, SELECTED_EFFECT_SIZE, 1);
-            };
-
-            let i = 4;
-            while (i--) {
-                wrap(corner((i / 4) * PI * 2 + PI / 4));
-            }
+            squareFocus(SELECTED_EFFECT_RADIUS, SELECTED_EFFECT_SIZE);
         }
     }
 

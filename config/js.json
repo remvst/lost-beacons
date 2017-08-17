@@ -12,6 +12,7 @@
     "src/js/util/angle-between.js",
 
     "src/js/graphics/particle.js",
+    "src/js/graphics/square-focus.js",
 
     "src/js/units/unit.js",
 

@@ -10,23 +10,12 @@ class ReachCursor extends Cursor {
         translate(this.x, this.y);
 
         R.fillStyle = this.color;
+        R.globalAlpha = 1 - s;
+        squareFocus(20, 4);
 
-        const corner = a => () => {
-            R.globalAlpha = 1 - s;
-            translate(cos(a) * 20, sin(a) * 20);
-            rotate(a + PI * 3 / 4);
-            fillRect(0, 0, 1, SELECTED_EFFECT_SIZE);
-            fillRect(0, 0, SELECTED_EFFECT_SIZE, 1);
-        };
-
-        let i = 4;
-        while (i--) {
-            wrap(corner((i / 4) * PI * 2 + PI / 4));
-        }
-
+        R.globalAlpha = 1;
         const cursorScale = min(1, max(0, (G.t - this.timeOnPosition - 0.5) * 10));
         scale(cursorScale, cursorScale);
-
         this.renderLabel(nomangle('REACH()'));
     }
 
