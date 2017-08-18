@@ -33,7 +33,7 @@ class World {
             unit.y = GRID_SIZE * 4.5;
             this.add(unit, CYCLABLE | RENDERABLE);
 
-            // unit.setBehavior(new Autonomous());s
+            // unit.setBehavior(new Autonomous());
         }
 
         for (let i = 0 ; i < 10 ; i++) {

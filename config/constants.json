@@ -3,8 +3,8 @@
     "false": 0,
     "const": "let",
 
-    "CANVAS_WIDTH": 800,
-    "CANVAS_HEIGHT": 800,
+    "CANVAS_WIDTH": 1000,
+    "CANVAS_HEIGHT": 1000,
 
     "GRID_ROWS": 50,
     "GRID_COLS": 50,
@@ -44,5 +44,7 @@
 
     "SELECTION_MIN_SIZE": 5,
 
-    "SHOT_DAMAGE": 0.1
+    "SHOT_DAMAGE": 0.1,
+
+    "MINIMAP_SCALE": 0.05
 }

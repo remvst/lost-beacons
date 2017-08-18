@@ -49,6 +49,71 @@ class Game {
 
         // Render things
         W.render();
+
+        G.minimap();
+    }
+
+    get minimapWidth() {
+        return MINIMAP_SCALE * W.width;
+    }
+
+    get minimapHeight() {
+        return MINIMAP_SCALE * W.height;
+    }
+
+    minimap() {
+        // console.log()
+
+        wrap(() => {
+            translate(CANVAS_WIDTH - W.width * MINIMAP_SCALE, CANVAS_HEIGHT - W.height * MINIMAP_SCALE);
+
+            R.globalAlpha = 0.5;
+            R.fillStyle = '#444';
+            R.strokeStyle = '#fff';
+            R.lineWidth = 2;
+            fillRect(0, 0, ~~(W.width * MINIMAP_SCALE), ~~(W.height * MINIMAP_SCALE));
+            strokeRect(0, 0, ~~(W.width * MINIMAP_SCALE), ~~(W.height * MINIMAP_SCALE));
+
+            R.fillStyle = '#fff';
+            R.globalAlpha = 1;
+            W.map.forEach((r, row) => {
+                r.forEach((x, col) => {
+                    if (x) {
+                        R.fillRect(
+                            round(row * GRID_SIZE * MINIMAP_SCALE),
+                            round(col * GRID_SIZE * MINIMAP_SCALE),
+                            round(MINIMAP_SCALE * GRID_SIZE),
+                            round(MINIMAP_SCALE * GRID_SIZE)
+                        );
+                    }
+                });
+            });
+
+            R.globalAlpha = 1;
+            W.cyclables
+                .filter(c => c.team)
+                .forEach(c => {
+                    R.fillStyle = c.team.body;
+                    R.fillRect(c.x * MINIMAP_SCALE - 2, c.y * MINIMAP_SCALE - 2, 5, 5);
+                });
+
+            R.lineWidth = 2;
+            R.fillStyle = '#fff';
+            R.strokeStyle = '#000';
+            R.globalAlpha = 0.2;
+            fillRect(
+                ~~(V.x * MINIMAP_SCALE),
+                ~~(V.y * MINIMAP_SCALE),
+                ~~(CANVAS_WIDTH * MINIMAP_SCALE),
+                ~~(CANVAS_HEIGHT * MINIMAP_SCALE)
+            );
+            strokeRect(
+                ~~(V.x * MINIMAP_SCALE),
+                ~~(V.y * MINIMAP_SCALE),
+                ~~(CANVAS_WIDTH * MINIMAP_SCALE),
+                ~~(CANVAS_HEIGHT * MINIMAP_SCALE)
+            );
+        });
     }
 
     updateCursor() {
