@@ -55,8 +55,8 @@ class Unit {
     }
 
     closestVisibleTarget() {
-        return pick(W.cyclables
-            .filter(c => c.team && c.team != this.team)
+        return pick(W.units
+            .filter(c => c.team != this.team)
             .filter(c => dist(c, this) < UNIT_ATTACK_RADIUS)
             .filter(c => !W.hasObstacleBetween(this, c))
             .sort((a, b) => dist(this, a) - dist(this, b)));

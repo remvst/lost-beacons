@@ -90,8 +90,7 @@ class Game {
             });
 
             R.globalAlpha = 1;
-            W.cyclables
-                .filter(c => c.team)
+            W.units
                 .forEach(c => {
                     R.fillStyle = c.team.body;
                     R.fillRect(c.x * MINIMAP_SCALE - 2, c.y * MINIMAP_SCALE - 2, 5, 5);

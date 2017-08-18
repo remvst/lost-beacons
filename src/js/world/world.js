@@ -8,6 +8,7 @@ class World {
         W = this;
 
         W.cyclables = [];
+        W.units = [];
         W.renderables = [];
 
         W.map = generate();
@@ -28,24 +29,29 @@ class World {
         });
 
         for (let i = 0 ; i < 10 ; i++) {
-            let unit = new Unit();
+            const unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 4.5;
-            this.add(unit, CYCLABLE | RENDERABLE);
+            this.add(unit, CYCLABLE | RENDERABLE | UNIT);
 
             // unit.setBehavior(new Autonomous());
         }
 
         for (let i = 0 ; i < 10 ; i++) {
-            let unit = new Unit();
+            const unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 20.5;
             unit.team = ENEMY_TEAM;
-            this.add(unit, CYCLABLE | RENDERABLE);
+            this.add(unit, CYCLABLE | RENDERABLE | UNIT);
 
             // unit.setBehavior(new AttackFollow(W.cyclables[0]));
             unit.setBehavior(new Autonomous());
         }
+
+        const beacon = new Beacon();
+        beacon.x = GRID_SIZE * 5;
+        beacon.y = GRID_SIZE * 6;
+        this.add(beacon, CYCLABLE | RENDERABLE);
     }
 
     render() {
@@ -101,11 +107,16 @@ class World {
         if (types & RENDERABLE) {
             W.renderables[method](element);
         }
+
+        if (types & UNIT) {
+            W.units[method](element);
+        }
     }
 
     remove(element) {
         W.cyclables.remove(element);
         W.renderables.remove(element);
+        W.units.remove(element);
     }
 
     isOut(x, y) {
@@ -382,7 +393,6 @@ class World {
         const d = dist(a, b);
         const cast = W.castRay(a, angleBetween(a, b), d);
         const castDist = dist(a, cast);
-        // console.log(castDist, d);
         return dist(a, cast) < d;
     }
 

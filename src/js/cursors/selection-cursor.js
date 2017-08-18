@@ -31,7 +31,7 @@ class SelectionCursor extends Cursor {
         this.y = p.y;
 
         if (this.downPosition) {
-            this.selection = W.cyclables.filter(e => {
+            this.selection = W.units.filter(e => {
                 return e.team === PLAYER_TEAM &&
                     isBetween(this.downPosition.x, e.x, this.x) &&
                     isBetween(this.downPosition.y, e.y, this.y);
@@ -40,7 +40,7 @@ class SelectionCursor extends Cursor {
     }
 
     up() {
-        this.selection = W.cyclables.filter(e => {
+        this.selection = W.units.filter(e => {
             return e.team === PLAYER_TEAM &&
                 isBetween(this.downPosition.x, e.x, this.x) &&
                 isBetween(this.downPosition.y, e.y, this.y);

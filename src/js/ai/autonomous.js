@@ -49,7 +49,7 @@ class Autonomous extends Behavior {
 
     friendlyUnit() {
         return pick(
-            W.cyclables
+            W.units
                 .filter(unit => unit != this.unit && unit.team == this.unit.team)
                 .filter(unit => this.healthInArea(unit, unit.team.enemy, UNIT_ATTACK_RADIUS * 2) <= 0)
         );
@@ -72,7 +72,6 @@ class Autonomous extends Behavior {
         if (retreatPosition) {
             const retreatBehavior = new Reach(retreatPosition);
             const retreatDecision = {
-                'label': 'retreat',
                 'behavior': retreatBehavior,
                 'done': () => {
                     return dist(retreatBehavior.target, this.unit) <= UNIT_ATTACK_RADIUS && this.healthInArea(this.unit, this.unit.team.enemy, UNIT_ATTACK_RADIUS) == 0;
@@ -81,6 +80,9 @@ class Autonomous extends Behavior {
                     return this.healthInArea(retreatBehavior.target, this.unit.team.enemy, UNIT_ATTACK_RADIUS * 4) > 0;
                 }
             };
+            if (DEBUG) {
+                retreatDecision.label = 'retreat';
+            }
             decisions.push(retreatDecision);
         }
 
@@ -88,7 +90,6 @@ class Autonomous extends Behavior {
         if (attackedUnit) {
             const attackBehavior = new Chase(attackedUnit);
             const attackDecision = {
-                'label': 'attack',
                 'behavior': attackBehavior,
                 'done': () => {
                     return attackBehavior.target.dead;
@@ -97,6 +98,9 @@ class Autonomous extends Behavior {
                     return this.healthInArea(attackedUnit, attackedUnit.team, UNIT_ATTACK_RADIUS) > this.healthAroundSelf() + 2;
                 }
             };
+            if (DEBUG) {
+                attackDecision.label = 'attack';
+            }
             decisions.push(attackDecision);
         }
 
@@ -104,7 +108,6 @@ class Autonomous extends Behavior {
         if (friend) {
             const regroupBehavior = new Chase(friend);
             const regroupDecision = {
-                'label': 'regroup',
                 'behavior': regroupBehavior,
                 'done': () => {
                     return dist(friend, this.unit) < UNIT_ATTACK_RADIUS;
@@ -113,6 +116,9 @@ class Autonomous extends Behavior {
                     return this.healthInArea(friend, friend.team.enemy, UNIT_ATTACK_RADIUS) > this.healthInArea(friend, friend.team, UNIT_ATTACK_RADIUS) + 2;
                 }
             };
+            if (DEBUG) {
+                regroupDecision.label = 'regroup';
+            }
             decisions.push(regroupDecision);
         }
 

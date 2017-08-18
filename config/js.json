@@ -34,6 +34,7 @@
     "src/js/world/cube.js",
     "src/js/world/generate.js",
 
+    "src/js/beacon.js",
     "src/js/teams.js",
     "src/js/keyboard.js",
     "src/js/mouse.js",

@@ -11,8 +11,7 @@ class Reach extends Behavior {
         if (!this.path) {
             this.target = W.firstFreePositionsAround(
                 this.target,
-                W.cyclables
-                    .filter(c => c.team)
+                W.units
                     .filter(c => c !== this.unit)
                     .map(c => c.behavior.reservedPosition()),
                 UNIT_RADIUS

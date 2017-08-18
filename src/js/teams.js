@@ -1,3 +1,9 @@
+const NEUTRAL_TEAM = {
+    'body': '#fff',
+    'leg': '#fff',
+    'head': '#fff'
+};
+
 const PLAYER_TEAM = {
     'body': '#4c2',
     'leg': '#381',
