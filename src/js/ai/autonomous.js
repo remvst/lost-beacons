@@ -132,7 +132,7 @@ class Autonomous extends Behavior {
 
         const conquerableBeacon = this.conquerableBeacon();
         if (conquerableBeacon) {
-            const conquerBehavior = new Chase(conquerableBeacon);
+            const conquerBehavior = new Reach(conquerableBeacon);
             const conquerDecision = {
                 'behavior': conquerBehavior,
                 'done': () => {
