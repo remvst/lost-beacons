@@ -92,6 +92,10 @@ class Beacon {
         wrap(() => {
             translate(this.x, this.y);
 
+            R.fillStyle = '#000';
+            fillRect(-BEACON_BASE_RADIUS / 2, -BEACON_BASE_THICKNESS / 2, BEACON_BASE_RADIUS, BEACON_BASE_THICKNESS);
+            fillRect(-BEACON_BASE_THICKNESS / 2, -BEACON_BASE_RADIUS / 2, BEACON_BASE_THICKNESS, BEACON_BASE_RADIUS);
+
             const s = (G.t % BEACON_CENTER_PERIOD) / BEACON_CENTER_PERIOD;
 
             R.fillStyle = R.strokeStyle = this.team.beacon;
