@@ -35,7 +35,7 @@ class Game {
 
             requestAnimationFrame(frame);
         };
-        frame();
+        // frame();
     }
 
     cycle(e) {

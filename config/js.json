@@ -10,6 +10,9 @@
     "src/js/util/rand.js",
     "src/js/util/pick.js",
     "src/js/util/angle-between.js",
+    "src/js/util/diamond-square.js",
+    "src/js/util/ds.js",
+    "src/js/terrain.js",
 
     "src/js/graphics/particle.js",
     "src/js/graphics/square-focus.js",

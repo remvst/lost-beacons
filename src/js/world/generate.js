@@ -21,6 +21,30 @@ function coat(map, width, x) {
 }
 
 function generate() {
+    // const map = ds();
+    // return coat(coat(map, GRID_EMPTY_PADDING, 0), GRID_OBSTACLE_PADDING, 1);
+
+    // var myInitMap = [
+    //     4,1,2,4,
+    //     1,4,2,2,
+    //     3,2,1,6,
+    //     2,1,1,5
+    // ];
+    //
+    // // Create a new DiamondSquare algorithm from the initial map, with a random
+    // // roughness factor
+    // var ds = new DiamondSquare(myInitMap,4,4,Math.random()*10);
+    //
+    //
+    // // Iterate until you're satisfied. The map doubles in size with each
+    // // iteration.
+    // ds.iterate();
+    // ds.iterate();
+    //
+    // // Then the data you want is in:
+    // console.log(ds.dataStore);
+
+
     const map = [];
     for (let i = 0 ; i < GRID_ROWS ; i++) {
         map.push([]);

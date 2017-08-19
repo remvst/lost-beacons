@@ -6,8 +6,8 @@
     "CANVAS_WIDTH": 1000,
     "CANVAS_HEIGHT": 1000,
 
-    "GRID_ROWS": 50,
-    "GRID_COLS": 50,
+    "GRID_ROWS": 65,
+    "GRID_COLS": 65,
     "GRID_EMPTY_PADDING": 3,
     "GRID_OBSTACLE_PADDING": 3,
     "OBSTACLES": 80,
