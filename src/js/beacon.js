@@ -130,7 +130,8 @@ class Beacon {
     }
 
     postRender() {
-        if (!this.enemyTeamOwned && !this.playerTeamOwned) {
+        const maxOwned = max(this.enemyTeamOwned, this.playerTeamOwned);
+        if (!maxOwned || maxOwned == 1) {
             return;
         }
 
