@@ -2,6 +2,10 @@ function linear(t, b, c, d) {
     return (t / d) * c + b;
 }
 
+function easeOutQuad(t, b, c, d) {
+    return -c *(t/=d)*(t-2) + b;
+}
+
 function interp(o, p, a, b, d, l, f, e) {
     var i = {
         o: o, // object

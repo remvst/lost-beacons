@@ -122,9 +122,8 @@ class Game {
         };
 
         // Reset cursor
-        const unit = W.cyclables.filter(e => {
-            return e.team &&
-                dist(p, e) < UNIT_RADIUS;
+        const unit = W.units.filter(e => {
+            return dist(p, e) < UNIT_RADIUS;
         }).sort((a, b) => dist(p, a) - dist(p, b))[0];
 
         let newCursor;

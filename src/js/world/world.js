@@ -48,10 +48,12 @@ class World {
             unit.setBehavior(new Autonomous());
         }
 
-        const beacon = new Beacon();
-        beacon.x = GRID_SIZE * 5;
-        beacon.y = GRID_SIZE * 6;
-        this.add(beacon, CYCLABLE | RENDERABLE);
+        for (let i = 0 ; i < 10 ; i++) {
+            const beacon = new Beacon();
+            beacon.x = GRID_SIZE * (5 + i * 2);
+            beacon.y = GRID_SIZE * 6;
+            this.add(beacon, CYCLABLE | RENDERABLE);
+        }
     }
 
     render() {
