@@ -9,6 +9,7 @@ class World {
 
         W.cyclables = [];
         W.units = [];
+        W.beacons = [];
         W.renderables = [];
 
         W.map = generate();
@@ -32,7 +33,7 @@ class World {
             const beacon = new Beacon();
             beacon.x = GRID_SIZE * (5 + i * 2);
             beacon.y = GRID_SIZE * 6;
-            this.add(beacon, CYCLABLE | RENDERABLE);
+            this.add(beacon, CYCLABLE | RENDERABLE | BEACON);
         }
 
         for (let i = 0 ; i < 10 ; i++) {
@@ -113,12 +114,17 @@ class World {
         if (types & UNIT) {
             W.units[method](element);
         }
+
+        if (types & BEACON) {
+            W.beacons[method](element);
+        }
     }
 
     remove(element) {
         W.cyclables.remove(element);
         W.renderables.remove(element);
         W.units.remove(element);
+        W.beacons.remove(element);
     }
 
     isOut(x, y) {

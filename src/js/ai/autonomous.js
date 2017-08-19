@@ -14,8 +14,8 @@ class Autonomous extends Behavior {
 
     healthInArea(point, team, radius) {
         // console.log(point, team, radius);
-        return W.cyclables
-            .filter(c => c.team && c.team == team)
+        return W.units
+            .filter(c => c.team == team)
             .filter(unit => dist(unit, point) < radius)
             .reduce((health, unit) => health + unit.health, 0);
     }
@@ -52,6 +52,14 @@ class Autonomous extends Behavior {
             W.units
                 .filter(unit => unit != this.unit && unit.team == this.unit.team)
                 .filter(unit => this.healthInArea(unit, unit.team.enemy, UNIT_ATTACK_RADIUS * 2) <= 0)
+        );
+    }
+
+    conquerableBeacon() {
+        return pick(
+            W.beacons
+                .filter(beacon => beacon != this.beacon && beacon.team != this.unit.team)
+                .filter(beacon => this.healthInArea(beacon, this.unit.team.enemy, UNIT_ATTACK_RADIUS * 2) <= 0)
         );
     }
 
@@ -120,6 +128,24 @@ class Autonomous extends Behavior {
                 regroupDecision.label = 'regroup';
             }
             decisions.push(regroupDecision);
+        }
+
+        const conquerableBeacon = this.conquerableBeacon();
+        if (conquerableBeacon) {
+            const conquerBehavior = new Chase(conquerableBeacon);
+            const conquerDecision = {
+                'behavior': conquerBehavior,
+                'done': () => {
+                    return conquerableBeacon.team == this.unit.team;
+                },
+                'bad': () => {
+                    return this.healthInArea(conquerableBeacon, this.unit.team.enemy, UNIT_ATTACK_RADIUS) > this.healthInArea(conquerableBeacon, this.unit.team, UNIT_ATTACK_RADIUS) + 2;
+                }
+            };
+            if (DEBUG) {
+                conquerDecision.label = 'conquer';
+            }
+            decisions.push(conquerDecision);
         }
 
         const goodDecisions = decisions.filter(decision => !decision.done() && !decision.bad());

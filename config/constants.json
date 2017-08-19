@@ -41,6 +41,7 @@
     "RENDERABLE": 2,
     "FIRST": 4,
     "UNIT": 8,
+    "BEACON": 16,
 
     "HEALTH_GAUGE_WIDTH": 30,
     "HEALTH_GAUGE_HEIGHT": 4,
