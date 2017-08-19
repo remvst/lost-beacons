@@ -5,12 +5,12 @@ class Beacon {
         this.x = 0;
         this.y = 0;
 
-        this.team = ENEMY_TEAM;
+        this.team = NEUTRAL_TEAM;
         this.teamOwnedFactor = 0;
         this.conqueringTeam = null;
         this.conqueringOwnedFactor = 0;
 
-        this.enemyTeamOwned = 1;
+        this.enemyTeamOwned = 0;
         this.playerTeamOwned = 0;
 
         this.nextParticle = 0;
@@ -130,6 +130,10 @@ class Beacon {
     }
 
     postRender() {
+        if (!this.enemyTeamOwned && !this.playerTeamOwned) {
+            return;
+        }
+
         translate(this.x, this.y);
 
         R.fillStyle = '#000';

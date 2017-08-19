@@ -31,12 +31,13 @@ class World {
 
         for (let i = 0 ; i < 10 ; i++) {
             const beacon = new Beacon();
-            beacon.x = GRID_SIZE * (5 + i * 2);
-            beacon.y = GRID_SIZE * 6;
+            beacon.x = roundP(rand(5 * GRID_SIZE, W.width - 5 * GRID_SIZE), GRID_SIZE);
+            beacon.y = roundP(rand(5 * GRID_SIZE, W.height - 5 * GRID_SIZE), GRID_SIZE);
+            // beacon.y = GRID_SIZE * (GRID_OBSTACLE_PADDING + GRID_EMPTY_PADDING + 1 + ~~(random() * GRID_COLS));
             this.add(beacon, CYCLABLE | RENDERABLE | BEACON);
         }
 
-        for (let i = 0 ; i < 10 ; i++) {
+        for (let i = 0 ; i < 0 ; i++) {
             const unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 4.5;
@@ -45,7 +46,7 @@ class World {
             // unit.setBehavior(new Autonomous());
         }
 
-        for (let i = 0 ; i < 10 ; i++) {
+        for (let i = 0 ; i < 1 ; i++) {
             const unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 20.5;

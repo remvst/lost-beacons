@@ -45,5 +45,5 @@ function generate() {
         expand(~~(random() * map.length), ~~(random() * map[0].length), OBSTACLE_EXPAND_ITERATIONS);
     }
 
-    return coat(coat(map, 3, 0), 3, 1);
+    return coat(coat(map, GRID_EMPTY_PADDING, 0), GRID_OBSTACLE_PADDING, 1);
 }
