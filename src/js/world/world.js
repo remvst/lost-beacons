@@ -29,6 +29,13 @@ class World {
         });
 
         for (let i = 0 ; i < 10 ; i++) {
+            const beacon = new Beacon();
+            beacon.x = GRID_SIZE * (5 + i * 2);
+            beacon.y = GRID_SIZE * 6;
+            this.add(beacon, CYCLABLE | RENDERABLE);
+        }
+
+        for (let i = 0 ; i < 10 ; i++) {
             const unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 4.5;
@@ -46,13 +53,6 @@ class World {
 
             // unit.setBehavior(new AttackFollow(W.cyclables[0]));
             unit.setBehavior(new Autonomous());
-        }
-
-        for (let i = 0 ; i < 10 ; i++) {
-            const beacon = new Beacon();
-            beacon.x = GRID_SIZE * (5 + i * 2);
-            beacon.y = GRID_SIZE * 6;
-            this.add(beacon, CYCLABLE | RENDERABLE);
         }
     }
 

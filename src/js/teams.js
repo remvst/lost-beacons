@@ -1,19 +1,22 @@
 const NEUTRAL_TEAM = {
     'body': '#fff',
     'leg': '#fff',
-    'head': '#fff'
+    'head': '#fff',
+    'beacon': '#fff'
 };
 
 const PLAYER_TEAM = {
     'body': '#4c2',
     'leg': '#381',
-    'head': '#2f7'
+    'head': '#2f7',
+    'beacon': '#0f0'
 };
 
 const ENEMY_TEAM = {
     'head': '#850000',
     'body': '#ef0404',
-    'leg': '#5d0505'
+    'leg': '#5d0505',
+    'beacon': '#f00'
 };
 
 PLAYER_TEAM.enemy = ENEMY_TEAM;

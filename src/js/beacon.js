@@ -91,7 +91,7 @@ class Beacon {
 
             const s = (G.t % BEACON_CENTER_PERIOD) / BEACON_CENTER_PERIOD;
 
-            R.fillStyle = R.strokeStyle = this.team.head;
+            R.fillStyle = R.strokeStyle = this.team.beacon;
             beginPath();
             arc(0, 0, BEACON_CENTER_RADIUS * s, 0, PI * 2, true);
             fill();
@@ -150,7 +150,7 @@ class Beacon {
         );
 
         if (DEBUG) {
-            fillText(roundP(this.playerTeamOwned, 0.1) + ' - ' + roundP(this.enemyTeamOwned, 0.1) + ':' + this.enemyTeamOwned, 0, 50);
+            fillText(roundP(this.playerTeamOwned, 0.1) + ' - ' + roundP(this.enemyTeamOwned, 0.1), 0, 50);
         }
     }
 
