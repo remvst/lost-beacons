@@ -11,9 +11,9 @@ class Reach extends Behavior {
         if (!this.path) {
             this.target = W.firstFreePositionsAround(
                 this.target,
-                W.units
-                    .filter(c => c !== this.unit)
-                    .map(c => c.behavior.reservedPosition()),
+                W.cyclables
+                    .filter(c => c.team && c !== this.unit)
+                    .map(c => c.behavior ? c.behavior.reservedPosition() : c),
                 UNIT_RADIUS
             ).sort((a, b) => {
                 const visibleFromA = W.castRay(a, atan2(this.target.y - a.y, this.target.x - a.x), GRID_SIZE * 10) >= dist(a, this.target);
