@@ -22,14 +22,17 @@ class Beacon {
         const enemy = units.filter(unit => unit.team == ENEMY_TEAM);
 
         let actualConqueringTeam;
+        let isConquering;
         if (enemy.length > player.length) {
             actualConqueringTeam = ENEMY_TEAM;
+            isConquering = this.enemyTeamOwned < 1;
         } else if (enemy.length < player.length) {
             actualConqueringTeam = PLAYER_TEAM;
+            isConquering = this.playerTeamOwned < 1;
         }
 
         this.nextParticle -= e;
-        if (this.nextParticle < 0 && actualConqueringTeam) {
+        if (this.nextParticle < 0 && isConquering) {
             this.nextParticle = 0.2;
 
             const unit = pick(actualConqueringTeam == ENEMY_TEAM ? enemy : player);
