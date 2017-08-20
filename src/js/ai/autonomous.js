@@ -100,7 +100,7 @@ class Autonomous extends Behavior {
             const attackDecision = {
                 'behavior': attackBehavior,
                 'done': () => {
-                    return attackBehavior.target.dead;
+                    return attackedUnit.dead;
                 },
                 'bad': () => {
                     return this.healthInArea(attackedUnit, attackedUnit.team, UNIT_ATTACK_RADIUS) > this.healthAroundSelf() + 2;
