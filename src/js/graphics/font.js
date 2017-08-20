@@ -337,7 +337,11 @@ if(DEBUG){
 // y: y coord
 // s: cell size
 // c: color
-function drawText(r, t, x, y, s, c) {
+function drawText(r, t, x, y, s, c, sh) {
+    if (sh) {
+        drawText(r, t, x, y + s, s, '#000');
+    }
+
     for(var i = 0 ; i < t.length ; i++){
         if (DEBUG) {
             window.used[t.charAt(i)] = true;
@@ -347,6 +351,10 @@ function drawText(r, t, x, y, s, c) {
         r.drawImage(cached, x, y);
         x += cached.width + s;
     }
+}
+
+function drawCenteredText(r, t, x, y, s, c, sh) {
+    return drawText(r, t, x - s * requiredCells(t) / 2, y, s, c, sh);
 }
 
 // Returns the total cells required to draw the specified text

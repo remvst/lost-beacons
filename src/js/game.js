@@ -52,29 +52,34 @@ class Game {
 
         G.minimap();
 
-        const playerScore = '' + G.score(PLAYER_TEAM);
-        const enemyScore = '' + G.score(ENEMY_TEAM);
+        drawCenteredText(R, nomangle('beacons'), CANVAS_WIDTH / 2, 10, HUD_SCORE_CELL_SIZE, '#fff', true);
+        drawCenteredText(R, nomangle('units'), CANVAS_WIDTH / 2, 30, HUD_SCORE_CELL_SIZE, '#fff', true);
 
-        const playerScoreX = CANVAS_WIDTH / 2 - 20;
-        const enemyScoreX = CANVAS_WIDTH / 2 + 20;
+        function gauge(x, y, value, sign, color) {
+            const w = (5 + value * 10) * sign;
 
-        const playerScoreCells = requiredCells(playerScore);
-        const enemyScoreCells = requiredCells(enemyScore);
+            R.fillStyle = '#000';
+            fillRect(x + 2, y + 2, w, HUD_SCORE_CELL_SIZE * 5);
 
-        const middle = '-';
-        const middleCells = requiredCells(middle);
+            R.fillStyle = color;
+            fillRect(x, y, w, HUD_SCORE_CELL_SIZE * 5);
 
-        const scoreText = nomangle('beacons');
-        const scoreCells = requiredCells(scoreText);
-        drawText(R, scoreText, CANVAS_WIDTH / 2 - scoreCells * HUD_SCORE_CELL_SIZE / 4, 10, HUD_SCORE_CELL_SIZE / 2, '#fff');
+            drawCenteredText(R, '' + value, x + w + sign * 15, y, HUD_SCORE_CELL_SIZE, color, true);
+        }
 
-        drawText(R, playerScore, playerScoreX - playerScoreCells * HUD_SCORE_CELL_SIZE / 2, 30, HUD_SCORE_CELL_SIZE, '#0f0');
-        drawText(R, enemyScore, enemyScoreX - enemyScoreCells * HUD_SCORE_CELL_SIZE / 2, 30, HUD_SCORE_CELL_SIZE, '#f00');
-        drawText(R, middle, CANVAS_WIDTH / 2 - middleCells * HUD_SCORE_CELL_SIZE / 2, 30, HUD_SCORE_CELL_SIZE, '#fff');
+        gauge((CANVAS_WIDTH - HUD_GAUGE_GAP) / 2, 10, G.beaconsScore(PLAYER_TEAM), -1, '#0f0');
+        gauge((CANVAS_WIDTH + HUD_GAUGE_GAP) / 2, 10, G.beaconsScore(ENEMY_TEAM), 1, '#f00');
+
+        gauge((CANVAS_WIDTH - HUD_GAUGE_GAP) / 2, 30, G.unitsScore(PLAYER_TEAM), -1, '#0f0');
+        gauge((CANVAS_WIDTH + HUD_GAUGE_GAP) / 2, 30, G.unitsScore(ENEMY_TEAM), 1, '#f00');
     }
 
-    score(team) {
+    beaconsScore(team) {
         return W.beacons.filter(b => b.team == team).length;
+    }
+
+    unitsScore(team) {
+        return W.units.filter(b => b.team == team).length;
     }
 
     get minimapWidth() {
