@@ -148,6 +148,8 @@ class Autonomous extends Behavior {
             decisions.push(conquerDecision);
         }
 
+        // TODO defendable beacon
+
         const goodDecisions = decisions.filter(decision => !decision.done() && !decision.bad());
 
         const decision = pick(goodDecisions);
