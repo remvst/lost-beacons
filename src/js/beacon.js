@@ -121,11 +121,6 @@ class Beacon {
     }
 
     postRender() {
-        const maxOwned = max(this.enemyTeamOwned, this.playerTeamOwned);
-        if (!maxOwned || maxOwned == 1) {
-            return;
-        }
-
         translate(this.x, this.y);
 
         const s =  (G.t % BEACON_WAVE_PERIOD) / BEACON_WAVE_PERIOD;
@@ -136,33 +131,36 @@ class Beacon {
         arc(0, 0, 80 * (1 - s), 0, PI * 2, true);
         stroke();
 
-        R.globalAlpha = 1;
-        R.fillStyle = '#000';
-        fillRect(
-            evaluate(-BEACON_GAUGE_WIDTH / 2) - 1,
-            -BEACON_GAUGE_RADIUS - 1,
-            evaluate(BEACON_GAUGE_WIDTH + 2),
-            evaluate(BEACON_GAUGE_HEIGHT + 2)
-        );
-
-        R.fillStyle = '#0f0';
-        fillRect(
-            evaluate(-BEACON_GAUGE_WIDTH / 2) * this.playerTeamOwned,
-            -BEACON_GAUGE_RADIUS,
-            BEACON_GAUGE_WIDTH * this.playerTeamOwned,
-            BEACON_GAUGE_HEIGHT
-        );
-
-        R.fillStyle = '#f00';
-        fillRect(
-            evaluate(-BEACON_GAUGE_WIDTH / 2) * this.enemyTeamOwned,
-            -BEACON_GAUGE_RADIUS,
-            BEACON_GAUGE_WIDTH * this.enemyTeamOwned,
-            BEACON_GAUGE_HEIGHT
-        );
-
         if (DEBUG) {
             fillText(roundP(this.playerTeamOwned, 0.1) + ' - ' + roundP(this.enemyTeamOwned, 0.1), 0, 50);
+        }
+
+        const maxOwned = max(this.enemyTeamOwned, this.playerTeamOwned);
+        if (maxOwned && maxOwned < 1) {
+            R.globalAlpha = 1;
+            R.fillStyle = '#000';
+            fillRect(
+                evaluate(-BEACON_GAUGE_WIDTH / 2) - 1,
+                -BEACON_GAUGE_RADIUS - 1,
+                evaluate(BEACON_GAUGE_WIDTH + 2),
+                evaluate(BEACON_GAUGE_HEIGHT + 2)
+            );
+
+            R.fillStyle = '#0f0';
+            fillRect(
+                evaluate(-BEACON_GAUGE_WIDTH / 2) * this.playerTeamOwned,
+                -BEACON_GAUGE_RADIUS,
+                BEACON_GAUGE_WIDTH * this.playerTeamOwned,
+                BEACON_GAUGE_HEIGHT
+            );
+
+            R.fillStyle = '#f00';
+            fillRect(
+                evaluate(-BEACON_GAUGE_WIDTH / 2) * this.enemyTeamOwned,
+                -BEACON_GAUGE_RADIUS,
+                BEACON_GAUGE_WIDTH * this.enemyTeamOwned,
+                BEACON_GAUGE_HEIGHT
+            );
         }
     }
 
