@@ -1,19 +1,20 @@
-function particle(s, c, as) {
+function particle(s, c, as, post) {
     let p;
 
     // Add to the list of particles
     W.add(p = {
-        s: s,
-        c: c,
-        render: function(){
-            if(!V.contains(this.x, this.y, this.s)){
-                return;
-            }
-
-            R.fillStyle = p.c;
-            R.fillRect(p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
-        }
+        's': s,
+        'c': c
     }, RENDERABLE | FIRST);
+
+    p[post ? 'postRender' : 'render'] = () => {
+        if(!V.contains(p.x, p.y, p.s)){
+            return;
+        }
+
+        R.fillStyle = p.c;
+        R.fillRect(p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
+    };
 
     // Interpolations
     as.forEach((a, i) => {

@@ -71,7 +71,6 @@ class World {
     }
 
     render() {
-
         wrap(() => {
             R.fillStyle = '#0e3b54';
             fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -88,7 +87,7 @@ class World {
             }
 
             // Renderables (units, particles...)
-            W.renderables.forEach(e => wrap(() => e.render()));
+            W.renderables.forEach(e => e.render && wrap(() => e.render()));
 
             // Polygons (obstacles)
             W.polygons.filter(function(p) {

@@ -83,50 +83,41 @@ class Beacon {
                     ['x', this.x, this.x + cos(angle) * dist, t, 0, easeOutQuad],
                     ['y', this.y, this.y + sin(angle) * dist, t, 0, easeOutQuad],
                     ['s', rand(5, 10), 0, t]
-                ]);
+                ], true);
             }
         }
     }
 
     render() {
-        wrap(() => {
-            translate(this.x, this.y);
+        translate(this.x, this.y);
 
-            R.fillStyle = '#000';
-            fillRect(-BEACON_BASE_RADIUS / 2, -BEACON_BASE_THICKNESS / 2, BEACON_BASE_RADIUS, BEACON_BASE_THICKNESS);
-            fillRect(-BEACON_BASE_THICKNESS / 2, -BEACON_BASE_RADIUS / 2, BEACON_BASE_THICKNESS, BEACON_BASE_RADIUS);
+        R.fillStyle = '#000';
+        fillRect(-BEACON_BASE_RADIUS / 2, -BEACON_BASE_THICKNESS / 2, BEACON_BASE_RADIUS, BEACON_BASE_THICKNESS);
+        fillRect(-BEACON_BASE_THICKNESS / 2, -BEACON_BASE_RADIUS / 2, BEACON_BASE_THICKNESS, BEACON_BASE_RADIUS);
 
-            const s = (G.t % BEACON_CENTER_PERIOD) / BEACON_CENTER_PERIOD;
+        const s = (G.t % BEACON_CENTER_PERIOD) / BEACON_CENTER_PERIOD;
 
-            R.fillStyle = R.strokeStyle = this.team.beacon;
-            beginPath();
-            arc(0, 0, BEACON_CENTER_RADIUS * s, 0, PI * 2, true);
-            fill();
+        R.fillStyle = R.strokeStyle = this.team.beacon;
+        beginPath();
+        arc(0, 0, BEACON_CENTER_RADIUS * s, 0, PI * 2, true);
+        fill();
 
-            R.globalAlpha = 1 - s;
-            beginPath();
-            arc(0, 0, BEACON_CENTER_RADIUS, 0, PI * 2, true);
-            fill();
+        R.globalAlpha = 1 - s;
+        beginPath();
+        arc(0, 0, BEACON_CENTER_RADIUS, 0, PI * 2, true);
+        fill();
 
-            R.globalAlpha = 0.5;
+        R.globalAlpha = 0.5;
 
-            [
-                -G.t * PI * 2,
-                -G.t * PI * 2 + PI
-            ].forEach(angle => this.drawArc(angle, BEACON_ARC_RADIUS));
+        [
+            -G.t * PI * 2,
+            -G.t * PI * 2 + PI
+        ].forEach(angle => this.drawArc(angle, BEACON_ARC_RADIUS));
 
-            [
-                G.t * PI * 3,
-                G.t * PI * 3 + PI
-            ].forEach(angle => this.drawArc(angle, BEACON_ARC_RADIUS + 2));
-
-            const s2 =  (G.t % BEACON_WAVE_PERIOD) / BEACON_WAVE_PERIOD;
-            R.lineWidth = 2;
-            R.globalAlpha = s2;
-            beginPath();
-            arc(0, 0, 80 * (1 - s2), 0, PI * 2, true);
-            stroke();
-        });
+        [
+            G.t * PI * 3,
+            G.t * PI * 3 + PI
+        ].forEach(angle => this.drawArc(angle, BEACON_ARC_RADIUS + 2));
     }
 
     postRender() {
@@ -137,6 +128,15 @@ class Beacon {
 
         translate(this.x, this.y);
 
+        const s =  (G.t % BEACON_WAVE_PERIOD) / BEACON_WAVE_PERIOD;
+        R.strokeStyle = this.team.beacon;
+        R.lineWidth = 2;
+        R.globalAlpha = s;
+        beginPath();
+        arc(0, 0, 80 * (1 - s), 0, PI * 2, true);
+        stroke();
+
+        R.globalAlpha = 1;
         R.fillStyle = '#000';
         fillRect(
             evaluate(-BEACON_GAUGE_WIDTH / 2) - 1,
