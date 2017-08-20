@@ -51,6 +51,8 @@ class Game {
         W.render();
 
         G.minimap();
+
+        drawText(R, 'hello', 0, 0, 10, '#f00');
     }
 
     get minimapWidth() {
