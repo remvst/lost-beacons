@@ -19,6 +19,12 @@ class Game {
             'postRender': () => G.cursor.postRender()
         }, RENDERABLE);
 
+        G.gridPattern = cache(1, 4, (r, c) => {
+            r.fillStyle = 'rgba(0,0,0,.2)';
+            r.fillRect(0, 0, 1, 1);
+            return r.createPattern(c, 'repeat');
+        });
+
         // Start cycle()
         let lf = Date.now();
         let frame = () => {
@@ -49,6 +55,9 @@ class Game {
 
         // Render things
         W.render();
+
+        R.fillStyle = G.gridPattern;
+        fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         G.minimap();
 
