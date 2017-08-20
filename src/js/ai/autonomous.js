@@ -40,10 +40,10 @@ class Autonomous extends Behavior {
 
     enemyUnit() {
         const myHealth = this.healthAroundSelf();
-        W.units
+        return W.units
             .filter(unit => unit.team == this.unit.team.enemy)
             .filter(unit => this.healthInArea(unit, unit.team, UNIT_ATTACK_RADIUS * 2) <= myHealth)
-            .sort((a, b) => dist(a, this.unit) - dist(b, this.unit))[0]
+            .sort((a, b) => dist(a, this.unit) - dist(b, this.unit))[0];
     }
 
     friendlyUnit() {
