@@ -64,9 +64,6 @@ class Game {
         // Render things
         W.render();
 
-        R.fillStyle = G.gridPattern;
-        fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
         R.fillStyle = 'rgba(255,255,255,.15)';
         fillRect(0, ~~(G.t * 100) % CANVAS_HEIGHT * 1.5, CANVAS_WIDTH, 0.5);
 
@@ -98,6 +95,9 @@ class Game {
             gauge(-HUD_GAUGE_GAP / 2, 40, G.unitsScore(PLAYER_TEAM), -1, '#0f0');
             gauge(HUD_GAUGE_GAP / 2, 40, G.unitsScore(ENEMY_TEAM), 1, '#f00');
         });
+
+        R.fillStyle = G.gridPattern;
+        fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         function gauge(x, y, value, sign, color) {
             const w = (5 + value * 10) * sign;
@@ -137,9 +137,13 @@ class Game {
             translate(CANVAS_WIDTH - W.width * MINIMAP_SCALE - MINIMAP_MARGIN, CANVAS_HEIGHT - W.height * MINIMAP_SCALE - MINIMAP_MARGIN);
 
             R.globalAlpha = 0.5;
-            R.fillStyle = '#444';
             R.strokeStyle = '#fff';
             R.lineWidth = 2;
+
+            R.fillStyle = '#000';
+            fillRect(4, 4, ~~(W.width * MINIMAP_SCALE), ~~(W.height * MINIMAP_SCALE));
+
+            R.fillStyle = '#444';
             fillRect(0, 0, ~~(W.width * MINIMAP_SCALE), ~~(W.height * MINIMAP_SCALE));
 
             R.fillStyle = '#6cf';
