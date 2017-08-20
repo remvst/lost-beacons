@@ -40,27 +40,24 @@ class Autonomous extends Behavior {
 
     enemyUnit() {
         const myHealth = this.healthAroundSelf();
-        return pick(
-            W.cyclables
-                .filter(unit => unit.team == this.unit.team.enemy)
-                .filter(unit => this.healthInArea(unit, unit.team, UNIT_ATTACK_RADIUS * 2) <= myHealth)
-        );
+        W.units
+            .filter(unit => unit.team == this.unit.team.enemy)
+            .filter(unit => this.healthInArea(unit, unit.team, UNIT_ATTACK_RADIUS * 2) <= myHealth)
+            .sort((a, b) => dist(a, this.unit) - dist(b, this.unit))[0]
     }
 
     friendlyUnit() {
-        return pick(
-            W.units
-                .filter(unit => unit != this.unit && unit.team == this.unit.team)
-                .filter(unit => this.healthInArea(unit, unit.team.enemy, UNIT_ATTACK_RADIUS * 2) <= 0)
-        );
+        return W.units
+            .filter(unit => unit != this.unit && unit.team == this.unit.team)
+            .filter(unit => this.healthInArea(unit, unit.team.enemy, UNIT_ATTACK_RADIUS * 2) <= 0)
+            .sort((a, b) => dist(a, this.unit) - dist(b, this.unit))[0];
     }
 
     conquerableBeacon() {
-        return pick(
-            W.beacons
-                .filter(beacon => beacon != this.beacon && beacon.team != this.unit.team)
-                .filter(beacon => this.healthInArea(beacon, this.unit.team.enemy, UNIT_ATTACK_RADIUS * 2) <= 0)
-        );
+        return W.beacons
+            .filter(beacon => beacon != this.beacon && beacon.team != this.unit.team)
+            .filter(beacon => this.healthInArea(beacon, this.unit.team.enemy, UNIT_ATTACK_RADIUS * 2) <= 0)
+            .sort((a, b) => dist(a, this.unit) - dist(b, this.unit))[0];
     }
 
     healthAroundSelf() {
