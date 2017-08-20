@@ -5,9 +5,37 @@ class ReachCursor extends Cursor {
     }
 
     postRender() {
-        const s = (G.t % REACH_CURSOR_PERIOD) / REACH_CURSOR_PERIOD;
+
+        const arrowRadius = 10;
+
+        function arrow(x, y, alpha) {
+            wrap(() => {
+                R.globalAlpha = alpha;
+                translate(x, y);
+                beginPath();
+                moveTo(0, 0);
+                lineTo(arrowRadius, -arrowRadius);
+                lineTo(-arrowRadius, -arrowRadius);
+                fill();
+            });
+        }
+
+        const beacon = W.beacons
+            .filter(beacon => dist(beacon, this) < BEACON_CONQUER_RADIUS)[0];
+
+        if (beacon) {
+            const offset = (G.t * 1 % 1) * arrowRadius;
+
+            R.fillStyle = PLAYER_TEAM.beacon;
+
+            arrow(beacon.x, offset + beacon.y - 50, 1 - offset / arrowRadius);
+            arrow(beacon.x, offset + beacon.y - arrowRadius - 50, 1);
+            arrow(beacon.x, offset + beacon.y - arrowRadius * 2 - 50, offset / arrowRadius);
+        }
 
         translate(this.x, this.y);
+
+        const s = (G.t % REACH_CURSOR_PERIOD) / REACH_CURSOR_PERIOD;
 
         R.fillStyle = this.color;
         R.globalAlpha = 1 - s;
@@ -16,7 +44,7 @@ class ReachCursor extends Cursor {
         R.globalAlpha = 1;
         const cursorScale = min(1, max(0, (G.t - this.timeOnPosition - 0.5) * 10));
         scale(cursorScale, cursorScale);
-        this.renderLabel(nomangle('REACH()'));
+        this.renderLabel(beacon ? nomangle('CONQUER()') : nomangle('REACH()'));
     }
 
     move(p) {
@@ -51,12 +79,6 @@ class ReachCursor extends Cursor {
 
             interp(circle, 'a', 1, 0, 0.3, 0, 0, () => W.remove(circle));
         });
-    }
-
-    cycle(e) {
-        this.timeOnPosition += e;
-        console.log(this.timeOnPosition);
-        super.cycle(e);
     }
 
 }
