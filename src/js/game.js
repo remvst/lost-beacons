@@ -52,8 +52,18 @@ class Game {
 
         G.minimap();
 
-        drawCenteredText(R, nomangle('beacons'), CANVAS_WIDTH / 2, 10, HUD_SCORE_CELL_SIZE, '#fff', true);
-        drawCenteredText(R, nomangle('units'), CANVAS_WIDTH / 2, 30, HUD_SCORE_CELL_SIZE, '#fff', true);
+        R.fillStyle = '#146';
+        R.strokeStyle = '#000';
+        beginPath();
+        moveTo(CANVAS_WIDTH / 2 - 220, CANVAS_HEIGHT);
+        lineTo(CANVAS_WIDTH / 2 - 170, CANVAS_HEIGHT - 70);
+        lineTo(CANVAS_WIDTH / 2 + 170, CANVAS_HEIGHT - 70);
+        lineTo(CANVAS_WIDTH / 2 + 220, CANVAS_HEIGHT);
+        fill();
+        stroke();
+
+        drawCenteredText(R, nomangle('beacons'), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 50, HUD_SCORE_CELL_SIZE, '#fff', true);
+        drawCenteredText(R, nomangle('units'), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 30, HUD_SCORE_CELL_SIZE, '#fff', true);
 
         function gauge(x, y, value, sign, color) {
             const w = (5 + value * 10) * sign;
@@ -67,11 +77,11 @@ class Game {
             drawCenteredText(R, '' + value, x + w + sign * 15, y, HUD_SCORE_CELL_SIZE, color, true);
         }
 
-        gauge((CANVAS_WIDTH - HUD_GAUGE_GAP) / 2, 10, G.beaconsScore(PLAYER_TEAM), -1, '#0f0');
-        gauge((CANVAS_WIDTH + HUD_GAUGE_GAP) / 2, 10, G.beaconsScore(ENEMY_TEAM), 1, '#f00');
+        gauge((CANVAS_WIDTH - HUD_GAUGE_GAP) / 2, CANVAS_HEIGHT - 50, G.beaconsScore(PLAYER_TEAM), -1, '#0f0');
+        gauge((CANVAS_WIDTH + HUD_GAUGE_GAP) / 2, CANVAS_HEIGHT - 50, G.beaconsScore(ENEMY_TEAM), 1, '#f00');
 
-        gauge((CANVAS_WIDTH - HUD_GAUGE_GAP) / 2, 30, G.unitsScore(PLAYER_TEAM), -1, '#0f0');
-        gauge((CANVAS_WIDTH + HUD_GAUGE_GAP) / 2, 30, G.unitsScore(ENEMY_TEAM), 1, '#f00');
+        gauge((CANVAS_WIDTH - HUD_GAUGE_GAP) / 2, CANVAS_HEIGHT - 30, G.unitsScore(PLAYER_TEAM), -1, '#0f0');
+        gauge((CANVAS_WIDTH + HUD_GAUGE_GAP) / 2, CANVAS_HEIGHT - 30, G.unitsScore(ENEMY_TEAM), 1, '#f00');
     }
 
     beaconsScore(team) {
