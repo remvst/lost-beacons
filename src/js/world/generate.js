@@ -21,28 +21,14 @@ function coat(map, width, x) {
 }
 
 function generate() {
+    seed(random());
+
     const map = [];
-    for (let i = 0 ; i < GRID_ROWS ; i++) {
+    for (let row = 0 ; row < GRID_ROWS ; row++) {
         map.push([]);
-        for (let j = 0 ; j < GRID_COLS ; j++) {
-            map[i][j] = 0;
+        for (let col = 0 ; col < GRID_COLS ; col++) {
+            map[row][col] = pow(abs(perlin2(row / 5, col / 5)), 2) > 0.1 ? 1 : 0;
         }
-    }
-
-    function expand(row, col, n) {
-        if (n > 0 && !isNaN(map[row] && map[row][col])) {
-            map[row][col] = 1;
-
-            if (random() < 0.5) {
-                expand(row + (random() < 0.5 ? 1 : -1), col, n - 1);
-            } else {
-                expand(row, col + (random() < 0.5 ? 1 : -1), n - 1);
-            }
-        }
-    }
-
-    for (let i = 0 ; i < OBSTACLES ; i++) {
-        expand(~~(random() * map.length), ~~(random() * map[0].length), OBSTACLE_EXPAND_ITERATIONS);
     }
 
     return coat(coat(map, GRID_EMPTY_PADDING, 0), GRID_OBSTACLE_PADDING, 1);

@@ -1,3 +1,7 @@
+// Make Math global
+const m = Math;
+Object.getOwnPropertyNames(m).forEach(n => w[n] = m[n]);
+
 onload = () => {
     C = D.querySelector('canvas');
     C.width = CANVAS_WIDTH;
@@ -17,9 +21,6 @@ onload = () => {
             w[n] = p[n].bind(R);
         }
     });
-
-    const m = Math;
-    Object.getOwnPropertyNames(m).forEach(n => w[n] = m[n]);
 
     onresize();
 
