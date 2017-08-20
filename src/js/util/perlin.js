@@ -40,7 +40,7 @@ const gradP = new Array(512);
 
 // This isn't a very good seeding function, but it works ok. It supports 2^16
 // different seed values. Write something better if you need more seeds.
-function seed(seed) {
+function seedPerlin() {
     const p = [];
     for (let i = 0 ; i < 256 ; i++) {
         p.push(~~(random() * 256));

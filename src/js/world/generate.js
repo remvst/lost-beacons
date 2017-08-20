@@ -21,7 +21,7 @@ function coat(map, width, x) {
 }
 
 function generate() {
-    seed(random());
+    seedPerlin();
 
     const map = [];
     for (let row = 0 ; row < GRID_ROWS ; row++) {
