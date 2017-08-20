@@ -1,8 +1,3 @@
-class Idle extends Behavior {
-
-    reconsider() {
-        const target = this.unit.closestVisibleTarget();
-        return target ? new AttackStill(target) : this;
-    }
+class Idle extends Behavior { // TODO maybe get rid of this behavior
 
 }

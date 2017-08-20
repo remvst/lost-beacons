@@ -15,6 +15,9 @@ class Unit {
         this.hurtFactor = 1;
 
         this.setBehavior(new Idle());
+
+        this.nextShot = rand(0.2, 1);
+        this.target = null;
     }
 
     get dead() {
@@ -55,16 +58,57 @@ class Unit {
     }
 
     closestVisibleTarget() {
-        return pick(W.units
+        return W.units
             .filter(c => c.team != this.team)
             .filter(c => dist(c, this) < UNIT_ATTACK_RADIUS)
             .filter(c => !W.hasObstacleBetween(this, c))
-            .sort((a, b) => dist(this, a) - dist(this, b)));
+            .sort((a, b) => dist(this, a) - dist(this, b))
+            [0];
     }
 
     cycle(e) {
         this.moving = false;
         this.behavior.cycle(e);
+
+        if (!this.moving && this.target && !this.target.dead) {
+            this.angle = angleBetween(this, this.target);
+        }
+
+        if (!this.moving && (this.nextShot -= e) <= 0) {
+            // Pick a new target?
+            if (
+                !this.target ||
+                this.target.dead ||
+                dist(this, this.target) > UNIT_ATTACK_RADIUS ||
+                W.hasObstacleBetween(this, this.target)
+            ) {
+                this.target = this.closestVisibleTarget();
+            }
+
+            this.nextShot = 1;
+
+            if (this.target) {
+                const impact = {'x': this.target.x, 'y': this.target.y};
+
+                let view = {
+                    'alpha': 1,
+                    'render': () => {
+                        R.globalAlpha = this.alpha;
+                        R.strokeStyle = '#ff0';
+                        R.lineWidth = 0.5;
+                        beginPath();
+                        moveTo(this.x, this.y);
+                        lineTo(impact.x, impact.y);
+                        stroke();
+                    }
+                };
+                W.add(view, RENDERABLE);
+
+                interp(view, 'alpha', 0.5, 0, 0.1, 0, null, () => W.remove(view));
+
+                this.target.hurt(SHOT_DAMAGE);
+            }
+        }
     }
 
     render() {

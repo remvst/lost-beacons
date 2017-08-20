@@ -29,16 +29,16 @@ class World {
             return !W.polygons.filter(b => a !== b && a.isSame(b)).length;
         });
 
-        for (let i = 0 ; i < 0 ; i++) {
+        for (let i = 0 ; i < 10 ; i++) {
             const unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 4.5;
             this.add(unit, CYCLABLE | RENDERABLE | UNIT);
 
-            // unit.setBehavior(new Autonomous());
+            unit.setBehavior(new Autonomous());
         }
 
-        for (let i = 0 ; i < 1 ; i++) {
+        for (let i = 0 ; i < 10 ; i++) {
             const unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 20.5;

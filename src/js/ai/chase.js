@@ -15,7 +15,7 @@ class Chase extends Behavior {
     updateSubBehavior() {
         if (dist(this.unit, this.target) < UNIT_ATTACK_RADIUS && !W.hasObstacleBetween(this.unit, this.target)) {
             // Target is visible, attack!
-            this.subBehavior = this.target.hurt && this.target.team != this.unit.team ? new AttackStill(this.target) : new Idle();
+            this.subBehavior = new Idle();
         } else {
             this.subBehavior = new Reach(this.target);
         }
