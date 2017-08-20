@@ -11,6 +11,7 @@
     "src/js/util/pick.js",
     "src/js/util/angle-between.js",
     "src/js/util/perlin.js",
+    "src/js/util/format-time.js",
 
     "src/js/graphics/particle.js",
     "src/js/graphics/square-focus.js",
