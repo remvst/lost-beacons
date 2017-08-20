@@ -55,8 +55,15 @@ class Autonomous extends Behavior {
 
     conquerableBeacon() {
         return W.beacons
-            .filter(beacon => beacon != this.beacon && beacon.team != this.unit.team)
+            .filter(beacon => beacon.team != this.unit.team)
             .filter(beacon => this.healthInArea(beacon, this.unit.team.enemy, UNIT_ATTACK_RADIUS * 2) <= 0)
+            .sort((a, b) => dist(a, this.unit) - dist(b, this.unit))[0];
+    }
+
+    defendableBeacon() {
+        return W.beacons
+            .filter(beacon => beacon.team != this.unit.team.enemy) // beacons that are owned or neutral
+            .filter(beacon => this.healthInArea(beacon, this.unit.team.enemy, BEACON_CONQUER_RADIUS * 2) > 0)
             .sort((a, b) => dist(a, this.unit) - dist(b, this.unit))[0];
     }
 
@@ -145,7 +152,25 @@ class Autonomous extends Behavior {
             decisions.push(conquerDecision);
         }
 
-        // TODO defendable beacon
+        const defendableBeacon = this.defendableBeacon();
+        if (defendableBeacon) {
+            const defendBehavior = new Reach(defendableBeacon);
+            const defendDecision = {
+                'behavior': defendBehavior,
+                'done': () => {
+                    // Done if no one is trying to conquer it anymore
+                    return this.healthInArea(defendableBeacon, this.unit.team.enemy, BEACON_CONQUER_RADIUS) == 0;
+                },
+                'bad': () => {
+                    // Bad if enemies have a strong advantage
+                    return this.healthInArea(defendableBeacon, this.unit.team.enemy, UNIT_ATTACK_RADIUS) > this.healthInArea(defendableBeacon, this.unit.team, UNIT_ATTACK_RADIUS) + 2;
+                }
+            };
+            if (DEBUG) {
+                defendDecision.label = 'defend';
+            }
+            decisions.push(defendDecision);
+        }
 
         const goodDecisions = decisions.filter(decision => !decision.done() && !decision.bad());
 
