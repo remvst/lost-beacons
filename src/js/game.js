@@ -59,14 +59,12 @@ class Game {
         R.fillStyle = G.gridPattern;
         fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        G.minimap();
-
         R.fillStyle = '#146';
         R.strokeStyle = '#000';
         beginPath();
         moveTo(CANVAS_WIDTH / 2 - 220, CANVAS_HEIGHT);
-        lineTo(CANVAS_WIDTH / 2 - 170, CANVAS_HEIGHT - 70);
-        lineTo(CANVAS_WIDTH / 2 + 170, CANVAS_HEIGHT - 70);
+        lineTo(CANVAS_WIDTH / 2 - 170, CANVAS_HEIGHT - 70.5);
+        lineTo(CANVAS_WIDTH / 2 + 170, CANVAS_HEIGHT - 70.5);
         lineTo(CANVAS_WIDTH / 2 + 220, CANVAS_HEIGHT);
         fill();
         stroke();
@@ -91,6 +89,8 @@ class Game {
 
         gauge((CANVAS_WIDTH - HUD_GAUGE_GAP) / 2, CANVAS_HEIGHT - 30, G.unitsScore(PLAYER_TEAM), -1, '#0f0');
         gauge((CANVAS_WIDTH + HUD_GAUGE_GAP) / 2, CANVAS_HEIGHT - 30, G.unitsScore(ENEMY_TEAM), 1, '#f00');
+
+        G.minimap();
     }
 
     beaconsScore(team) {
@@ -113,16 +113,15 @@ class Game {
         // console.log()
 
         wrap(() => {
-            translate(CANVAS_WIDTH - W.width * MINIMAP_SCALE, CANVAS_HEIGHT - W.height * MINIMAP_SCALE);
+            translate(CANVAS_WIDTH - W.width * MINIMAP_SCALE - MINIMAP_MARGIN, CANVAS_HEIGHT - W.height * MINIMAP_SCALE - MINIMAP_MARGIN);
 
             R.globalAlpha = 0.5;
             R.fillStyle = '#444';
             R.strokeStyle = '#fff';
             R.lineWidth = 2;
             fillRect(0, 0, ~~(W.width * MINIMAP_SCALE), ~~(W.height * MINIMAP_SCALE));
-            strokeRect(0, 0, ~~(W.width * MINIMAP_SCALE), ~~(W.height * MINIMAP_SCALE));
 
-            R.fillStyle = '#fff';
+            R.fillStyle = '#6cf';
             R.globalAlpha = 1;
             W.map.forEach((r, row) => {
                 r.forEach((x, col) => {
@@ -144,7 +143,11 @@ class Game {
                     R.fillRect(c.x * MINIMAP_SCALE - 2, c.y * MINIMAP_SCALE - 2, 5, 5);
                 });
 
-            R.lineWidth = 2;
+            R.lineWidth = 1;
+            R.strokeStyle = '#000';
+            strokeRect(0.5, 0.5, ~~(W.width * MINIMAP_SCALE), ~~(W.height * MINIMAP_SCALE));
+
+            R.lineWidth = 1;
             R.fillStyle = '#fff';
             R.strokeStyle = '#000';
             R.globalAlpha = 0.2;
@@ -154,9 +157,11 @@ class Game {
                 ~~(CANVAS_WIDTH * MINIMAP_SCALE),
                 ~~(CANVAS_HEIGHT * MINIMAP_SCALE)
             );
+
+            R.globalAlpha = 1;
             strokeRect(
-                ~~(V.x * MINIMAP_SCALE),
-                ~~(V.y * MINIMAP_SCALE),
+                ~~(V.x * MINIMAP_SCALE) + 0.5,
+                ~~(V.y * MINIMAP_SCALE) + 0.5,
                 ~~(CANVAS_WIDTH * MINIMAP_SCALE),
                 ~~(CANVAS_HEIGHT * MINIMAP_SCALE)
             );

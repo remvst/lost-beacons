@@ -41,7 +41,7 @@ class Beacon {
                 ['x', unit.x, this.x, t, 0],
                 ['y', unit.y, this.y, t, 0],
                 ['s', 0, rand(5, 10), t]
-            ]);
+            ], true);
         }
 
         let playerOwnedSign = 0;

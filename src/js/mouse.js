@@ -14,8 +14,8 @@ function eventCoords(e) {
 }
 
 function followMinimap() {
-    const xOnMap = (MOUSE_POSITION.x - (CANVAS_WIDTH - G.minimapWidth)) / G.minimapWidth;
-    const yOnMap = (MOUSE_POSITION.y - (CANVAS_HEIGHT - G.minimapHeight)) / G.minimapHeight;
+    const xOnMap = (MOUSE_POSITION.x - (CANVAS_WIDTH - G.minimapWidth - MINIMAP_MARGIN)) / G.minimapWidth;
+    const yOnMap = (MOUSE_POSITION.y - (CANVAS_HEIGHT - G.minimapHeight - MINIMAP_MARGIN)) / G.minimapHeight;
 
     if (xOnMap > 0 && xOnMap < 1 && yOnMap > 0 && yOnMap < 1) {
         // interp(V, 'x', V.x, (xOnMap * W.width) - CANVAS_WIDTH / 2, 0.1);
@@ -29,8 +29,8 @@ onmousedown = e => {
     MOUSE_POSITION = eventCoords(e);
 
     // Assuming the minimap is a square
-    const xOnMap = (MOUSE_POSITION.x - (CANVAS_WIDTH - G.minimapWidth)) / G.minimapWidth;
-    const yOnMap = (MOUSE_POSITION.y - (CANVAS_HEIGHT - G.minimapHeight)) / G.minimapHeight;
+    const xOnMap = (MOUSE_POSITION.x - (CANVAS_WIDTH - G.minimapWidth - MINIMAP_MARGIN)) / G.minimapWidth;
+    const yOnMap = (MOUSE_POSITION.y - (CANVAS_HEIGHT - G.minimapHeight - MINIMAP_MARGIN)) / G.minimapHeight;
 
     if (xOnMap > 0 && xOnMap < 1 && yOnMap > 0 && yOnMap < 1) {
         draggingMinimap = true;
