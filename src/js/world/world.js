@@ -38,8 +38,6 @@ class World {
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 4.5;
             this.add(unit, CYCLABLE | RENDERABLE | UNIT);
-
-            unit.setBehavior(new Autonomous());
         }
 
         for (let i = 0 ; i < 10 ; i++) {
@@ -47,10 +45,8 @@ class World {
             unit.x = GRID_SIZE * (4.5 + i);
             unit.y = GRID_SIZE * 20.5;
             unit.team = ENEMY_TEAM;
-            this.add(unit, CYCLABLE | RENDERABLE | UNIT);
-
-            // unit.setBehavior(new AttackFollow(W.cyclables[0]));
             unit.setBehavior(new Autonomous());
+            this.add(unit, CYCLABLE | RENDERABLE | UNIT);
         }
     }
 
