@@ -69,5 +69,6 @@
     "MINIMAP_MARGIN": 20,
 
     "HUD_SCORE_CELL_SIZE": 2,
-    "HUD_GAUGE_GAP": 70
+    "HUD_GAUGE_GAP": 70,
+    "HUD_HEIGHT": 70
 }
