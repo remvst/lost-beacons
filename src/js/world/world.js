@@ -29,14 +29,6 @@ class World {
             return !W.polygons.filter(b => a !== b && a.isSame(b)).length;
         });
 
-        for (let i = 0 ; i < 10 ; i++) {
-            const beacon = new Beacon();
-            beacon.x = roundP(rand(5 * GRID_SIZE, W.width - 5 * GRID_SIZE), GRID_SIZE);
-            beacon.y = roundP(rand(5 * GRID_SIZE, W.height - 5 * GRID_SIZE), GRID_SIZE);
-            // beacon.y = GRID_SIZE * (GRID_OBSTACLE_PADDING + GRID_EMPTY_PADDING + 1 + ~~(random() * GRID_COLS));
-            this.add(beacon, CYCLABLE | RENDERABLE | BEACON);
-        }
-
         for (let i = 0 ; i < 0 ; i++) {
             const unit = new Unit();
             unit.x = GRID_SIZE * (4.5 + i);
@@ -56,6 +48,26 @@ class World {
             // unit.setBehavior(new AttackFollow(W.cyclables[0]));
             unit.setBehavior(new Autonomous());
         }
+
+        for (let i = 0 ; i < 10 ; i++) {
+            this.spawnBeacon();
+        }
+    }
+
+    spawnBeacon() {
+        const beacon = new Beacon();
+        while(true) {
+            do {
+                beacon.x = roundP(random() * W.width, GRID_SIZE);
+                beacon.y = roundP(random() * W.height, GRID_SIZE);
+            } while(W.hasObstacle(beacon.x, beacon.y, 2));
+
+            if (!W.beacons.filter(b => dist(b, beacon) < BEACON_SPACING_RADIUS).length) {
+                break;
+            }
+        }
+
+        this.add(beacon, CYCLABLE | RENDERABLE | BEACON);
     }
 
     render() {
