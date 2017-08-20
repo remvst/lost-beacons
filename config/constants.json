@@ -65,5 +65,7 @@
 
     "SHOT_DAMAGE": 0.1,
 
-    "MINIMAP_SCALE": 0.05
+    "MINIMAP_SCALE": 0.05,
+
+    "HUD_SCORE_CELL_SIZE": 5
 }

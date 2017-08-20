@@ -52,7 +52,29 @@ class Game {
 
         G.minimap();
 
-        drawText(R, 'hello', 0, 0, 10, '#f00');
+        const playerScore = '' + G.score(PLAYER_TEAM);
+        const enemyScore = '' + G.score(ENEMY_TEAM);
+
+        const playerScoreX = CANVAS_WIDTH / 2 - 20;
+        const enemyScoreX = CANVAS_WIDTH / 2 + 20;
+
+        const playerScoreCells = requiredCells(playerScore);
+        const enemyScoreCells = requiredCells(enemyScore);
+
+        const middle = '-';
+        const middleCells = requiredCells(middle);
+
+        const scoreText = nomangle('beacons');
+        const scoreCells = requiredCells(scoreText);
+        drawText(R, scoreText, CANVAS_WIDTH / 2 - scoreCells * HUD_SCORE_CELL_SIZE / 4, 10, HUD_SCORE_CELL_SIZE / 2, '#fff');
+
+        drawText(R, playerScore, playerScoreX - playerScoreCells * HUD_SCORE_CELL_SIZE / 2, 30, HUD_SCORE_CELL_SIZE, '#0f0');
+        drawText(R, enemyScore, enemyScoreX - enemyScoreCells * HUD_SCORE_CELL_SIZE / 2, 30, HUD_SCORE_CELL_SIZE, '#f00');
+        drawText(R, middle, CANVAS_WIDTH / 2 - middleCells * HUD_SCORE_CELL_SIZE / 2, 30, HUD_SCORE_CELL_SIZE, '#fff');
+    }
+
+    score(team) {
+        return W.beacons.filter(b => b.team == team).length;
     }
 
     get minimapWidth() {
