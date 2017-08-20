@@ -151,7 +151,7 @@ class Game {
             W.map.forEach((r, row) => {
                 r.forEach((x, col) => {
                     if (x) {
-                        R.fillRect(
+                        fillRect(
                             round(row * GRID_SIZE * MINIMAP_SCALE),
                             round(col * GRID_SIZE * MINIMAP_SCALE),
                             round(MINIMAP_SCALE * GRID_SIZE),
@@ -160,17 +160,6 @@ class Game {
                     }
                 });
             });
-
-            R.globalAlpha = 1;
-            W.units
-                .forEach(c => {
-                    R.fillStyle = c.team.body;
-                    R.fillRect(c.x * MINIMAP_SCALE - 2, c.y * MINIMAP_SCALE - 2, 5, 5);
-                });
-
-            R.lineWidth = 1;
-            R.strokeStyle = '#000';
-            strokeRect(0.5, 0.5, ~~(W.width * MINIMAP_SCALE), ~~(W.height * MINIMAP_SCALE));
 
             R.lineWidth = 1;
             R.fillStyle = '#fff';
@@ -190,6 +179,26 @@ class Game {
                 ~~(CANVAS_WIDTH * MINIMAP_SCALE),
                 ~~(CANVAS_HEIGHT * MINIMAP_SCALE)
             );
+
+            R.globalAlpha = 1;
+            W.units
+                .forEach(c => {
+                    R.fillStyle = c.team.body;
+                    fillRect(c.x * MINIMAP_SCALE - 1, c.y * MINIMAP_SCALE - 1, 2, 2);
+                });
+
+            W.beacons
+                .forEach(beacon => {
+                    R.fillStyle = beacon.team.beacon;
+                    wrap(() => {
+                        translate(beacon.x * MINIMAP_SCALE, beacon.y * MINIMAP_SCALE);
+                        squareFocus(8, 4);
+                    });
+                });
+
+            R.lineWidth = 1;
+            R.strokeStyle = '#000';
+            strokeRect(0.5, 0.5, ~~(W.width * MINIMAP_SCALE), ~~(W.height * MINIMAP_SCALE));
         });
     }
 
