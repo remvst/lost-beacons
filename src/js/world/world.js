@@ -29,10 +29,7 @@ class World {
             return !W.polygons.filter(b => a !== b && a.isSame(b)).length;
         });
 
-        for (let i = 0 ; i < 10 ; i++) {
-            this.spawnBeacon();
-        }
-
+        // Creates a squad of the specified size at the specified position
         function squad(x, y, team, size) {
             if (!size) {
                 return;
@@ -53,26 +50,33 @@ class World {
             squad(x, y, team, size - 1);
         }
 
-        squad(
+        // Spawns squads for each team at opposite sides of the map
+        function symSquad(x, y, size) {
+            squad(x, y, PLAYER_TEAM, size);
+            squad(W.width - x, W.height - y, ENEMY_TEAM, size);
+        }
+
+        symSquad(
             GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2),
             GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2),
-            PLAYER_TEAM,
             5
         );
 
-        squad(
+        symSquad(
             GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 5),
             GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2),
-            PLAYER_TEAM,
             5
         );
 
-        squad(
+        symSquad(
             GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 8),
             GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2),
-            PLAYER_TEAM,
             5
         );
+
+        for (let i = 0 ; i < 10 ; i++) {
+            this.spawnBeacon();
+        }
 
         // for (let i = 0 ; i < 10 ; i++) {
         //     const unit = new Unit();
@@ -99,7 +103,7 @@ class World {
                 beacon.y = roundP(random() * W.height, GRID_SIZE);
             } while(W.hasObstacle(beacon.x, beacon.y, 2));
 
-            if (!W.beacons.filter(b => dist(b, beacon) < BEACON_SPACING_RADIUS).length) {
+            if (!W.cyclables.filter(c => c.team && dist(c, beacon) < BEACON_SPACING_RADIUS).length) {
                 break;
             }
         }
