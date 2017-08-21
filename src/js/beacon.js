@@ -14,6 +14,8 @@ class Beacon {
         this.playerTeamOwned = 0;
 
         this.nextParticle = 0;
+
+        this.nextReinforcements = 0;
     }
 
     cycle(e) {
@@ -85,7 +87,25 @@ class Beacon {
                     ['s', rand(5, 10), 0, t]
                 ], true);
             }
+
+            this.nextReinforcements = 120;
         }
+
+        if ((this.nextReinforcements -= e) < 0 && this.team != NEUTRAL_TEAM) {
+            this.reinforcements();
+        }
+    }
+
+    reinforcements() {
+        this.nextReinforcements = 120;
+
+        const unit = new Unit();
+        unit.x = this.x;
+        unit.y = this.y;
+        unit.team = this.team;
+        W.add(unit, CYCLABLE | RENDERABLE | UNIT);
+
+        unit.setBehavior(new Reach(this));
     }
 
     render() {
@@ -122,6 +142,11 @@ class Beacon {
 
     postRender() {
         translate(this.x, this.y);
+
+        if (this.team != NEUTRAL_TEAM) {
+            drawCenteredText(R, nomangle('reinforcements'), 0, 50, 2, this.team.beacon, true);
+            drawCenteredText(R, formatTime(this.nextReinforcements), 0, 64, 2, this.team.beacon, true);
+        }
 
         const s =  (G.t % BEACON_WAVE_PERIOD) / BEACON_WAVE_PERIOD;
         R.strokeStyle = this.team.beacon;

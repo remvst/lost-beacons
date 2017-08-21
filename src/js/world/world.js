@@ -33,21 +33,62 @@ class World {
             this.spawnBeacon();
         }
 
-        for (let i = 0 ; i < 10 ; i++) {
+        function squad(x, y, team, size) {
+            if (!size) {
+                return;
+            }
+
+            const position = pick(W.firstFreePositionsAround(
+                {'x': x, 'y': y},
+                W.units,
+                UNIT_RADIUS
+            ));
+
             const unit = new Unit();
-            unit.x = GRID_SIZE * (4.5 + i);
-            unit.y = GRID_SIZE * 4.5;
-            this.add(unit, CYCLABLE | RENDERABLE | UNIT);
+            unit.x = position.x;
+            unit.y = position.y;
+            unit.team = team;
+            W.add(unit, CYCLABLE | RENDERABLE | UNIT);
+
+            squad(x, y, team, size - 1);
         }
 
-        for (let i = 0 ; i < 10 ; i++) {
-            const unit = new Unit();
-            unit.x = GRID_SIZE * (4.5 + i);
-            unit.y = GRID_SIZE * 20.5;
-            unit.team = ENEMY_TEAM;
-            unit.setBehavior(new Autonomous());
-            this.add(unit, CYCLABLE | RENDERABLE | UNIT);
-        }
+        squad(
+            GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2),
+            GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2),
+            PLAYER_TEAM,
+            5
+        );
+
+        squad(
+            GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 5),
+            GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2),
+            PLAYER_TEAM,
+            5
+        );
+
+        squad(
+            GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 8),
+            GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2),
+            PLAYER_TEAM,
+            5
+        );
+
+        // for (let i = 0 ; i < 10 ; i++) {
+        //     const unit = new Unit();
+        //     unit.x = GRID_SIZE * (4.5 + i);
+        //     unit.y = GRID_SIZE * 4.5;
+        //     this.add(unit, CYCLABLE | RENDERABLE | UNIT);
+        // }
+        //
+        // for (let i = 0 ; i < 10 ; i++) {
+        //     const unit = new Unit();
+        //     unit.x = GRID_SIZE * (4.5 + i);
+        //     unit.y = GRID_SIZE * 20.5;
+        //     unit.team = ENEMY_TEAM;
+        //     unit.setBehavior(new Autonomous());
+        //     this.add(unit, CYCLABLE | RENDERABLE | UNIT);
+        // }
     }
 
     spawnBeacon() {
@@ -190,7 +231,9 @@ class World {
             }
 
             path[path.length - 1] = {'x': end.x, 'y': end.y};
-            path.shift(); // kinda risky, but the first step is very often a step back
+            if (path.length > 1) {
+                path.shift(); // kinda risky, but the first step is very often a step back
+            }
 
             return path;
         }

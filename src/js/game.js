@@ -8,8 +8,6 @@ class Game {
         new World();
         new Camera();
 
-        G.nextReinforcements = 120;
-
         // Initialize cursors
         G.cursor = G.selectionCursor = new SelectionCursor();
         G.attackCursor = new AttackCursor();
@@ -60,7 +58,6 @@ class Game {
 
     cycle(e) {
         G.t += e;
-        G.nextReinforcements -= e;
 
         // Game loop things
         W.cyclables.forEach(x => x.cycle(e));
@@ -117,26 +114,6 @@ class Game {
 
             drawCenteredText(R, '' + value, x + w + sign * 15, y, HUD_SCORE_CELL_SIZE, color, true);
         }
-
-        wrap(() => {
-            translate(CANVAS_WIDTH / 2, 0);
-
-            R.fillStyle = G.hudGradient2;
-            fillRect(-CANVAS_WIDTH / 2, 0, CANVAS_WIDTH, HUD_HEIGHT);
-
-            R.fillStyle = G.hudBg;
-            R.strokeStyle = '#000';
-            beginPath();
-            moveTo(-220, 0.5);
-            lineTo(-170, HUD_HEIGHT);
-            lineTo(170, HUD_HEIGHT);
-            lineTo(220, 0.5);
-            fill();
-            stroke();
-
-            drawCenteredText(R, nomangle('reinforcements in:'), 0, 10, HUD_SCORE_CELL_SIZE, '#fff', true);
-            drawCenteredText(R, formatTime(G.nextReinforcements), 0, 30, HUD_SCORE_CELL_SIZE * 2, '#fff', true);
-        });
 
         G.minimap();
     }
