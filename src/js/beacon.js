@@ -89,6 +89,16 @@ class Beacon {
             }
 
             this.nextReinforcements = 120;
+
+            let s;
+            if (newOwner == ENEMY_TEAM) {
+                s = 'enemy took';
+            } else if (newOwner == PLAYER_TEAM) {
+                s = 'conquered';
+            } else {
+                s = actualConqueringTeam == ENEMY_TEAM ? 'lost' : 'enemy lost';
+            }
+            G.addLog(s + ' beacon #' + this.index);
         }
 
         if ((this.nextReinforcements -= e) < 0 && this.team != NEUTRAL_TEAM) {
@@ -106,6 +116,8 @@ class Beacon {
         W.add(unit, CYCLABLE | RENDERABLE | UNIT);
 
         unit.setBehavior(this.team.behavior(this));
+
+        G.addLog((this.team == ENEMY_TEAM ? 'enemy' : 'new') + ' reinforcements at beacon #' + this.index);
     }
 
     render() {
@@ -197,6 +209,10 @@ class Beacon {
             arc(0, 0, radius, 0, PI / 3, false);
             stroke();
         });
+    }
+
+    get index() {
+        return W.beacons.indexOf(this) + 1;
     }
 
 }
