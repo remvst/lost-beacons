@@ -17,6 +17,7 @@
     "src/js/graphics/square-focus.js",
     "src/js/graphics/cache.js",
     "src/js/graphics/font.js",
+    "src/js/graphics/indicator.js",
 
     "src/js/units/unit.js",
 

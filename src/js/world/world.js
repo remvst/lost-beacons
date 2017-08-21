@@ -94,6 +94,8 @@ class World {
         }
 
         this.add(beacon, CYCLABLE | RENDERABLE | BEACON);
+
+        this.add(new Indicator(beacon, nomangle('beacon'), () => beacon.team.beacon), RENDERABLE);
     }
 
     render() {
