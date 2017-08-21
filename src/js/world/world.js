@@ -57,42 +57,26 @@ class World {
         }
 
         symSquad(
-            GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2),
-            GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2),
+            evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
+            evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
             5
         );
 
         symSquad(
-            GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 5),
-            GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2),
+            evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 5)),
+            evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
             5
         );
 
         symSquad(
-            GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 8),
-            GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2),
+            evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 8)),
+            evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
             5
         );
 
         for (let i = 0 ; i < 10 ; i++) {
             this.spawnBeacon();
         }
-
-        // for (let i = 0 ; i < 10 ; i++) {
-        //     const unit = new Unit();
-        //     unit.x = GRID_SIZE * (4.5 + i);
-        //     unit.y = GRID_SIZE * 4.5;
-        //     this.add(unit, CYCLABLE | RENDERABLE | UNIT);
-        // }
-        //
-        // for (let i = 0 ; i < 10 ; i++) {
-        //     const unit = new Unit();
-        //     unit.x = GRID_SIZE * (4.5 + i);
-        //     unit.y = GRID_SIZE * 20.5;
-        //     unit.team = ENEMY_TEAM;
-        //     unit.setBehavior(new Autonomous());
-        //     this.add(unit, CYCLABLE | RENDERABLE | UNIT);
-        // }
     }
 
     spawnBeacon() {
