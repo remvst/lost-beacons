@@ -29,10 +29,6 @@ class Game {
         G.hudGradient.addColorStop(0, 'rgba(0,0,0,0)');
         G.hudGradient.addColorStop(1, 'rgba(0,0,0,0.5)');
 
-        G.hudGradient2 = R.createLinearGradient(0, 0, 0, HUD_HEIGHT);
-        G.hudGradient2.addColorStop(1, 'rgba(0,0,0,0)');
-        G.hudGradient2.addColorStop(0, 'rgba(0,0,0,0.5)');
-
         G.hudBg = R.createLinearGradient(0, 0, 0, HUD_HEIGHT);
         G.hudBg.addColorStop(0, '#035');
         G.hudBg.addColorStop(1, '#146');
