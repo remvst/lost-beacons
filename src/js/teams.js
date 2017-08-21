@@ -10,7 +10,7 @@ const PLAYER_TEAM = {
     'leg': '#381',
     'head': '#2f7',
     'beacon': '#0f0',
-    'behavior': position => new Idle(position)
+    'behavior': position => new Reach(position)
 };
 
 const ENEMY_TEAM = {
