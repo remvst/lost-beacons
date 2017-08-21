@@ -105,7 +105,7 @@ class Beacon {
         unit.team = this.team;
         W.add(unit, CYCLABLE | RENDERABLE | UNIT);
 
-        unit.setBehavior(new Reach(this));
+        unit.setBehavior(this.team.behavior(unit));
     }
 
     render() {

@@ -45,6 +45,7 @@ class World {
             unit.x = position.x;
             unit.y = position.y;
             unit.team = team;
+            unit.setBehavior(team.behavior(unit));
             W.add(unit, CYCLABLE | RENDERABLE | UNIT);
 
             squad(x, y, team, size - 1);
