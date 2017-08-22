@@ -116,6 +116,8 @@ class Beacon {
         W.add(unit, CYCLABLE | RENDERABLE | UNIT);
 
         unit.setBehavior(this.team.behavior(this));
+
+        this.indicator.indicate(this.team == ENEMY_TEAM ? nomangle('enemy reinforcements') : nomangle('reinforcements'), this.team.beacon);
     }
 
     render() {
