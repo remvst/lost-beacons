@@ -5,10 +5,17 @@ class Indicator {
         // Owner will set color and label
     }
 
+    indicate(label, color) {
+        this.indicateTime = G.t;
+        this.label = label;
+        this.color = color;
+    }
+
     postRender() {
+        const t = G.t - (this.indicateTime || -99);
         const radius = CANVAS_WIDTH / 2 - INDICATOR_MARGIN;
 
-        if (dist(this.target, V.center) < radius) {
+        if (t > 4 || dist(this.target, V.center) < radius) {
             return;
         }
 
@@ -27,7 +34,11 @@ class Indicator {
         const labelX = between(minX, V.center.x + cos(angle) * radius, maxX - labelWidth);
         const labelY = between(minY, V.center.y + sin(angle) * radius, maxY - labelHeight);
 
-        drawText(R, this.label, labelX, labelY, INDICATOR_LABEL_CELL_SIZE, this.color, true);
+        let label = this.label.substr(0, ~~(t * 30));
+        if ((t % 0.5) > 0.25) {
+            label += '?';
+        }
+        drawText(R, label, labelX, labelY, INDICATOR_LABEL_CELL_SIZE, this.color, true);
 
         translate(
             V.center.x + cos(angle) * (radius + INDICATOR_ARROW_SIZE * 2),
