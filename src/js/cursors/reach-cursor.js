@@ -44,7 +44,7 @@ class ReachCursor extends Cursor {
         R.globalAlpha = 1;
         const cursorScale = min(1, max(0, (G.t - this.timeOnPosition - 0.5) * 10));
         scale(cursorScale, cursorScale);
-        this.renderLabel(beacon ? nomangle('CONQUER()') : nomangle('REACH()'));
+        this.renderLabel(beacon ? (beacon.team == PLAYER_TEAM ? nomangle('DEFEND()') : nomangle('CAPTURE()')) : nomangle('REACH()'));
     }
 
     move(p) {

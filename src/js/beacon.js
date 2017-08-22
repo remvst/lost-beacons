@@ -16,6 +16,9 @@ class Beacon {
         this.nextParticle = 0;
 
         this.nextReinforcements = 0;
+
+        this.indicator = new Indicator(this);
+        this.indicatorShowingTime = 0;
     }
 
     cycle(e) {
@@ -90,20 +93,26 @@ class Beacon {
 
             this.nextReinforcements = 120;
 
-            let s;
-            if (newOwner == ENEMY_TEAM) {
-                s = 'enemy took';
-            } else if (newOwner == PLAYER_TEAM) {
-                s = 'conquered';
-            } else {
-                s = actualConqueringTeam == ENEMY_TEAM ? 'lost' : 'enemy lost';
+            if (newOwner == PLAYER_TEAM) {
+                this.indicate(nomangle('beacon captured'));
+            } else if (newOwner == ENEMY_TEAM) {
+                this.indicate(nomangle('enemy captured beacon'));
+            } else if (actualConqueringTeam == ENEMY_TEAM) {
+                this.indicate(nomangle('beacon lost'));
             }
-            G.addLog(s + ' beacon #' + this.index);
         }
 
         if ((this.nextReinforcements -= e) < 0 && this.team != NEUTRAL_TEAM) {
             this.reinforcements();
         }
+
+        this.indicatorShowingTime -= e;
+    }
+
+    indicate(label) {
+        this.indicator.label = label;
+        this.indicator.color = this.team.beacon;
+        this.indicatorShowingTime = 4;
     }
 
     reinforcements() {
@@ -116,8 +125,6 @@ class Beacon {
         W.add(unit, CYCLABLE | RENDERABLE | UNIT);
 
         unit.setBehavior(this.team.behavior(this));
-
-        G.addLog((this.team == ENEMY_TEAM ? 'enemy' : 'new') + ' reinforcements at beacon #' + this.index);
     }
 
     render() {
@@ -153,6 +160,10 @@ class Beacon {
     }
 
     postRender() {
+        if (this.indicatorShowingTime > 0) {
+            this.indicator.postRender();
+        }
+
         translate(this.x, this.y);
 
         if (this.team != NEUTRAL_TEAM) {

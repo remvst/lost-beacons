@@ -33,8 +33,6 @@ class Unit {
         let particles = 1;
 
         if (this.dead) {
-            G.addLog((this.team == ENEMY_TEAM ? 'destroyed enemy' : 'lost') + ' unit');
-
             W.remove(this);
             particles = 20;
 

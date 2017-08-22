@@ -8,8 +8,6 @@ class Game {
         new World();
         new Camera();
 
-        this.log = [];
-
         // Initialize cursors
         G.cursor = G.selectionCursor = new SelectionCursor();
         G.attackCursor = new AttackCursor();
@@ -114,24 +112,6 @@ class Game {
         }
 
         G.minimap();
-
-        this.logTime += e;
-
-        this.log.forEach((l, i, a) => {
-            if (i == a.length - 1) {
-                l = l.substr(0, ~~(l.length * this.logTime * 4)) + ((G.logTime % 1) > 0.5 ? '?' : '');
-            }
-            drawText(R, l, 10, 10 + i * 20, 2, '#fff', true);
-        });
-    }
-
-    addLog(s) {
-        this.log.push(s);
-        if (this.log.length > 10) {
-            this.log.shift();
-        }
-
-        this.logTime = 0;
     }
 
     beaconsScore(team) {
@@ -151,8 +131,6 @@ class Game {
     }
 
     minimap() {
-        // console.log()
-
         wrap(() => {
             translate(CANVAS_WIDTH - W.width * MINIMAP_SCALE - MINIMAP_MARGIN, CANVAS_HEIGHT - W.height * MINIMAP_SCALE - MINIMAP_MARGIN);
 
@@ -172,8 +150,8 @@ class Game {
                 r.forEach((x, col) => {
                     if (x) {
                         fillRect(
-                            round(row * GRID_SIZE * MINIMAP_SCALE),
                             round(col * GRID_SIZE * MINIMAP_SCALE),
+                            round(row * GRID_SIZE * MINIMAP_SCALE),
                             round(MINIMAP_SCALE * GRID_SIZE),
                             round(MINIMAP_SCALE * GRID_SIZE)
                         );

@@ -366,6 +366,8 @@ function drawCenteredText(r, t, x, y, s, c, sh) {
 
 // Returns the total cells required to draw the specified text
 function requiredCells(t) {
+    t = t || '';
+
     const r = 0;
     for(var i = 0 ; i < t.length ; i++){
         r += defs[t.charAt(i)][0].length + 1;
