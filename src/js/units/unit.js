@@ -18,6 +18,8 @@ class Unit {
 
         this.nextShot = rand(0.2, 1);
         this.target = null;
+
+        this.indicator = new Indicator(this);
     }
 
     get dead() {
@@ -28,6 +30,10 @@ class Unit {
         this.health -= amount * this.hurtFactor;
         if (this.health < 0.1) {
             this.health = 0;
+        }
+
+        if (this.team == PLAYER_TEAM) {
+            this.indicator.indicate(nomangle('unit under attack'), ENEMY_TEAM.beacon);
         }
 
         let particles = 1;
@@ -163,6 +169,8 @@ class Unit {
     }
 
     postRender() {
+        this.indicator.postRender();
+
         translate(this.x, this.y);
 
         // Second render pass, add health gauge

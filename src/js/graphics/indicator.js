@@ -6,7 +6,10 @@ class Indicator {
     }
 
     indicate(label, color) {
-        this.indicateTime = G.t;
+        if (label != this.label) {
+            this.indicateTime = G.t;
+        }
+
         this.label = label;
         this.color = color;
     }
