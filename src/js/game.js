@@ -5,8 +5,8 @@ class Game {
 
         G.t = 0;
 
-        new World();
         new Camera();
+        new MenuWorld();
 
         // Initialize cursors
         G.cursor = G.selectionCursor = new SelectionCursor();
@@ -63,7 +63,18 @@ class Game {
 
         // Render things
         W.render();
+        G.renderHUD();
+    }
 
+    beaconsScore(team) {
+        return W.beacons.filter(b => b.team == team).length;
+    }
+
+    unitsScore(team) {
+        return W.units.filter(b => b.team == team).length;
+    }
+
+    renderHUD() {
         R.fillStyle = 'rgba(255,255,255,.15)';
         fillRect(0, ~~(G.t * 100) % CANVAS_HEIGHT * 1.5, CANVAS_WIDTH, 0.5);
 
@@ -111,15 +122,7 @@ class Game {
             drawCenteredText(R, '' + value, x + w + sign * 15, y, HUD_SCORE_CELL_SIZE, color, true);
         }
 
-        G.minimap();
-    }
-
-    beaconsScore(team) {
-        return W.beacons.filter(b => b.team == team).length;
-    }
-
-    unitsScore(team) {
-        return W.units.filter(b => b.team == team).length;
+        G.renderMinimap();
     }
 
     get minimapWidth() {
@@ -130,7 +133,7 @@ class Game {
         return MINIMAP_SCALE * W.height;
     }
 
-    minimap() {
+    renderMinimap() {
         wrap(() => {
             translate(CANVAS_WIDTH - W.width * MINIMAP_SCALE - MINIMAP_MARGIN, CANVAS_HEIGHT - W.height * MINIMAP_SCALE - MINIMAP_MARGIN);
 
