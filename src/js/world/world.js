@@ -12,7 +12,8 @@ class World {
         W.beacons = [];
         W.renderables = [];
 
-        W.map = generate();
+        this.initialize();
+
         W.polygons = [];
 
         // TODO maybe use reduce?
@@ -28,48 +29,52 @@ class World {
         W.polygons = W.polygons.filter(a => {
             return !W.polygons.filter(b => a !== b && a.isSame(b)).length;
         });
+    }
 
-        // Creates a squad of the specified size at the specified position
-        function squad(x, y, team, size) {
-            if (!size) {
-                return;
-            }
-
-            const position = pick(W.firstFreePositionsAround(
-                {'x': x, 'y': y},
-                W.units,
-                UNIT_RADIUS
-            ));
-
-            const unit = new Unit();
-            unit.x = position.x;
-            unit.y = position.y;
-            unit.team = team;
-            unit.setBehavior(team.behavior(unit));
-            W.add(unit, CYCLABLE | RENDERABLE | UNIT);
-
-            squad(x, y, team, size - 1);
+    // Creates a squad of the specified size at the specified position
+    squad(x, y, team, size) {
+        if (!size) {
+            return;
         }
 
-        // Spawns squads for each team at opposite sides of the map
-        function symSquad(x, y, size) {
-            squad(x, y, PLAYER_TEAM, size);
-            squad(W.width - x, W.height - y, ENEMY_TEAM, size);
-        }
+        const position = pick(W.firstFreePositionsAround(
+            {'x': x, 'y': y},
+            W.units,
+            UNIT_RADIUS
+        ));
 
-        symSquad(
+        const unit = new Unit();
+        unit.x = position.x;
+        unit.y = position.y;
+        unit.team = team;
+        unit.setBehavior(team.behavior(unit));
+        W.add(unit, CYCLABLE | RENDERABLE | UNIT);
+
+        this.squad(x, y, team, size - 1);
+    }
+
+    // Spawns squads for each team at opposite sides of the map
+    symSquad(x, y, size) {
+        this.squad(x, y, PLAYER_TEAM, size);
+        this.squad(W.width - x, W.height - y, ENEMY_TEAM, size);
+    }
+
+    initialize() {
+        W.map = generate();
+
+        this.symSquad(
             evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
             evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
             5
         );
 
-        symSquad(
+        this.symSquad(
             evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 5)),
             evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
             5
         );
 
-        symSquad(
+        this.symSquad(
             evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 8)),
             evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
             5
