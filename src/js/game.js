@@ -75,6 +75,10 @@ class Game {
     }
 
     renderHUD() {
+        if (W instanceof MenuWorld) {
+            return;
+        }
+
         R.fillStyle = 'rgba(255,255,255,.15)';
         fillRect(0, ~~(G.t * 100) % CANVAS_HEIGHT * 1.5, CANVAS_WIDTH, 0.5);
 
