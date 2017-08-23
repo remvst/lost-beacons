@@ -33,6 +33,7 @@
     "src/js/cursors/selection-cursor.js",
 
     "src/js/world/world.js",
+    "src/js/world/menu-world.js",
     "src/js/world/camera.js",
     "src/js/world/polygon.js",
     "src/js/world/cube.js",

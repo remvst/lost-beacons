@@ -57,7 +57,10 @@ class Game {
 
         // Game loop things
         W.cyclables.forEach(x => x.cycle(e));
-        V.cycle(e);
+
+        if (!(W instanceof MenuWorld)) {
+            V.cycle(e);
+        }
 
         G.updateCursor();
 
