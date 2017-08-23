@@ -40,7 +40,7 @@ class MenuWorld extends World {
             'cycle': () => {
                 if (beacon.team == PLAYER_TEAM) {
                     // TODO launch
-                    console.log('launch game');
+                    this.launch();
                     W.remove(checker);
                 }
             }
@@ -59,6 +59,12 @@ class MenuWorld extends World {
             drawCenteredText(R, nomangle('tactical territory control'), CANVAS_WIDTH / 2, 200 + 16 * 7, 5, '#fff', true);
 
             drawCenteredText(R, nomangle('capture the beacon to start'), CANVAS_WIDTH / 2, 850, 5, '#fff', true);
+        });
+    }
+
+    launch() {
+        interp(W, 'textAlpha', 1, 0, 0.5, 0, 0, () => {
+            delayed(() => W.animatePolygons(1, 0), 500);
         });
     }
 

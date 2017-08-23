@@ -28,7 +28,7 @@ class World {
             return volumes.concat(volume);
         }, []);
 
-        W.animatePolygons(() => {
+        W.animatePolygons(0, 1, () => {
             // Filter out polygons that are pretty much the same
             W.polygons = W.polygons.filter(a => {
                 return !W.polygons.filter(b => a !== b && a.isSame(b)).length;
@@ -453,12 +453,12 @@ class World {
         return dist(a, cast) < d;
     }
 
-    animatePolygons(cb) {
+    animatePolygons(from, to, cb) {
         W.volumes.forEach(volume => {
             const duration = random() * 0.5 + 0.5;
             volume.forEach(polygon => {
-                interp(polygon, 'perspective', polygon.perspective * 10, polygon.perspective, duration);
-                interp(polygon, 'alpha', 0, 1, duration);
+                interp(polygon, 'perspective', polygon.perspective * (from ? 1 : 10), polygon.perspective * (to ? 1 : 10), duration);
+                interp(polygon, 'alpha', from, to, duration);
             });
         });
 
