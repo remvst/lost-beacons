@@ -12,7 +12,7 @@ class World {
         W.beacons = [];
         W.renderables = [];
 
-        this.initialize();
+        W.initialize();
 
         W.polygons = [];
 
@@ -98,7 +98,7 @@ class World {
             }
         }
 
-        this.add(beacon, CYCLABLE | RENDERABLE | BEACON);
+        W.add(beacon, CYCLABLE | RENDERABLE | BEACON);
     }
 
     render() {
@@ -273,10 +273,10 @@ class World {
             const left = {'row': expandedCell.row, 'col': expandedCell.col - 1};
             const right = {'row': expandedCell.row, 'col': expandedCell.col + 1};
 
-            const obstacleTop = this.hasObstacleAtCell(top);
-            const obstacleBottom = this.hasObstacleAtCell(bottom);
-            const obstacleLeft = this.hasObstacleAtCell(left);
-            const obstacleRight = this.hasObstacleAtCell(right);
+            const obstacleTop = W.hasObstacleAtCell(top);
+            const obstacleBottom = W.hasObstacleAtCell(bottom);
+            const obstacleLeft = W.hasObstacleAtCell(left);
+            const obstacleRight = W.hasObstacleAtCell(right);
 
             const neighbors = [top, bottom, left, right];
 
