@@ -41,17 +41,25 @@ class MenuWorld extends World {
                 if (beacon.team == PLAYER_TEAM) {
                     // TODO launch
                     console.log('launch game');
+                    W.remove(checker);
                 }
             }
         };
         W.add(checker, CYCLABLE);
+
+        interp(W, 'textAlpha', 0, 1, 0.5, 0.8);
     }
 
     render() {
         super.render();
 
-        drawCenteredText(R, nomangle('lost beacons'), CANVAS_WIDTH / 2, 220, 16, '#a51', true);
-        drawCenteredText(R, nomangle('capture the beacon to start'), CANVAS_WIDTH / 2, 850, 5, '#fff', true);
+        wrap(() => {
+            R.globalAlpha = W.textAlpha;
+            drawCenteredText(R, nomangle('lost beacons'), CANVAS_WIDTH / 2, 200, 16, '#a51', true);
+            drawCenteredText(R, nomangle('tactical territory control'), CANVAS_WIDTH / 2, 200 + 16 * 7, 5, '#fff', true);
+
+            drawCenteredText(R, nomangle('capture the beacon to start'), CANVAS_WIDTH / 2, 850, 5, '#fff', true);
+        });
     }
 
 }

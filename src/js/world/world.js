@@ -13,21 +13,26 @@ class World {
         W.renderables = [];
 
         W.initialize();
-
-        W.polygons = [];
+        W.volumes = [];
 
         // TODO maybe use reduce?
         W.map.forEach((r, row) => {
             r.forEach((e, col) => {
                 if (e) {
-                    W.polygons = W.polygons.concat(cube(col * GRID_SIZE, row * GRID_SIZE, GRID_SIZE, GRID_SIZE, '#158'));
+                    W.volumes.push(cube(col * GRID_SIZE, row * GRID_SIZE, GRID_SIZE, GRID_SIZE, '#158'));
                 }
             });
         });
 
-        // Filter out polygons that are pretty much the same
-        W.polygons = W.polygons.filter(a => {
-            return !W.polygons.filter(b => a !== b && a.isSame(b)).length;
+        W.polygons = W.volumes.reduce((volumes, volume) => {
+            return volumes.concat(volume);
+        }, []);
+
+        W.animatePolygons(() => {
+            // Filter out polygons that are pretty much the same
+            W.polygons = W.polygons.filter(a => {
+                return !W.polygons.filter(b => a !== b && a.isSame(b)).length;
+            });
         });
     }
 
@@ -445,20 +450,19 @@ class World {
     hasObstacleBetween(a, b) {
         const d = dist(a, b);
         const cast = W.castRay(a, angleBetween(a, b), d);
-        const castDist = dist(a, cast);
         return dist(a, cast) < d;
     }
 
-    animatePolygons() {
-        function easeOutBack(t, b, c, d) {
-            const s = 1.70158;
-            return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
-        }
-
-        this.polygons.forEach(polygon => {
-            interp(polygon, 'perspective', polygon.perspective * 10, polygon.perspective, random() * 0.5 + 0.5, 0);
-            interp(polygon, 'alpha', 0, 1, random() * 0.5 + 0.5, 0);
+    animatePolygons(cb) {
+        W.volumes.forEach(volume => {
+            const duration = random() * 0.5 + 0.5;
+            volume.forEach(polygon => {
+                interp(polygon, 'perspective', polygon.perspective * 10, polygon.perspective, duration);
+                interp(polygon, 'alpha', 0, 1, duration);
+            });
         });
+
+        delayed(cb, 1000);
     }
 
 }
