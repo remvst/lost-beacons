@@ -5,19 +5,7 @@ class Game {
 
         G.t = 0;
 
-        new Camera();
-        new MenuWorld();
-
-        // Initialize cursors
-        G.cursor = G.selectionCursor = new SelectionCursor();
-        G.attackCursor = new AttackCursor();
-        G.reachCursor = new ReachCursor();
-
-        // Add a proxy object that will call render on the current cursor
-        W.add({
-            'render': () => G.cursor.render(),
-            'postRender': () => G.cursor.postRender()
-        }, RENDERABLE);
+        G.launch(MenuWorld);
 
         G.gridPattern = cache(1, 4, (r, c) => {
             r.fillStyle = 'rgba(0,0,0,.2)';
@@ -50,6 +38,22 @@ class Game {
             requestAnimationFrame(frame);
         };
         frame();
+    }
+
+    launch(worldType) {
+        new Camera();
+        new worldType();
+
+        // Initialize cursors
+        G.cursor = G.selectionCursor = new SelectionCursor();
+        G.attackCursor = new AttackCursor();
+        G.reachCursor = new ReachCursor();
+
+        // Add a proxy object that will call render on the current cursor
+        W.add({
+            'render': () => G.cursor.render(),
+            'postRender': () => G.cursor.postRender()
+        }, RENDERABLE);
     }
 
     cycle(e) {

@@ -34,6 +34,9 @@ class World {
                 return !W.polygons.filter(b => a !== b && a.isSame(b)).length;
             });
         });
+
+        this.flashAlpha = 1;
+        interp(W, 'flashAlpha', 1, 0, 1);
     }
 
     // Creates a squad of the specified size at the specified position
@@ -138,6 +141,14 @@ class World {
 
             W.renderables.forEach(e => e.postRender && wrap(() => e.postRender()));
         });
+
+        if (W.flashAlpha) {
+            wrap(() => {
+                R.globalAlpha = W.flashAlpha;
+                R.fillStyle = '#fff';
+                fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            });
+        }
     }
 
     get width() {
