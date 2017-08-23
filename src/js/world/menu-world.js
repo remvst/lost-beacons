@@ -35,6 +35,16 @@ class MenuWorld extends World {
         beacon.y = V.center.y;
         beacon.indicator.postRender = () => 0;
         W.add(beacon, CYCLABLE | RENDERABLE | BEACON);
+
+        const checker = {
+            'cycle': () => {
+                if (beacon.team == PLAYER_TEAM) {
+                    // TODO launch
+                    console.log('launch game');
+                }
+            }
+        };
+        W.add(checker, CYCLABLE);
     }
 
     render() {
