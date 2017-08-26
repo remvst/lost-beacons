@@ -53,6 +53,13 @@ class Unit {
             }
         }
 
+        const bloodDelay = rand(3, 4);
+        let p = particle(0, this.team.body, [
+            ['s', rand(4, 8), 0, 0.1, bloodDelay],
+        ]);
+        p.x = this.x + rand(-15, 15);
+        p.y = this.y + rand(-15, 15);
+
         while (particles--) {
             const d = rand(0.6, 1);
             particle(0, this.team.body, [
