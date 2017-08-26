@@ -22,6 +22,10 @@ class Cursor {
         this.downPosition = p;
     }
 
+    rightDown() {
+        console.log('heyyyy');
+    }
+
     move(p) {
         this.x = p.x;
         this.y = p.y;

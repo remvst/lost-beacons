@@ -55,9 +55,7 @@ class ReachCursor extends Cursor {
         super.move(p);
     }
 
-    up() {
-        super.up();
-
+    rightDown() {
         G.selectionCursor.units.forEach(unit => {
             unit.goto(this);
 

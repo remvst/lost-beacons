@@ -38,7 +38,7 @@ onmousedown = e => {
         return;
     }
 
-    G.cursor.down({
+    G.cursor[e.which == 3 ? 'rightDown' : 'down']({
         'x': MOUSE_POSITION.x + V.x,
         'y': MOUSE_POSITION.y + V.y
     });
@@ -66,4 +66,8 @@ onmouseup = () => {
             'y': MOUSE_POSITION.y + V.y
         });
     }
+};
+
+oncontextmenu = e => {
+    e.preventDefault();
 };
