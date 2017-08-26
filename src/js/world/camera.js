@@ -11,16 +11,16 @@ class Camera {
         // TODO
         const p = {'x': 0, 'y': 0};
 
-        if (w.down[37]) {
+        if (w.down[37] || w.down[65] || w.down[81]) {
             p.x = -1;
         }
-        if (w.down[39]) {
+        if (w.down[39] || w.down[68]) {
             p.x = 1;
         }
-        if (w.down[38]) {
+        if (w.down[38] || w.down[87] || w.down[90]) {
             p.y = -1;
         }
-        if (w.down[40]) {
+        if (w.down[40] || w.down[83]) {
             p.y = 1;
         }
 
