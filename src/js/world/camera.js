@@ -8,7 +8,6 @@ class Camera {
     }
 
     cycle(e) {
-        // TODO
         const p = {'x': 0, 'y': 0};
 
         if (w.down[37] || w.down[65] || w.down[81]) {
@@ -22,6 +21,18 @@ class Camera {
         }
         if (w.down[40] || w.down[83]) {
             p.y = 1;
+        }
+
+
+        const xBetween = isBetween(CURSOR_MOVE_CAMERA_MARGIN, MOUSE_POSITION.x, CANVAS_WIDTH - CURSOR_MOVE_CAMERA_MARGIN);
+        const yBetween = isBetween(CURSOR_MOVE_CAMERA_MARGIN, MOUSE_POSITION.y, CANVAS_HEIGHT - CURSOR_MOVE_CAMERA_MARGIN);
+        if (!xBetween || !yBetween) {
+            if (!xBetween) {
+                p.x = MOUSE_POSITION.x > CANVAS_WIDTH / 2 ? 1 : -1;
+            }
+            if (!yBetween) {
+                p.y = MOUSE_POSITION.y > CANVAS_HEIGHT / 2 ? 1 : -1;
+            }
         }
 
         if (p.x || p.y) {
