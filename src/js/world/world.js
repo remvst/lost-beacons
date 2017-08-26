@@ -7,7 +7,7 @@ class World {
     constructor() {
         W = this;
 
-        W.cyclables = [];
+        W.cyclables = [V];
         W.units = [];
         W.beacons = [];
         W.renderables = [];
@@ -60,37 +60,10 @@ class World {
         this.squad(x, y, team, size - 1);
     }
 
-    // Spawns squads for each team at opposite sides of the map
-    symSquad(x, y, size) {
-        this.squad(x, y, PLAYER_TEAM, size);
-        this.squad(W.width - x, W.height - y, ENEMY_TEAM, size);
-    }
-
-    initialize() {
-        W.map = generate();
-
-        W.symSquad(
-            evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
-            evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
-            5
-        );
-
-        W.symSquad(
-            evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 5)),
-            evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
-            5
-        );
-
-        W.symSquad(
-            evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 8)),
-            evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
-            5
-        );
-
-        for (let i = 0 ; i < 10 ; i++) {
-            W.spawnBeacon();
-        }
-    }
+    // Both subclasses will implement, no need to declare it
+    // initialize() {
+    //
+    // }
 
     spawnBeacon() {
         const beacon = new Beacon();
@@ -148,6 +121,17 @@ class World {
                 fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
             });
         }
+
+        if (W.renderHUD) {
+            W.renderHUD();
+        }
+
+        R.fillStyle = G.gridPattern;
+        fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+        if (W.renderMinimap) {
+            W.renderMinimap();
+        }
     }
 
     get width() {
@@ -183,6 +167,10 @@ class World {
         W.renderables.remove(element);
         W.units.remove(element);
         W.beacons.remove(element);
+    }
+
+    cycle(e) {
+        W.cyclables.slice().forEach(x => x.cycle(e));
     }
 
     isOut(x, y) {

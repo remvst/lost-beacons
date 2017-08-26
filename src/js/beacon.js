@@ -157,7 +157,7 @@ class Beacon {
 
         translate(this.x, this.y);
 
-        if (this.team != NEUTRAL_TEAM && !(W instanceof MenuWorld)) {
+        if (this.team != NEUTRAL_TEAM && W instanceof GameplayWorld) {
             drawCenteredText(R, nomangle('reinforcements'), 0, 50, 2, this.team.beacon, true);
             drawCenteredText(R, formatTime(this.nextReinforcements), 0, 64, 2, this.team.beacon, true);
         }

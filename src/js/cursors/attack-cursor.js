@@ -42,7 +42,7 @@ class AttackCursor extends Cursor {
         this.y = target.y;
     }
 
-    down() {
+    rightDown() {
         if (this.target) {
             G.selectionCursor.units.forEach(unit => {
                 unit.setBehavior(new Chase(this.target));

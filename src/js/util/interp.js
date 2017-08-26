@@ -6,6 +6,14 @@ function easeOutQuad(t, b, c, d) {
     return -c *(t/=d)*(t-2) + b;
 }
 
+function easeInQuint(t, b, c, d) {
+    return c*(t/=d)*t*t*t*t + b;
+}
+
+function easeOutQuint(t, b, c, d) {
+    return c*((t=t/d-1)*t*t*t*t + 1) + b;
+}
+
 function interp(o, p, a, b, d, l, f, e) {
     var i = {
         o: o, // object

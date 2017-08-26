@@ -25,9 +25,6 @@ class MenuWorld extends World {
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ]);
 
-        V.x = (W.width - CANVAS_WIDTH) / 2;
-        V.y = (W.width - CANVAS_HEIGHT) / 2;
-
         W.squad(V.center.x - 300, V.center.y, PLAYER_TEAM, 5);
 
         const beacon = new Beacon();
@@ -48,6 +45,13 @@ class MenuWorld extends World {
         W.add(checker, CYCLABLE);
 
         interp(W, 'textAlpha', 0, 1, 0.5, 0.8);
+
+        W.add({
+            'cycle': () => {
+                V.x = (W.width - CANVAS_WIDTH) / 2;
+                V.y = (W.width - CANVAS_HEIGHT) / 2;
+            }
+        }, CYCLABLE);
     }
 
     render() {
@@ -74,7 +78,10 @@ class MenuWorld extends World {
     launch() {
         interp(W, 'textAlpha', 1, 0, 0.5, 0, 0, () => {
             delayed(() => W.animatePolygons(1, 0), 500);
-            interp(W, 'flashAlpha', 0, 1, 1, 0.5, 0, () => G.launch(World));
+            delayed(() => {
+                W.add(new Announcement('capture all beacons'), RENDERABLE);
+            }, 2000);
+            interp(W, 'flashAlpha', 0, 1, 1, 0.5, 0, () => G.launch(GameplayWorld));
         });
     }
 
