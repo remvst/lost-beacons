@@ -31,23 +31,27 @@ class SelectionCursor extends Cursor {
         this.y = p.y;
 
         if (this.downPosition) {
-            this.selection = W.units.filter(e => {
-                return e.team === PLAYER_TEAM &&
-                    isBetween(this.downPosition.x, e.x, this.x) &&
-                    isBetween(this.downPosition.y, e.y, this.y);
+            this.selection = W.units.filter(unit => {
+                if (dist(this, this.downPosition) < 5) {
+                    return dist(unit, this.downPosition) < 20;
+                }
+
+                return unit.team === PLAYER_TEAM &&
+                    isBetween(this.downPosition.x, unit.x, this.x) &&
+                    isBetween(this.downPosition.y, unit.y, this.y);
             });
         }
     }
 
-    up() {
-        this.selection = W.units.filter(e => {
-            return e.team === PLAYER_TEAM &&
-                isBetween(this.downPosition.x, e.x, this.x) &&
-                isBetween(this.downPosition.y, e.y, this.y);
-        });
-
-        super.up();
-    }
+    // up() {
+    //     // this.selection = W.units.filter(unit => {
+    //     //     return unit.team === PLAYER_TEAM &&
+    //     //         isBetween(this.downPosition.x, unit.x, this.x) &&
+    //     //         isBetween(this.downPosition.y, unit.y, this.y);
+    //     // });
+    //
+    //     super.up();
+    // }
 
     get units() {
         return this.selection.filter(unit => !unit.dead);

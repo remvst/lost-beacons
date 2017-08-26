@@ -23,14 +23,14 @@ class Cursor {
     }
 
     rightDown() {
-        
+
     }
 
     move(p) {
         this.x = p.x;
         this.y = p.y;
 
-        if (this.downPosition && dist(this.downPosition, this) > SELECTION_MIN_SIZE) {
+        if (this.downPosition) {
             G.cursor = G.selectionCursor;
             G.cursor.down(this.downPosition);
             G.cursor.move(this);
