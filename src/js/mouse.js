@@ -17,9 +17,7 @@ function followMinimap() {
     const xOnMap = (MOUSE_POSITION.x - (CANVAS_WIDTH - G.minimapWidth - MINIMAP_MARGIN)) / G.minimapWidth;
     const yOnMap = (MOUSE_POSITION.y - (CANVAS_HEIGHT - G.minimapHeight - MINIMAP_MARGIN)) / G.minimapHeight;
 
-    if (xOnMap > 0 && xOnMap < 1 && yOnMap > 0 && yOnMap < 1) {
-        // interp(V, 'x', V.x, (xOnMap * W.width) - CANVAS_WIDTH / 2, 0.1);
-        // interp(V, 'y', V.y, (yOnMap * W.height) - CANVAS_HEIGHT / 2, 0.1);
+    if (isBetween(0, xOnMap, 1) && isBetween(0, yOnMap, 1)) {
         V.x = (xOnMap * W.width) - CANVAS_WIDTH / 2;
         V.y = (yOnMap * W.height) - CANVAS_HEIGHT / 2;
     }

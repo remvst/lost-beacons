@@ -23,15 +23,18 @@ class Camera {
             p.y = 1;
         }
 
-
-        const xBetween = isBetween(CURSOR_MOVE_CAMERA_MARGIN, MOUSE_POSITION.x, CANVAS_WIDTH - CURSOR_MOVE_CAMERA_MARGIN);
-        const yBetween = isBetween(CURSOR_MOVE_CAMERA_MARGIN, MOUSE_POSITION.y, CANVAS_HEIGHT - CURSOR_MOVE_CAMERA_MARGIN);
-        if (!xBetween || !yBetween) {
-            if (!xBetween) {
-                p.x = MOUSE_POSITION.x > CANVAS_WIDTH / 2 ? 1 : -1;
-            }
-            if (!yBetween) {
-                p.y = MOUSE_POSITION.y > CANVAS_HEIGHT / 2 ? 1 : -1;
+        const xOnMap = (MOUSE_POSITION.x - (CANVAS_WIDTH - G.minimapWidth - MINIMAP_MARGIN)) / G.minimapWidth;
+        const yOnMap = (MOUSE_POSITION.y - (CANVAS_HEIGHT - G.minimapHeight - MINIMAP_MARGIN)) / G.minimapHeight;
+        if (!isBetween(0, xOnMap, 1) || !isBetween(0, yOnMap, 1)) {
+            const xBetween = isBetween(CURSOR_MOVE_CAMERA_MARGIN, MOUSE_POSITION.x, CANVAS_WIDTH - CURSOR_MOVE_CAMERA_MARGIN);
+            const yBetween = isBetween(CURSOR_MOVE_CAMERA_MARGIN, MOUSE_POSITION.y, CANVAS_HEIGHT - CURSOR_MOVE_CAMERA_MARGIN);
+            if (!xBetween || !yBetween) {
+                if (!xBetween) {
+                    p.x = MOUSE_POSITION.x > CANVAS_WIDTH / 2 ? 1 : -1;
+                }
+                if (!yBetween) {
+                    p.y = MOUSE_POSITION.y > CANVAS_HEIGHT / 2 ? 1 : -1;
+                }
             }
         }
 
