@@ -212,19 +212,6 @@ class Unit {
         b.attach(this);
     }
 
-    gotoShootable(pt) {
-        this.path = W.findPath(this, pt, position => {
-            if (dist(position, pt) > GRID_SIZE * 4) {
-                return; // too far, no need to cast a ray
-            }
-
-            const angle = atan2(pt.y - position.y, pt.x - position.x);
-            const cast = W.castRay(position, angle, GRID_SIZE * 4);
-
-            return dist(cast, position) > dist(pt, position);
-        }) || [];
-    }
-
     isSelected() {
         return G.selectionCursor.units.indexOf(this) >= 0;
     }
