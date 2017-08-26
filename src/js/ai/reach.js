@@ -64,13 +64,15 @@ class Reach extends Behavior {
             super.render();
         }
 
-        R.globalAlpha = 0.1;
-        beginPath();
-        R.strokeStyle = this.unit.team.body;
-        R.lineWidth = 4;
-        moveTo(this.unit.x, this.unit.y);
-        this.path.forEach(step => lineTo(step.x, step.y));
-        stroke();
+        if (this.unit.team == PLAYER_TEAM) {
+            R.globalAlpha = 0.1;
+            beginPath();
+            R.strokeStyle = this.unit.team.body;
+            R.lineWidth = 4;
+            moveTo(this.unit.x, this.unit.y);
+            this.path.forEach(step => lineTo(step.x, step.y));
+            stroke();
+        }
     }
 
     reservedPosition() {
