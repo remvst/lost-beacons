@@ -28,12 +28,11 @@ class World {
             return volumes.concat(volume);
         }, []);
 
-        W.animatePolygons(0, 1, () => {
-            // Filter out polygons that are pretty much the same
-            W.polygons = W.polygons.filter(a => {
-                return !W.polygons.filter(b => a !== b && a.isSame(b)).length;
-            });
+        W.polygons = W.polygons.filter((a, i, polygons) => {
+            return !polygons.filter(b => a !== b && a.isSame(b)).length;
         });
+
+        W.animatePolygons(0, 1);
 
         this.flashAlpha = 1;
         interp(W, 'flashAlpha', 1, 0, 1);
@@ -464,7 +463,7 @@ class World {
         return dist(a, cast) < d;
     }
 
-    animatePolygons(from, to, cb) {
+    animatePolygons(from, to) {
         W.volumes.forEach(volume => {
             const duration = random() * 0.5 + 0.5;
             volume.forEach(polygon => {
@@ -472,8 +471,6 @@ class World {
                 interp(polygon, 'alpha', from, to, duration);
             });
         });
-
-        delayed(cb, 1000);
     }
 
 }
