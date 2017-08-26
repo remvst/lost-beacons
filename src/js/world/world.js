@@ -78,7 +78,7 @@ class World {
             }
         }
 
-        W.add(beacon, CYCLABLE | RENDERABLE | BEACON);
+        W.add(beacon, CYCLABLE | RENDERABLE | BEACON | FIRST);
     }
 
     render() {

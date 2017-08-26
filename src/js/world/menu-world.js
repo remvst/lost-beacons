@@ -31,7 +31,7 @@ class MenuWorld extends World {
         beacon.x = V.center.x + 300;
         beacon.y = V.center.y;
         beacon.indicator.postRender = () => 0;
-        W.add(beacon, CYCLABLE | RENDERABLE | BEACON);
+        W.add(beacon, CYCLABLE | RENDERABLE | BEACON | FIRST);
 
         const checker = {
             'cycle': () => {
