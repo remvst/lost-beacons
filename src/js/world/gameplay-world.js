@@ -24,6 +24,14 @@ class GameplayWorld extends World {
         for (let i = 0 ; i < 10 ; i++) {
             W.spawnBeacon();
         }
+
+        W.pauseAndAnnounce(nomangle('capture all beacons to win'));
+    }
+
+    pauseAndAnnounce(s) {
+        const cyclables = W.cyclables.slice(0);
+        W.cyclables = [V];
+        W.add(new Announcement(s, () => W.cyclables = cyclables), RENDERABLE);
     }
 
     // Spawns squads for each team at opposite sides of the map

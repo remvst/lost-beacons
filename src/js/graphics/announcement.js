@@ -1,9 +1,9 @@
 class Announcement {
 
-    constructor(label) {
+    constructor(label, callback) {
         this.label = label;
 
-        interp(this, 'rectangleHeight', 100, 0, 0.25, 4);
+        interp(this, 'rectangleHeight', 100, 0, 0.25, 4, null, callback);
         interp(this, 'rectangleHeight', 0, 100, 0.25);
 
         interp(this, 'textXOffset', 0, CANVAS_WIDTH, 0.5, 3.5, easeInQuint);
