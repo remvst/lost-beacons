@@ -25,13 +25,33 @@ class GameplayWorld extends World {
             W.spawnBeacon();
         }
 
+        const endCheck = {
+            'cycle': () => {
+                const playerUnits = W.units.filter(unit => unit.team == PLAYER_TEAM).length;
+                const playerBeacons = W.beacons.filter(beacon => beacon.team == PLAYER_TEAM).length;
+                const enemyBeacons = W.beacons.filter(beacon => beacon.team == ENEMY_TEAM).length;
+
+                // End if someone captured all beacons OR if the player is completely dead
+                if (!playerUnits || max(enemyBeacons, playerBeacons) == W.beacons.length) {
+                    this.gameOver(!enemyBeacons);
+                    W.remove(endCheck);
+                }
+            }
+        };
+        W.add(endCheck, CYCLABLE);
+
         W.pauseAndAnnounce(nomangle('capture all beacons to win'));
     }
 
-    pauseAndAnnounce(s) {
+    pauseAndAnnounce(s, callback) {
         const cyclables = W.cyclables.slice(0);
         W.cyclables = [V];
-        W.add(new Announcement(s, () => W.cyclables = cyclables), RENDERABLE);
+        W.add(new Announcement(s, () => {
+            W.cyclables = cyclables;
+            if (callback) {
+                callback();
+            }
+        }), RENDERABLE);
     }
 
     // Spawns squads for each team at opposite sides of the map
@@ -153,6 +173,12 @@ class GameplayWorld extends World {
 
             gauge(-HUD_GAUGE_GAP / 2, 40, G.unitsScore(PLAYER_TEAM), -1, '#0f0');
             gauge(HUD_GAUGE_GAP / 2, 40, G.unitsScore(ENEMY_TEAM), 1, '#f00');
+        });
+    }
+
+    gameOver(win) {
+        W.pauseAndAnnounce(win ? nomangle('victory') : nomangle('you were defeated'), () => {
+            G.launch(MenuWorld);
         });
     }
 
