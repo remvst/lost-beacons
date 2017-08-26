@@ -23,7 +23,7 @@ class Cursor {
     }
 
     rightDown() {
-        console.log('heyyyy');
+        
     }
 
     move(p) {

@@ -58,7 +58,16 @@ class MenuWorld extends World {
             drawCenteredText(R, nomangle('lost beacons'), CANVAS_WIDTH / 2, 200, 16, '#a51', true);
             drawCenteredText(R, nomangle('tactical territory control'), CANVAS_WIDTH / 2, 200 + 16 * 7, 5, '#fff', true);
 
-            drawCenteredText(R, nomangle('capture the beacon to start'), CANVAS_WIDTH / 2, 850, 5, '#fff', true);
+            let s;
+            if (!G.selectionCursor.selection.length) {
+                s = nomangle('click left to select units');
+                G.reachCursor.sentUnits = false;
+            } else if (!G.reachCursor.sentUnits) {
+                s = nomangle('click right to send units');
+            } else {
+                s = nomangle('capture the beacon to start');
+            }
+            drawCenteredText(R, s, CANVAS_WIDTH / 2, 850, 5, '#fff', true);
         });
     }
 

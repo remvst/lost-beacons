@@ -5,7 +5,6 @@ class ReachCursor extends Cursor {
     }
 
     postRender() {
-
         const arrowRadius = 10;
 
         function arrow(x, y, alpha) {
@@ -21,7 +20,7 @@ class ReachCursor extends Cursor {
         }
 
         const beacon = W.beacons
-            .filter(beacon => dist(beacon, this) < BEACON_CONQUER_RADIUS)[0];
+            .filter(beacon => dist(beacon, this) < BEACON_CONQUER_RADIUS || W instanceof MenuWorld)[0];
 
         if (beacon) {
             const offset = (G.t * 1 % 1) * arrowRadius;
@@ -76,6 +75,8 @@ class ReachCursor extends Cursor {
             }, RENDERABLE);
 
             interp(circle, 'a', 1, 0, 0.3, 0, 0, () => W.remove(circle));
+
+            this.sentUnits = true;
         });
     }
 
