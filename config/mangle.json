@@ -64,6 +64,8 @@
         "color",
         "perspective",
         "position",
-        "expand"
+        "expand",
+        "cursor",
+        "initialize"
     ]
 }

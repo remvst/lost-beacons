@@ -36,7 +36,6 @@ class MenuWorld extends World {
         const checker = {
             'cycle': () => {
                 if (beacon.team == PLAYER_TEAM) {
-                    // TODO launch
                     this.launch();
                     W.remove(checker);
                 }
