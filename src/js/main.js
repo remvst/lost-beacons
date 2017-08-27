@@ -1,6 +1,6 @@
 // Make Math global
 const m = Math;
-Object.getOwnPropertyNames(m).forEach(n => w[n] = m[n]);
+Object.getOwnPropertyNames(m).forEach(n => w[n] = w[n] || m[n]);
 
 onload = () => {
     C = D.querySelector('canvas');
