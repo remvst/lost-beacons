@@ -62,7 +62,7 @@ class Beacon {
             // Otherwise, it means we have a tie, so let's not move ownership at all
         }
 
-        const factor = BEACON_CONQUER_SPEED_PER_UNIT * max(1, abs(player.length - enemy.length));
+        const factor = BEACON_CONQUER_SPEED_PER_UNIT * between(1, abs(player.length - enemy.length), BEACON_MAX_CONQUERING_UNITS);
 
         this.playerTeamOwned = max(0, min(1, this.playerTeamOwned + playerOwnedSign * factor * e));
         this.enemyTeamOwned = max(0, min(1, this.enemyTeamOwned + enemyOwnedSign * factor * e));
