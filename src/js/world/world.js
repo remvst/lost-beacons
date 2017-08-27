@@ -16,7 +16,7 @@ class World {
         W.volumes = [];
 
         // TODO maybe use reduce?
-        W.map.forEach((r, row) => {
+        W.matrix.forEach((r, row) => {
             r.forEach((e, col) => {
                 if (e) {
                     W.volumes.push(cube(col * GRID_SIZE, row * GRID_SIZE, GRID_SIZE, GRID_SIZE, '#158'));
@@ -135,11 +135,11 @@ class World {
     }
 
     get width() {
-        return W.map[0].length * GRID_SIZE;
+        return W.matrix[0].length * GRID_SIZE;
     }
 
     get height() {
-        return W.map.length * GRID_SIZE;
+        return W.matrix.length * GRID_SIZE;
     }
 
     add(element, types) {
@@ -193,11 +193,11 @@ class World {
     }
 
     pointInObstacle(pt) {
-        return W.isOut(pt.x, pt.y) || W.map[~~(pt.y / GRID_SIZE)][~~(pt.x / GRID_SIZE)];
+        return W.isOut(pt.x, pt.y) || W.matrix[~~(pt.y / GRID_SIZE)][~~(pt.x / GRID_SIZE)];
     }
 
     hasObstacleAtCell(cell) {
-        return W.map[cell.row] && W.map[cell.row][cell.col];
+        return W.matrix[cell.row] && W.matrix[cell.row][cell.col];
     }
 
     /**
@@ -242,7 +242,7 @@ class World {
      * @param endCondition: Function that should return true if the position is considered final
      */
     aStar(start, end, endCondition) {
-        const map = W.map;
+        const map = W.matrix;
 
         const expandable = [start];
         const expandedMap = copyMap(map);

@@ -66,6 +66,8 @@
         "position",
         "expand",
         "cursor",
-        "initialize"
+        "initialize",
+        "units",
+        "unit"
     ]
 }

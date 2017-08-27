@@ -1,7 +1,7 @@
 class GameplayWorld extends World {
 
     initialize() {
-        W.map = generate();
+        W.matrix = generate();
 
         W.symSquad(
             evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
@@ -76,7 +76,7 @@ class GameplayWorld extends World {
 
             R.fillStyle = '#6cf';
             R.globalAlpha = 1;
-            W.map.forEach((r, row) => {
+            W.matrix.forEach((r, row) => {
                 r.forEach((x, col) => {
                     if (x) {
                         fillRect(
