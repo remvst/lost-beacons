@@ -79,16 +79,7 @@ class Beacon {
         if (newOwner && newOwner != this.team) {
             this.team = newOwner;
 
-            for (let i = 0 ; i < 100 ; i++) {
-                const angle = rand(0, PI * 2);
-                const dist = rand(100, 200);
-                const t = rand(0.5, 1.5);
-                particle(5, newOwner.body, [
-                    ['x', this.x, this.x + cos(angle) * dist, t, 0, easeOutQuad],
-                    ['y', this.y, this.y + sin(angle) * dist, t, 0, easeOutQuad],
-                    ['s', rand(5, 10), 0, t]
-                ], true);
-            }
+            this.conqueredAnimation();
 
             this.nextReinforcements = 120;
 
@@ -215,6 +206,50 @@ class Beacon {
 
     get index() {
         return W.beacons.indexOf(this) + 1;
+    }
+
+    conqueredAnimation() {
+        for (let i = 0 ; i < 100 ; i++) {
+            const angle = rand(0, PI * 2);
+            const dist = rand(100, 200);
+            const t = rand(0.5, 1.5);
+            particle(5, this.team.body, [
+                ['x', this.x, this.x + cos(angle) * dist, t, 0, easeOutQuad],
+                ['y', this.y, this.y + sin(angle) * dist, t, 0, easeOutQuad],
+                ['s', rand(5, 10), 0, t]
+            ], true);
+        }
+
+        const effect = {
+            'radius': 0,
+            'render': () => {
+                const beaconRow = ~~(this.y / GRID_SIZE);
+                const beaconCol = ~~(this.x / GRID_SIZE);
+                const radiusCells = ceil(effect.radius / GRID_SIZE);
+
+                R.fillStyle = this.team.beacon;
+                R.globalAlpha = 0.2;
+
+                for (let row = beaconRow - radiusCells ; row < beaconRow + radiusCells ; row++) {
+                    for (let col = beaconCol - radiusCells ; col < beaconCol + radiusCells ; col++) {
+                        const center = {
+                            'x': (col + 0.5) * GRID_SIZE,
+                            'y': (row + 0.5) * GRID_SIZE
+                        };
+                        const angle = angleBetween(this, center);
+                        if (
+                            isBetween(center.x - GRID_SIZE / 2, this.x + cos(angle) * effect.radius, center.x + GRID_SIZE / 2) &&
+                            isBetween(center.y - GRID_SIZE / 2, this.y + sin(angle) * effect.radius, center.y + GRID_SIZE / 2)
+                        ) {
+                            fillRect(center.x - GRID_SIZE / 2, center.y - GRID_SIZE / 2, GRID_SIZE, GRID_SIZE);
+                        }
+                    }
+                }
+            }
+        };
+        W.add(effect, RENDERABLE);
+
+        interp(effect, 'radius', 0, GRID_SIZE * 10, 1, 0, easeOutQuad, () => W.remove(effect));
     }
 
 }
