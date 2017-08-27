@@ -58,8 +58,8 @@ class MenuWorld extends World {
 
         wrap(() => {
             R.globalAlpha = W.textAlpha;
-            drawCenteredText(R, nomangle('lost beacons'), CANVAS_WIDTH / 2, 200, 16, '#a51', true);
-            drawCenteredText(R, nomangle('tactical territory control'), CANVAS_WIDTH / 2, 200 + 16 * 7, 5, '#fff', true);
+            drawCenteredText(nomangle('lost beacons'), CANVAS_WIDTH / 2, 200, 16, '#a51', true);
+            drawCenteredText(nomangle('tactical territory control'), CANVAS_WIDTH / 2, 200 + 16 * 7, 5, '#fff', true);
 
             let s;
             if (!G.selectionCursor.selection.length) {
@@ -70,7 +70,7 @@ class MenuWorld extends World {
             } else {
                 s = nomangle('capture the beacon to start');
             }
-            drawCenteredText(R, s, CANVAS_WIDTH / 2, 850, 5, '#fff', true);
+            drawCenteredText(s, CANVAS_WIDTH / 2, 850, 5, '#fff', true);
         });
     }
 

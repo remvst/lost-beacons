@@ -149,8 +149,8 @@ class Beacon {
         translate(this.x, this.y);
 
         if (this.team != NEUTRAL_TEAM && W instanceof GameplayWorld) {
-            drawCenteredText(R, nomangle('reinforcements'), 0, 50, 2, this.team.beacon, true);
-            drawCenteredText(R, formatTime(this.nextReinforcements), 0, 64, 2, this.team.beacon, true);
+            drawCenteredText(nomangle('reinforcements'), 0, 50, 2, this.team.beacon, true);
+            drawCenteredText(formatTime(this.nextReinforcements), 0, 64, 2, this.team.beacon, true);
         }
 
         const s =  (G.t % BEACON_WAVE_PERIOD) / BEACON_WAVE_PERIOD;

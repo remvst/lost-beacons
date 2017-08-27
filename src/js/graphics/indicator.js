@@ -41,7 +41,7 @@ class Indicator {
         if ((t % 0.5) > 0.25) {
             label += '?';
         }
-        drawText(R, label, labelX, labelY, INDICATOR_LABEL_CELL_SIZE, this.color, true);
+        drawText(label, labelX, labelY, INDICATOR_LABEL_CELL_SIZE, this.color, true);
 
         translate(
             V.center.x + cos(angle) * (radius + INDICATOR_ARROW_SIZE * 2),

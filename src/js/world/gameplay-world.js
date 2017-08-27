@@ -153,8 +153,8 @@ class GameplayWorld extends World {
             fill();
             stroke();
 
-            drawCenteredText(R, nomangle('beacons'), 0, 20, HUD_SCORE_CELL_SIZE, '#fff', true);
-            drawCenteredText(R, nomangle('units'), 0, 40, HUD_SCORE_CELL_SIZE, '#fff', true);
+            drawCenteredText(nomangle('beacons'), 0, 20, HUD_SCORE_CELL_SIZE, '#fff', true);
+            drawCenteredText(nomangle('units'), 0, 40, HUD_SCORE_CELL_SIZE, '#fff', true);
 
             function gauge(x, y, value, sign, color) {
                 const w = (5 + value * 10) * sign;
@@ -165,7 +165,7 @@ class GameplayWorld extends World {
                 R.fillStyle = color;
                 fillRect(x, y, w, HUD_SCORE_CELL_SIZE * 5);
 
-                drawCenteredText(R, '' + value, x + w + sign * 15, y, HUD_SCORE_CELL_SIZE, color, true);
+                drawCenteredText('' + value, x + w + sign * 15, y, HUD_SCORE_CELL_SIZE, color, true);
             }
 
             gauge(-HUD_GAUGE_GAP / 2, 20, G.beaconsScore(PLAYER_TEAM), -1, '#0f0');
@@ -175,7 +175,7 @@ class GameplayWorld extends World {
             gauge(HUD_GAUGE_GAP / 2, 40, G.unitsScore(ENEMY_TEAM), 1, '#f00');
         });
 
-        drawCenteredText(R, nomangle('wasd/arrows: move the camera  -  left click: select units  -  right click: send units'), CANVAS_WIDTH / 2, 10, 2, '#888');
+        drawCenteredText(nomangle('wasd/arrows: move the camera  -  left click: select units  -  right click: send units'), CANVAS_WIDTH / 2, 10, 2, '#888');
     }
 
     gameOver(win) {
