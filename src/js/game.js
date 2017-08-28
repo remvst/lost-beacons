@@ -51,8 +51,11 @@ class Game {
 
         // Add a proxy object that will call render on the current cursor
         W.add({
-            'render': () => G.cursor.render(),
-            'postRender': () => G.cursor.postRender()
+            // No cursor implements render()
+            // 'render': () => G.cursor.render(),
+
+            // Not post rendering the cursor if hovering a reinforcements button
+            'postRender': () => C.style[nomangle('cursor')] == 'default' && G.cursor.postRender()
         }, RENDERABLE);
     }
 
@@ -109,6 +112,8 @@ class Game {
 
         G.cursor = newCursor;
         G.cursor.move(p);
+
+        C.style[nomangle('cursor')] = W.beacons.filter(beacon => beacon.inReinforcementsButton(G.cursor)).length ? 'pointer' : 'default';
     }
 
 }

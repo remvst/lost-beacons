@@ -1,3 +1,5 @@
+const REINFORCEMENTS_STRING = nomangle('reinforcements');
+
 class Beacon {
 
     constructor() {
@@ -81,7 +83,7 @@ class Beacon {
 
             this.conqueredAnimation();
 
-            this.nextReinforcements = 30;
+            this.nextReinforcements = REINFORCEMENTS_INTERVAL;
 
             if (newOwner == PLAYER_TEAM) {
                 this.indicator.indicate(nomangle('beacon captured'), this.team.beacon);
@@ -92,13 +94,19 @@ class Beacon {
             }
         }
 
-        if ((this.nextReinforcements -= e) < 0 && this.team != NEUTRAL_TEAM) {
-            this.reinforcements();
+        if ((this.nextReinforcements -= e) < 0) {
+            if (this.team == ENEMY_TEAM) {
+                // Enemies spawn reinforcements automatically
+                this.reinforcements();
+            } else if (this.team == PLAYER_TEAM) {
+                // Player needs to click a button
+                this.indicator.indicate(nomangle('reinforcements ready'), PLAYER_TEAM.beacon);
+            }
         }
     }
 
     reinforcements() {
-        this.nextReinforcements = 30;
+        this.nextReinforcements = REINFORCEMENTS_INTERVAL;
 
         const unit = new Unit();
         unit.x = this.x;
@@ -143,15 +151,80 @@ class Beacon {
         ].forEach(angle => this.drawArc(angle, BEACON_ARC_RADIUS + 2));
     }
 
-    postRender() {
-        this.indicator.postRender();
+    inReinforcementsButton(position) {
+        const bounds = this.reinforcementsButtonBounds();
+        return this.nextReinforcements < 0 && this.team == PLAYER_TEAM &&
+            isBetween(bounds.x, position.x, bounds.x + bounds.width) &&
+            isBetween(bounds.y, position.y, bounds.y + bounds.height);
+    }
 
-        translate(this.x, this.y);
+    reinforcementsButtonBounds() {
+        const width = requiredCells(REINFORCEMENTS_STRING) * BEACON_REINFORCEMENTS_BUTTON_CELL_SIZE + (BEACON_REINFORCEMENTS_BUTTON_PADDING + BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS) * 2;
+        return {
+            'x': this.x - width / 2,
+            'y': this.y + BEACON_REINFORCEMENTS_BUTTON_Y,
+            'width': width,
+            'height': 5 * BEACON_REINFORCEMENTS_BUTTON_CELL_SIZE + (BEACON_REINFORCEMENTS_BUTTON_PADDING + BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS) * 2
+        };
+    }
+
+    maybeClick(position) {
+        if (this.inReinforcementsButton(position)) {
+            this.reinforcements();
+            return true;
+        }
+    }
+
+    postRender() {
+        wrap(() => this.indicator.postRender());
 
         if (this.team != NEUTRAL_TEAM && W instanceof GameplayWorld) {
-            drawCenteredText(nomangle('reinforcements'), 0, 50, 2, this.team.beacon, true);
-            drawCenteredText(formatTime(this.nextReinforcements), 0, 64, 2, this.team.beacon, true);
+            const buttonBounds = this.reinforcementsButtonBounds();
+
+            if (this.nextReinforcements > 0) {
+                drawCenteredText(REINFORCEMENTS_STRING, this.x, buttonBounds.y, BEACON_REINFORCEMENTS_BUTTON_CELL_SIZE, this.team.beacon, true);
+                drawCenteredText(formatTime(this.nextReinforcements), this.x, buttonBounds.y + 14, BEACON_REINFORCEMENTS_BUTTON_CELL_SIZE, this.team.beacon, true);
+            } else {
+                // Border
+                R.fillStyle = PLAYER_TEAM.beacon; // only the player ever needs to click the button
+                fillRect(
+                    buttonBounds.x,
+                    buttonBounds.y,
+                    buttonBounds.width,
+                    buttonBounds.height
+                );
+
+                // Bottom part (with reflection)
+                R.fillStyle = '#444';
+                fillRect(
+                    buttonBounds.x + BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS,
+                    buttonBounds.y + BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS,
+                    buttonBounds.width - 2 * BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS,
+                    buttonBounds.height - BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS * 2
+                );
+
+                // Top part (no reflection)
+                R.fillStyle = '#000';
+                fillRect(
+                    buttonBounds.x + BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS,
+                    buttonBounds.y + BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS,
+                    buttonBounds.width - 2 * BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS,
+                    buttonBounds.height / 2
+                );
+
+                drawCenteredText(
+                    REINFORCEMENTS_STRING,
+                    this.x,
+                    buttonBounds.y + (buttonBounds.height - 5 * BEACON_REINFORCEMENTS_BUTTON_CELL_SIZE) / 2,
+                    BEACON_REINFORCEMENTS_BUTTON_CELL_SIZE,
+                    PLAYER_TEAM.beacon,
+                    true
+                );
+
+            }
         }
+
+        translate(this.x, this.y);
 
         const s =  (G.t % BEACON_WAVE_PERIOD) / BEACON_WAVE_PERIOD;
         R.strokeStyle = this.team.beacon;

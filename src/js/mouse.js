@@ -36,10 +36,15 @@ onmousedown = e => {
         return;
     }
 
-    G.cursor[e.which == 3 ? 'rightDown' : 'down']({
+    const position = {
         'x': MOUSE_POSITION.x + V.x,
         'y': MOUSE_POSITION.y + V.y
-    });
+    };
+
+    if (!W.beacons.filter(b => b.maybeClick(position)).length) {
+        G.cursor[e.which == 3 ? 'rightDown' : 'down'](position);
+    }
+
 };
 
 onmousemove = e => {
