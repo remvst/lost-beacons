@@ -10,7 +10,8 @@ const PLAYER_TEAM = {
     'leg': '#381',
     'head': '#2f7',
     'beacon': '#0f0',
-    'behavior': position => new Reach(position)
+    'behavior': position => new Reach(position),
+    'reinforcementsInterval': 30
 };
 
 const ENEMY_TEAM = {
@@ -18,7 +19,8 @@ const ENEMY_TEAM = {
     'body': '#ef0404',
     'leg': '#5d0505',
     'beacon': '#f00',
-    'behavior': () => new Autonomous()
+    'behavior': () => new Autonomous(),
+    'reinforcementsInterval': 45
 };
 
 PLAYER_TEAM.enemy = ENEMY_TEAM;

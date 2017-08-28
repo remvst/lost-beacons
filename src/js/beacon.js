@@ -83,7 +83,7 @@ class Beacon {
 
             this.conqueredAnimation();
 
-            this.nextReinforcements = REINFORCEMENTS_INTERVAL;
+            this.nextReinforcements = this.team.reinforcementsInterval;
 
             if (newOwner == PLAYER_TEAM) {
                 this.indicator.indicate(nomangle('beacon captured'), this.team.beacon);
@@ -106,7 +106,7 @@ class Beacon {
     }
 
     reinforcements() {
-        this.nextReinforcements = REINFORCEMENTS_INTERVAL;
+        this.nextReinforcements = this.team.reinforcementsInterval;
 
         const unit = new Unit();
         unit.x = this.x;
