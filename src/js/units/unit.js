@@ -101,8 +101,6 @@ class Unit {
             this.nextShot = 1;
 
             if (this.target) {
-                const impact = {'x': this.target.x, 'y': this.target.y};
-
                 let view = {
                     'alpha': 1,
                     'render': () => {
@@ -111,7 +109,7 @@ class Unit {
                         R.lineWidth = 0.5;
                         beginPath();
                         moveTo(this.x, this.y);
-                        lineTo(impact.x, impact.y);
+                        lineTo(this.target.x, this.target.y);
                         stroke();
                     }
                 };
