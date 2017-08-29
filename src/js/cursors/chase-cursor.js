@@ -5,7 +5,7 @@ class ChaseCursor extends Cursor {
     }
 
     postRender() {
-        const s = 1 - (G.t % this.period) / this.period;
+        const s = 1 - (G.t % CHASE_CURSOR_PERIOD) / CHASE_CURSOR_PERIOD;
 
         translate(this.target.x, this.target.y);
 

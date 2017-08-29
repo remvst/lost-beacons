@@ -1,4 +1,4 @@
-class AttackCursor extends Cursor {
+class AttackCursor extends ChaseCursor {
 
     get color() {
         return '#900';
@@ -6,10 +6,6 @@ class AttackCursor extends Cursor {
 
     get label() {
         return nomangle('HEAL()');
-    }
-
-    get period() {
-        return ATTACK_CURSOR_PERIOD;
     }
 
     get chaseRadius() {
