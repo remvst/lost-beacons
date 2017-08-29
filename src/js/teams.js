@@ -20,7 +20,7 @@ const ENEMY_TEAM = {
     'leg': '#5d0505',
     'beacon': '#f00',
     'behavior': () => new Autonomous(),
-    'reinforcementsInterval': 45
+    'reinforcementsInterval': 55
 };
 
 PLAYER_TEAM.enemy = ENEMY_TEAM;
