@@ -2,19 +2,19 @@ class Unit {
 
     constructor() {
         // Might be able to gut these if they're set from the outside
-        this.x = 0;
-        this.y = 0;
-        this.team = PLAYER_TEAM;
+        // this.x = 0;
+        // this.y = 0;
+        // this.team = PLAYER_TEAM;
+        // this.target = null;
 
         this.angle = 0;
         this.moving = false;
 
-        this.health = 0.1;
+        this.health = 1;
 
         this.setBehavior(new Idle());
 
         this.nextShot = rand(0.2, 1);
-        this.target = null;
 
         this.indicator = new Indicator(this);
     }
