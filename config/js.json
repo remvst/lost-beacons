@@ -29,6 +29,7 @@
     "src/js/ai/autonomous.js",
 
     "src/js/cursors/cursor.js",
+    "src/js/cursors/chase-cursor.js",
     "src/js/cursors/attack-cursor.js",
     "src/js/cursors/heal-cursor.js",
     "src/js/cursors/reach-cursor.js",

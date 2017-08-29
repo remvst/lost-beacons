@@ -4,48 +4,16 @@ class AttackCursor extends Cursor {
         return '#900';
     }
 
-    postRender() {
-        const s = 1 - (G.t % ATTACK_CURSOR_PERIOD) / ATTACK_CURSOR_PERIOD;
-
-        translate(this.target.x, this.target.y);
-
-        const corner = a => () => {
-            translate(cos(a) * ATTACK_CURSOR_RADIUS, sin(a) * ATTACK_CURSOR_RADIUS);
-            rotate(a);
-
-            beginPath();
-            moveTo(-ATTACK_CURSOR_SIZE, 0);
-            lineTo(0, ATTACK_CURSOR_SIZE);
-            lineTo(0, -ATTACK_CURSOR_SIZE);
-            fill();
-        };
-
-        R.fillStyle = this.color;
-
-        wrap(() => {
-            R.globalAlpha = s;
-            scale(s, s);
-            let i = 4;
-            while (i--) {
-                wrap(corner((i / 4) * PI * 2 + PI / 4));
-            }
-        });
-
-        this.renderLabel(nomangle('ATTACK()'));
+    get label() {
+        return nomangle('HEAL()');
     }
 
-    track(target) {
-        this.target = target;
-        this.x = target.x;
-        this.y = target.y;
+    get period() {
+        return ATTACK_CURSOR_PERIOD;
     }
 
-    rightDown() {
-        if (this.target) {
-            G.selectionCursor.units.forEach(unit => {
-                unit.setBehavior(new Chase(this.target));
-            });
-        }
+    get chaseRadius() {
+        return UNIT_ATTACK_RADIUS;
     }
 
 }
