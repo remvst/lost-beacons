@@ -30,6 +30,7 @@
 
     "src/js/cursors/cursor.js",
     "src/js/cursors/attack-cursor.js",
+    "src/js/cursors/heal-cursor.js",
     "src/js/cursors/reach-cursor.js",
     "src/js/cursors/selection-cursor.js",
 

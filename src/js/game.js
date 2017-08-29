@@ -48,6 +48,7 @@ class Game {
         G.cursor = G.selectionCursor = new SelectionCursor();
         G.attackCursor = new AttackCursor();
         G.reachCursor = new ReachCursor();
+        G.healCursor = new HealCursor();
 
         // Add a proxy object that will call render on the current cursor
         W.add({
@@ -101,8 +102,8 @@ class Game {
 
         if (G.cursor === G.selectionCursor && G.selectionCursor.downPosition || !G.selectionCursor.units.length) {
             newCursor = G.selectionCursor;
-        } else if (unit && unit.team === ENEMY_TEAM) {
-            newCursor = G.attackCursor;
+        } else if (unit && (G.selectionCursor.units.length > 1 || G.selectionCursor.units[0] != unit)) {
+            newCursor = unit.team === ENEMY_TEAM ? G.attackCursor : G.healCursor;
             newCursor.track(unit);
         } else if (G.selectionCursor.units.length) {
             newCursor = G.reachCursor;

@@ -1,22 +1,22 @@
-class AttackCursor extends Cursor {
+class HealCursor extends Cursor {
 
     get color() {
-        return '#900';
+        return '#0f0';
     }
 
     postRender() {
-        const s = 1 - (G.t % ATTACK_CURSOR_PERIOD) / ATTACK_CURSOR_PERIOD;
+        const s = 1 - (G.t % HEAL_CURSOR_PERIOD) / HEAL_CURSOR_PERIOD;
 
         translate(this.target.x, this.target.y);
 
         const corner = a => () => {
-            translate(cos(a) * ATTACK_CURSOR_RADIUS, sin(a) * ATTACK_CURSOR_RADIUS);
+            translate(cos(a) * HEAL_CURSOR_RADIUS, sin(a) * HEAL_CURSOR_RADIUS);
             rotate(a);
 
             beginPath();
-            moveTo(-ATTACK_CURSOR_SIZE, 0);
-            lineTo(0, ATTACK_CURSOR_SIZE);
-            lineTo(0, -ATTACK_CURSOR_SIZE);
+            moveTo(-HEAL_CURSOR_SIZE, 0);
+            lineTo(0, HEAL_CURSOR_SIZE);
+            lineTo(0, -HEAL_CURSOR_SIZE);
             fill();
         };
 
@@ -31,7 +31,7 @@ class AttackCursor extends Cursor {
             }
         });
 
-        this.renderLabel(nomangle('ATTACK()'));
+        this.renderLabel(nomangle('HEAL()'));
     }
 
     track(target) {
@@ -43,7 +43,7 @@ class AttackCursor extends Cursor {
     rightDown() {
         if (this.target) {
             G.selectionCursor.units.forEach(unit => {
-                unit.setBehavior(new Chase(this.target));
+                unit.setBehavior(new Chase(this.target, UNIT_HEAL_RADIUS));
             });
         }
     }

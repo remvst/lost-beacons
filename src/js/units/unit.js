@@ -6,13 +6,10 @@ class Unit {
         this.y = 0;
         this.team = PLAYER_TEAM;
 
-        this.path = [];
-
         this.angle = 0;
         this.moving = false;
 
-        this.health = 1;
-        this.hurtFactor = 1;
+        this.health = 0.1;
 
         this.setBehavior(new Idle());
 
@@ -27,8 +24,7 @@ class Unit {
     }
 
     hurt(amount) {
-        this.health -= amount * this.hurtFactor;
-        if (this.health < 0.1) {
+        if ((this.health -= amount) < 0.1) {
             this.health = 0;
         }
 
@@ -70,6 +66,12 @@ class Unit {
         }
     }
 
+    heal(amount) {
+        if (!this.dead) {
+            this.health = min(1, this.health + amount);
+        }
+    }
+
     closestVisibleTarget() {
         return W.units
             .filter(c => c.team != this.team)
@@ -87,37 +89,69 @@ class Unit {
             this.angle = angleBetween(this, this.target);
         }
 
+        const healing = this.target && this.target.team == this.team;
+
         if (!this.moving && (this.nextShot -= e) <= 0) {
-            // Pick a new target?
-            if (
-                !this.target ||
+            this.nextShot = UNIT_SHOT_INTERVAL;
+
+            // If the target is dead or not accessible, we can't do the action on it
+            const notActionable = !this.target ||
                 this.target.dead ||
-                dist(this, this.target) > UNIT_ATTACK_RADIUS ||
-                W.hasObstacleBetween(this, this.target)
-            ) {
-                this.target = this.closestVisibleTarget();
-            }
+                dist(this, this.target) > (healing ? UNIT_HEAL_RADIUS : UNIT_ATTACK_RADIUS) ||
+                W.hasObstacleBetween(this, this.target);
 
-            this.nextShot = 1;
+            if (healing) {
+                // Healing a friendly unit
 
-            if (this.target) {
-                let view = {
-                    'alpha': 1,
-                    'render': () => {
-                        R.globalAlpha = this.alpha;
-                        R.strokeStyle = '#ff0';
-                        R.lineWidth = 0.5;
-                        beginPath();
-                        moveTo(this.x, this.y);
-                        lineTo(this.target.x, this.target.y);
-                        stroke();
-                    }
-                };
-                W.add(view, RENDERABLE);
+                if (this.target.health == 1 || this.target == this) {
+                    // stop healing, target is already at full health (and allows us to start shooting at another target)
+                    this.target = null;
+                } else if (!notActionable) {
+                    const target = this.target;
 
-                interp(view, 'alpha', 0.5, 0, 0.1, 0, null, () => W.remove(view));
+                    const p = {
+                        'progress': 0,
+                        'postRender': () => {
+                            translate(this.x + p.progress * (target.x - this.x), this.y + p.progress * (target.y - this.y));
 
-                this.target.hurt(SHOT_DAMAGE);
+                            R.fillStyle = this.team.beacon;
+                            fillRect(-2, -6, 4, 12);
+                            fillRect(-6, -2, 12, 4);
+                        }
+                    };
+
+                    W.add(p, RENDERABLE);
+
+                    interp(p, 'progress', 0, 1, dist(this, this.target) / 100, 0, null, () => this.target.heal(UNIT_HEALING_AMOUNT));
+                }
+
+            } else {
+                // Shooting
+
+                if (notActionable) {
+                    // Pick a different target if the current one isn't available
+                    this.target = this.closestVisibleTarget();
+                }
+
+                if (this.target) {
+                    const view = {
+                        'alpha': 1,
+                        'render': () => {
+                            R.globalAlpha = this.alpha;
+                            R.strokeStyle = '#ff0';
+                            R.lineWidth = 0.5;
+                            beginPath();
+                            moveTo(this.x, this.y);
+                            lineTo(this.target.x, this.target.y);
+                            stroke();
+                        }
+                    };
+                    W.add(view, RENDERABLE);
+
+                    interp(view, 'alpha', 0.5, 0, 0.1, 0, null, () => W.remove(view));
+
+                    this.target.hurt(SHOT_DAMAGE);
+                }
             }
         }
     }
