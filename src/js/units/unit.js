@@ -122,7 +122,10 @@ class Unit {
 
                     W.add(p, RENDERABLE);
 
-                    interp(p, 'progress', 0, 1, dist(this, this.target) / 100, 0, null, () => this.target.heal(UNIT_HEALING_AMOUNT));
+                    interp(p, 'progress', 0, 1, dist(this, this.target) / 100, 0, null, () => {
+                        this.target.heal(UNIT_HEALING_AMOUNT);
+                        W.remove(p);
+                    });
                 }
 
             } else {
