@@ -76,8 +76,13 @@ class MenuWorld extends World {
             drawCenteredText(s, CANVAS_WIDTH / 2, 850, 5, '#fff', true);
 
             const labels = [nomangle('--- best times ---')];
-            for (let i = 1 ; i < 14 ; i++) {
-                labels.unshift(nomangle('sector #') + zeroes(i) + ' - ' + formatTime(TimeData.timeForLevelIndex(i)));
+            let i = 0;
+            while (true) {
+                const time = TimeData.timeForLevelIndex(++i);
+                if (!time) {
+                    break;
+                }
+                labels.unshift(nomangle('sector #') + zeroes(i) + ' - ' + formatTime(time));
             }
 
             labels.forEach((label, i) => {
