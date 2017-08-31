@@ -51,6 +51,9 @@ class MenuWorld extends World {
                 V.y = (W.width - CANVAS_HEIGHT) / 2;
             }
         }, CYCLABLE);
+
+        // That should totally not be here but hey, we need the bytes
+        G.levelId = 0;
     }
 
     render() {

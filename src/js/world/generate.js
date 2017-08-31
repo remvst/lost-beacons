@@ -20,13 +20,13 @@ function coat(map, width, x) {
     return map;
 }
 
-function generate() {
+function generate(rows, cols) {
     seedPerlin();
 
     const map = [];
-    for (let row = 0 ; row < GRID_ROWS ; row++) {
+    for (let row = 0 ; row < rows ; row++) {
         map.push([]);
-        for (let col = 0 ; col < GRID_COLS ; col++) {
+        for (let col = 0 ; col < cols ; col++) {
             map[row][col] = pow(abs(perlin2(row / 5, col / 5)), 2) > 0.1 ? 1 : 0;
         }
     }

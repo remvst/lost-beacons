@@ -1,7 +1,12 @@
 class GameplayWorld extends World {
 
     initialize() {
-        W.matrix = generate();
+        G.levelId++;
+
+        const rows = 20 + G.levelId * 10;
+        const cols = 20 + G.levelId * 10;
+
+        W.matrix = generate(rows, cols);
 
         W.symSquad(
             evaluate(GRID_SIZE * (GRID_EMPTY_PADDING / 2 + GRID_OBSTACLE_PADDING + 2)),
@@ -21,7 +26,7 @@ class GameplayWorld extends World {
             2
         );
 
-        for (let i = 0 ; i < 10 ; i++) {
+        for (let i = 0 ; i < rows * cols * 0.004 ; i++) {
             W.spawnBeacon();
         }
 
@@ -33,22 +38,22 @@ class GameplayWorld extends World {
 
                 // End if someone captured all beacons OR if the player is completely dead
                 if (!playerUnits || max(enemyBeacons, playerBeacons) == W.beacons.length) {
-                    this.gameOver(!enemyBeacons);
                     W.remove(endCheck);
+                    this.gameOver(!enemyBeacons);
                 }
             }
         };
         W.add(endCheck, CYCLABLE);
 
         W.pauseAndAnnounce([
-            nomangle('sector #1'),
+            nomangle('sector #') + G.levelId,
             nomangle('capture all beacons to win')
         ]);
     }
 
     pauseAndAnnounce(s, callback) {
         const cyclables = W.cyclables.slice(0);
-        W.cyclables = [V];
+        W.cyclables = [];
         W.add(new Announcement(s, () => {
             W.cyclables = cyclables;
             if (callback) {
@@ -182,9 +187,17 @@ class GameplayWorld extends World {
     }
 
     gameOver(win) {
-        W.pauseAndAnnounce([win ? nomangle('victory') : nomangle('you were defeated')], () => {
-            G.launch(MenuWorld);
-        });
+        // Ugly format, but it saves bytes
+        W.add(new Announcement(
+            win ?
+                [nomangle('sector secured')] :
+                [nomangle('sector lost'), nomangle('you secured ') + (G.levelId - 1) + nomangle('sectors')],
+            () => {
+                W.animatePolygons(1, 0);
+                interp(W, 'flashAlpha', 0, 1, 1, 0.5, 0, () => G.launch(win ? GameplayWorld : MenuWorld));
+            }),
+            RENDERABLE
+        );
     }
 
 }
