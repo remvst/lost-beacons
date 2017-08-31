@@ -187,11 +187,15 @@ class GameplayWorld extends World {
     }
 
     gameOver(win) {
+        if (win) {
+            TimeData.saveTime(G.levelId, W.t);
+        }
+
         // Ugly format, but it saves bytes
         W.add(new Announcement(
             win ?
                 [nomangle('sector secured')] :
-                [nomangle('sector lost'), nomangle('you secured ') + (G.levelId - 1) + nomangle('sectors')],
+                [nomangle('sector lost'), nomangle('you secured ') + (G.levelId - 1) + nomangle(' sectors')],
             () => {
                 W.animatePolygons(1, 0);
                 interp(W, 'flashAlpha', 0, 1, 1, 0.5, 0, () => G.launch(win ? GameplayWorld : MenuWorld));

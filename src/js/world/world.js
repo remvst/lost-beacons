@@ -7,6 +7,7 @@ class World {
     constructor() {
         W = this;
 
+        W.t = 0;
         W.cyclables = [V];
         W.units = [];
         W.beacons = [];
@@ -170,6 +171,7 @@ class World {
     }
 
     cycle(e) {
+        W.t += e;
         W.cyclables.slice().forEach(x => x.cycle(e));
     }
 
