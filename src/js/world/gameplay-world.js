@@ -40,7 +40,10 @@ class GameplayWorld extends World {
         };
         W.add(endCheck, CYCLABLE);
 
-        W.pauseAndAnnounce(nomangle('capture all beacons to win'));
+        W.pauseAndAnnounce([
+            nomangle('sector #1'),
+            nomangle('capture all beacons to win')
+        ]);
     }
 
     pauseAndAnnounce(s, callback) {
@@ -179,7 +182,7 @@ class GameplayWorld extends World {
     }
 
     gameOver(win) {
-        W.pauseAndAnnounce(win ? nomangle('victory') : nomangle('you were defeated'), () => {
+        W.pauseAndAnnounce([win ? nomangle('victory') : nomangle('you were defeated')], () => {
             G.launch(MenuWorld);
         });
     }
