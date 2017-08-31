@@ -74,6 +74,15 @@ class MenuWorld extends World {
                 s = nomangle('capture the beacon to start');
             }
             drawCenteredText(s, CANVAS_WIDTH / 2, 850, 5, '#fff', true);
+
+            const labels = [nomangle('--- best times ---')];
+            for (let i = 1 ; i < 14 ; i++) {
+                labels.unshift(nomangle('sector #') + zeroes(i) + ' - ' + formatTime(TimeData.timeForLevelIndex(i)));
+            }
+
+            labels.forEach((label, i) => {
+                drawText(label, 10, CANVAS_HEIGHT - (i + 1) * 7 * 2, 2, '#fff', true);
+            });
         });
     }
 

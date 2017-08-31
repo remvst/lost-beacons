@@ -6,7 +6,7 @@ class TimeData {
         }
 
         try {
-            localStorage['_' + levelId] = time;
+            localStorage['_' + levelId] = min(time, this.timeForLevelIndex(levelId) || Number.MAX_VALUE);
         } catch(e) {
 
         }
