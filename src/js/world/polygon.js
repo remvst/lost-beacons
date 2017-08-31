@@ -29,9 +29,8 @@ class Polygon {
         };
     }
 
-    isSame(b) {
-        // Laziness (the check could be more accurate but fuck that it's js13k)
-        return this.center.x === b.center.x && this.center.y === b.center.y;
+    hash() {
+        return this.center.x + ',' + this.center.y;
     }
 
     render() {

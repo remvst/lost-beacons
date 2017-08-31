@@ -25,12 +25,17 @@ class World {
             });
         });
 
-        W.polygons = W.volumes.reduce((volumes, volume) => {
-            return volumes.concat(volume);
-        }, []);
+        W.polygons = [];
+        W.volumes.forEach(v => v.forEach(p => W.polygons.push(p)));
 
-        W.polygons = W.polygons.filter((a, i, polygons) => {
-            return !polygons.filter(b => a !== b && a.isSame(b)).length;
+        const polygonCountByHash = {};
+        W.polygons.forEach(polygon => {
+            const hash = polygon.hash();
+            polygonCountByHash[hash] = (polygonCountByHash[hash] || 0) + 1;
+        });
+
+        W.polygons = W.polygons.filter(polygon => {
+            return polygonCountByHash[polygon.hash()] == 1;
         });
 
         W.animatePolygons(0, 1);
