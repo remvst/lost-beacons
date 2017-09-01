@@ -21,6 +21,41 @@ class Game {
         G.hudBg.addColorStop(0, '#035');
         G.hudBg.addColorStop(1, '#146');
 
+        G.floorPattern = cache(GRID_SIZE * 5, GRID_SIZE * 5, (r, c) => {
+            r.fillStyle = '#0e3b54';
+            r.fillRect(0, 0, c.width, c.height);
+
+            r.globalAlpha = 0.05;
+            r.fillStyle = '#fff';
+            for (let x = 0 ; x < c.width ; x += GRID_SIZE / 2) {
+                r.fillRect(0, x, c.width, 1);
+                r.fillRect(x, 0, 1, c.height);
+            }
+
+            r.globalAlpha = 0.5;
+            r.fillStyle = GRID_COLOR;
+            r.shadowColor = 'rgba(255,255,255, 0.2)';
+            r.shadowBlur = 3;
+            for (let x = 0 ; x < c.width ; x += GRID_SIZE) {
+                r.fillRect(0, x, c.width, 1);
+                r.fillRect(x, 0, 1, c.height);
+            }
+
+            r.shadowBlur = 0;
+
+            r.globalAlpha = 0.5;
+            r.fillStyle = '#fff';
+            r.fillRect(GRID_SIZE, GRID_SIZE - 7, 1, 14);
+            r.fillRect(GRID_SIZE - 7, GRID_SIZE, 14, 1);
+
+            r.globalAlpha = 0.02;
+            r.fillRect(GRID_SIZE * 3, GRID_SIZE * 4, GRID_SIZE, GRID_SIZE);
+            r.fillRect(GRID_SIZE * 4, GRID_SIZE * 2, GRID_SIZE, GRID_SIZE);
+            r.fillRect(GRID_SIZE * 1, GRID_SIZE * 3, GRID_SIZE, GRID_SIZE);
+
+            return r.createPattern(c, 'repeat');
+        });
+
         // Start cycle()
         let lf = Date.now();
         let frame = () => {

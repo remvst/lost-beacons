@@ -139,12 +139,6 @@ class GameplayWorld extends World {
     }
 
     renderHUD() {
-        R.fillStyle = 'rgba(255,255,255,.15)';
-        fillRect(0, ~~(G.t * 100) % CANVAS_HEIGHT * 1.5, CANVAS_WIDTH, 0.5);
-
-        R.fillStyle = 'rgba(255,255,255,.02)';
-        fillRect(0, ~~(G.t * 50) % CANVAS_HEIGHT * 1.5, CANVAS_WIDTH, 100);
-
         wrap(() => {
             translate(CANVAS_WIDTH / 2, CANVAS_HEIGHT - HUD_HEIGHT);
 

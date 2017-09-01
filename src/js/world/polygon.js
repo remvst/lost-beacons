@@ -38,7 +38,7 @@ class Polygon {
             R.globalAlpha = this.alpha;
             R.fillStyle = this.color;
             R.strokeStyle = GRID_COLOR;
-            R.lineWidth = 2;
+            R.lineWidth = 1;
             R.lineJoin = 'round';
             beginPath();
             this.pts.map(p => this.pointCoords(p)).forEach((p, i) => {

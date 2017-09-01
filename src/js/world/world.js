@@ -94,16 +94,11 @@ class World {
             R.fillStyle = '#0e3b54';
             fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-            translate(-V.x, -V.y);
+            translate(-~~V.x, -~~V.y);
 
             // Grid on the floor
-            R.fillStyle = GRID_COLOR;
-            for (let x = roundP(V.x, GRID_SIZE) ; x < V.x + CANVAS_WIDTH ; x += GRID_SIZE) {
-                fillRect(x, V.y, 1, CANVAS_HEIGHT);
-            }
-            for (let y = roundP(V.y, GRID_SIZE) ; y < V.y + CANVAS_HEIGHT ; y += GRID_SIZE) {
-                fillRect(V.x, y, CANVAS_WIDTH, 1);
-            }
+            R.fillStyle = G.floorPattern;
+            fillRect(V.x, V.y, CANVAS_WIDTH, CANVAS_HEIGHT);
 
             // Renderables (units, particles...)
             W.renderables.forEach(e => e.render && wrap(() => e.render()));
@@ -133,6 +128,13 @@ class World {
         if (W.renderHUD) {
             W.renderHUD();
         }
+
+        R.fillStyle = 'rgba(255,255,255,.15)';
+        fillRect(0, ~~(G.t * 100) % CANVAS_HEIGHT * 1.5, CANVAS_WIDTH, 0.5);
+
+        R.fillStyle = 'rgba(255,255,255,.02)';
+        fillRect(0, ~~(G.t * 50) % CANVAS_HEIGHT * 1.5 - 100, CANVAS_WIDTH, 100);
+
 
         R.fillStyle = G.gridPattern;
         fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
