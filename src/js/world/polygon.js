@@ -30,7 +30,7 @@ class Polygon {
     }
 
     hash() {
-        return this.center.x + ',' + this.center.y;
+        return this.center.x + ',' + this.center.y + ',' + this.center.z;
     }
 
     render() {

@@ -16,11 +16,13 @@ class World {
         W.initialize();
         W.volumes = [];
 
+        const polygonColor = () => random() < 0.1 ? '#147' : '#158';
+
         // TODO maybe use reduce?
         W.matrix.forEach((r, row) => {
             r.forEach((e, col) => {
-                if (e) {
-                    W.volumes.push(cube(col * GRID_SIZE, row * GRID_SIZE, GRID_SIZE, GRID_SIZE, '#158'));
+                for (let i = 0 ; i < e ; i++) {
+                    W.volumes.push(cube(col * GRID_SIZE, row * GRID_SIZE, GRID_SIZE, GRID_SIZE, i * GRID_SIZE, polygonColor()));
                 }
             });
         });
