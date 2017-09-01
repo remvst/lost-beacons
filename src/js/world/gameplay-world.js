@@ -47,7 +47,7 @@ class GameplayWorld extends World {
 
         W.pauseAndAnnounce([
             nomangle('sector #') + G.levelId,
-            nomangle('capture all beacons to win')
+            nomangle('capture all the beacons to win')
         ]);
     }
 
