@@ -65,10 +65,10 @@ class Reach extends Behavior {
         }
 
         if (this.unit.team == PLAYER_TEAM) {
-            R.globalAlpha = 0.1;
+            R.globalAlpha = 0.3;
             beginPath();
             R.strokeStyle = this.unit.team.body;
-            R.lineWidth = 4;
+            R.lineWidth = 2;
             moveTo(this.unit.x, this.unit.y);
             this.path.forEach(step => lineTo(step.x, step.y));
             stroke();
