@@ -116,7 +116,9 @@ class Beacon {
 
         unit.setBehavior(this.team.behavior(this));
 
-        this.indicator.indicate(this.team == ENEMY_TEAM ? nomangle('enemy reinforcements') : nomangle('reinforcements'), this.team.beacon);
+        if (this.team == ENEMY_TEAM) {
+            this.indicator.indicate(nomangle('enemy reinforcements'), this.team.beacon); 
+        }
     }
 
     render() {
