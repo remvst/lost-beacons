@@ -162,6 +162,14 @@ class Unit {
     render() {
         wrap(() => this.behavior.render());
 
+        wrap(() => {
+            translate(floorP(this.x, GRID_SIZE), floorP(this.y, GRID_SIZE));
+
+            R.globalAlpha = 0.1;
+            R.fillStyle = this.team.body;
+            fillRect(0, 0, GRID_SIZE, GRID_SIZE);
+        });
+
         translate(this.x, this.y);
         rotate(this.angle);
 
