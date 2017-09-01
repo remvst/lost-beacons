@@ -5,7 +5,7 @@ class AttackCursor extends ChaseCursor {
     }
 
     get label() {
-        return nomangle('HEAL()');
+        return nomangle('ATTACK()');
     }
 
     get chaseRadius() {
