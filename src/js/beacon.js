@@ -117,11 +117,35 @@ class Beacon {
         unit.setBehavior(this.team.behavior(this));
 
         if (this.team == ENEMY_TEAM) {
-            this.indicator.indicate(nomangle('enemy reinforcements'), this.team.beacon); 
+            this.indicator.indicate(nomangle('enemy reinforcements'), this.team.beacon);
         }
     }
 
     render() {
+        wrap(() => {
+            const beaconRow = ~~(this.y / GRID_SIZE);
+            const beaconCol = ~~(this.x / GRID_SIZE);
+            const radiusCells = ~~(BEACON_CONQUER_RADIUS / GRID_SIZE);
+
+            R.fillStyle = this.team.beacon;
+            R.globalAlpha = 0.05;
+
+            for (let row = beaconRow - radiusCells ; row < beaconRow + radiusCells ; row++) {
+                for (let col = beaconCol - radiusCells ; col < beaconCol + radiusCells ; col++) {
+                    const center = {
+                        'x': (col + 0.5) * GRID_SIZE,
+                        'y': (row + 0.5) * GRID_SIZE
+                    };
+                    const angle = angleBetween(this, center);
+                    if (
+                        dist(this, center) < dist(this, {'x': this.x + cos(angle) * BEACON_CONQUER_RADIUS, 'y': this.y + sin(angle) * BEACON_CONQUER_RADIUS})
+                    ) {
+                        fillRect(center.x - GRID_SIZE / 2, center.y - GRID_SIZE / 2, GRID_SIZE, GRID_SIZE);
+                    }
+                }
+            }
+        });
+
         translate(this.x, this.y);
 
         R.fillStyle = '#000';
