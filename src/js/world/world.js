@@ -91,9 +91,6 @@ class World {
 
     render() {
         wrap(() => {
-            R.fillStyle = '#0e3b54';
-            fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
             translate(-~~V.x, -~~V.y);
 
             // Grid on the floor
