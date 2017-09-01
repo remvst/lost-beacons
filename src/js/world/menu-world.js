@@ -85,9 +85,11 @@ class MenuWorld extends World {
                 labels.unshift(nomangle('sector #') + zeroes(i) + ' - ' + formatTime(time));
             }
 
-            labels.forEach((label, i) => {
-                drawText(label, 10, CANVAS_HEIGHT - (i + 1) * 7 * 2, 2, '#fff', true);
-            });
+            if (i > 1) {
+                labels.forEach((label, i) => {
+                    drawText(label, 10, CANVAS_HEIGHT - (i + 1) * 7 * 2, 2, '#fff', true);
+                });
+            }
         });
     }
 
