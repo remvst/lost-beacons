@@ -60,12 +60,9 @@ class MenuWorld extends World {
                 if (!G.selectionCursor.selection.length && !G.selectionCursor.downPosition) {
                     if (!W.selectHint) {
                         W.selectHint = new SelectHelp();
-                        W.selectHint.x = 100;
-                        W.selectHint.y = 100;
-                        W.add(W.selectHint, RENDERABLE);
-
                         W.selectHint.x = W.units[0].x - SELECT_HELP_SIZE / 2;
                         W.selectHint.y = W.units[0].y - SELECT_HELP_SIZE / 2;
+                        W.add(W.selectHint, RENDERABLE);
 
                         W.selectHint.animate(() => {
                             W.remove(W.selectHint);
@@ -89,10 +86,12 @@ class MenuWorld extends World {
 
             let s;
             if (!G.selectionCursor.selection.length) {
-                s = nomangle('click left to select units');
+                s = nomangle('click left     to select units');
                 G.reachCursor.sentUnits = false;
+                fakeMouse(455, 850 + 5 * 5 / 2, LEFT_CLICK);
             } else if (!G.reachCursor.sentUnits) {
-                s = nomangle('click right to send units');
+                s = nomangle('click right     to send units');
+                fakeMouse(485, 850 + 5 * 5 / 2, RIGHT_CLICK);
             } else {
                 s = nomangle('capture the beacon to start');
             }
