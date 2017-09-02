@@ -19,6 +19,8 @@
     "src/js/graphics/font.js",
     "src/js/graphics/indicator.js",
     "src/js/graphics/announcement.js",
+    "src/js/graphics/fake-cursor.js",
+    "src/js/graphics/select-help.js",
 
     "src/js/units/unit.js",
 
