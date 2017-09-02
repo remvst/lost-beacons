@@ -59,15 +59,13 @@ class MenuWorld extends World {
             'cycle': () => {
                 if (!G.selectionCursor.selection.length && !G.selectionCursor.downPosition) {
                     if (!W.selectHint) {
-                        W.selectHint = new SelectHelp();
-                        W.selectHint.x = W.units[0].x - SELECT_HELP_SIZE / 2;
-                        W.selectHint.y = W.units[0].y - SELECT_HELP_SIZE / 2;
-                        W.add(W.selectHint, RENDERABLE);
-
-                        W.selectHint.animate(() => {
+                        W.selectHint = new SelectHelp(() => {
                             W.remove(W.selectHint);
                             W.selectHint = null;
                         });
+                        W.selectHint.x = W.units[0].x - SELECT_HELP_SIZE / 2;
+                        W.selectHint.y = W.units[0].y - SELECT_HELP_SIZE / 2;
+                        W.add(W.selectHint, RENDERABLE);
                     }
                 } else {
                     W.remove(W.selectHint);
