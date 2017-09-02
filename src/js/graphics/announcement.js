@@ -23,7 +23,7 @@ class Announcement {
             translate(V.x, V.y);
 
             R.fillStyle = '#fff';
-            fillRect(0, (CANVAS_HEIGHT - this.rectangleHeight) / 2, CANVAS_WIDTH, this.rectangleHeight);
+            fr(0, (CANVAS_HEIGHT - this.rectangleHeight) / 2, CANVAS_WIDTH, this.rectangleHeight);
 
             drawCenteredText(this.labels[0] || '', CANVAS_WIDTH / 2 + this.textXOffset, (CANVAS_HEIGHT - ANNOUNCEMENT_CELL_SIZE * 5) / 2, ANNOUNCEMENT_CELL_SIZE, '#000');
         });

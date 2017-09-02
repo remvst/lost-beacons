@@ -16,6 +16,7 @@ onload = () => {
         f();
         this.restore();
     };
+    p.fr = p.fillRect;
     Object.getOwnPropertyNames(p).forEach(n => {
         if (R[n] && R[n].call) {
             w[n] = p[n].bind(R);

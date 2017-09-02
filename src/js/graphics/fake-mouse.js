@@ -3,7 +3,7 @@ function fakeMouse(x, y, clickType) {
         translate(x, y);
 
         R.fillStyle = '#000';
-        fillRect(-1, 0, 2, -40);
+        fr(-1, 0, 2, -40);
 
         R.fillStyle = '#fff';
         R.strokeStyle = '#000';

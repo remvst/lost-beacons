@@ -384,7 +384,7 @@ function cachedCharacter(t, s, c){
         def.forEach((y, row) => {
             y.forEach((x, col) => {
                 if (x) {
-                    r.fillRect(col * s, row * s, s, s);
+                    r.fr(col * s, row * s, s, s);
                 }
             });
         });

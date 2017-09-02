@@ -10,7 +10,7 @@ class SelectionCursor extends Cursor {
             R.strokeStyle = '#0f0';
             R.fillStyle = 'rgba(0,255,0,0.1)';
             R.lineWidth = 1;
-            fillRect(
+            fr(
                 this.downPosition.x,
                 this.downPosition.y,
                 this.x - this.downPosition.x,

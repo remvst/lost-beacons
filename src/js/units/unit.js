@@ -115,8 +115,8 @@ class Unit {
                             translate(this.x + p.progress * (target.x - this.x), this.y + p.progress * (target.y - this.y));
 
                             R.fillStyle = this.team.beacon;
-                            fillRect(-2, -6, 4, 12);
-                            fillRect(-6, -2, 12, 4);
+                            fr(-2, -6, 4, 12);
+                            fr(-6, -2, 12, 4);
                         }
                     };
 
@@ -167,7 +167,7 @@ class Unit {
 
             R.globalAlpha = 0.1;
             R.fillStyle = this.team.body;
-            fillRect(0, 0, GRID_SIZE, GRID_SIZE);
+            fr(0, 0, GRID_SIZE, GRID_SIZE);
         });
 
         translate(this.x, this.y);
@@ -183,39 +183,39 @@ class Unit {
             translate(UNIT_PX_SIZE, 0);
             scale(sinusoidal, 1);
             R.fillStyle = this.team.leg;
-            fillRect(0, UNIT_PX_SIZE, UNIT_PX_SIZE * 3, UNIT_PX_SIZE); // left
-            fillRect(0, UNIT_PX_SIZE * 3, -UNIT_PX_SIZE * 3, UNIT_PX_SIZE); // right
+            fr(0, UNIT_PX_SIZE, UNIT_PX_SIZE * 3, UNIT_PX_SIZE); // left
+            fr(0, UNIT_PX_SIZE * 3, -UNIT_PX_SIZE * 3, UNIT_PX_SIZE); // right
         });
 
         // Left arm
         wrap(() => {
             translate(offset, 0);
             R.fillStyle = this.team.body;
-            fillRect(UNIT_PX_SIZE, 0, UNIT_PX_SIZE * 2, UNIT_PX_SIZE);
+            fr(UNIT_PX_SIZE, 0, UNIT_PX_SIZE * 2, UNIT_PX_SIZE);
             R.fillStyle = this.team.leg;
-            fillRect(UNIT_PX_SIZE * 2, UNIT_PX_SIZE, UNIT_PX_SIZE * 2, UNIT_PX_SIZE);
+            fr(UNIT_PX_SIZE * 2, UNIT_PX_SIZE, UNIT_PX_SIZE * 2, UNIT_PX_SIZE);
         });
 
         // Right arm
         wrap(() => {
             translate(-offset, 0);
             R.fillStyle = this.team.body;
-            fillRect(UNIT_PX_SIZE, UNIT_PX_SIZE * 4, UNIT_PX_SIZE * 2, UNIT_PX_SIZE);
+            fr(UNIT_PX_SIZE, UNIT_PX_SIZE * 4, UNIT_PX_SIZE * 2, UNIT_PX_SIZE);
             R.fillStyle = this.team.leg;
-            fillRect(UNIT_PX_SIZE * 2, UNIT_PX_SIZE * 3, UNIT_PX_SIZE * 2, UNIT_PX_SIZE);
+            fr(UNIT_PX_SIZE * 2, UNIT_PX_SIZE * 3, UNIT_PX_SIZE * 2, UNIT_PX_SIZE);
         });
 
         // Main body
         R.fillStyle = this.team.body;
-        fillRect(0, UNIT_PX_SIZE, UNIT_PX_SIZE * 2, UNIT_PX_SIZE * 3);
+        fr(0, UNIT_PX_SIZE, UNIT_PX_SIZE * 2, UNIT_PX_SIZE * 3);
 
         // Gun
         R.fillStyle = '#000';
-        fillRect(UNIT_PX_SIZE * 3, UNIT_PX_SIZE * 2, UNIT_PX_SIZE * 3, UNIT_PX_SIZE);
+        fr(UNIT_PX_SIZE * 3, UNIT_PX_SIZE * 2, UNIT_PX_SIZE * 3, UNIT_PX_SIZE);
 
         // Head
         R.fillStyle = this.team.head;
-        fillRect(UNIT_PX_SIZE, UNIT_PX_SIZE, UNIT_PX_SIZE * 2, UNIT_PX_SIZE * 3);
+        fr(UNIT_PX_SIZE, UNIT_PX_SIZE, UNIT_PX_SIZE * 2, UNIT_PX_SIZE * 3);
     }
 
     postRender() {
@@ -225,7 +225,7 @@ class Unit {
 
         // Second render pass, add health gauge
         R.fillStyle = '#000';
-        fillRect(
+        fr(
             evaluate(-HEALTH_GAUGE_WIDTH / 2) - 1,
             -HEALTH_GAUGE_RADIUS - 1,
             evaluate(HEALTH_GAUGE_WIDTH + 2),
@@ -233,7 +233,7 @@ class Unit {
         );
 
         R.fillStyle = this.health > 0.3 ? '#0f0' : '#f00';
-        fillRect(
+        fr(
             evaluate(-HEALTH_GAUGE_WIDTH / 2),
             -HEALTH_GAUGE_RADIUS,
             HEALTH_GAUGE_WIDTH * this.health,

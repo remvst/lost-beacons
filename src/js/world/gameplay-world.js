@@ -77,17 +77,17 @@ class GameplayWorld extends World {
             R.lineWidth = 2;
 
             R.fillStyle = '#000';
-            fillRect(4, 4, ~~(W.width * MINIMAP_SCALE), ~~(W.height * MINIMAP_SCALE));
+            fr(4, 4, ~~(W.width * MINIMAP_SCALE), ~~(W.height * MINIMAP_SCALE));
 
             R.fillStyle = '#444';
-            fillRect(0, 0, ~~(W.width * MINIMAP_SCALE), ~~(W.height * MINIMAP_SCALE));
+            fr(0, 0, ~~(W.width * MINIMAP_SCALE), ~~(W.height * MINIMAP_SCALE));
 
             R.fillStyle = '#6cf';
             R.globalAlpha = 1;
             W.matrix.forEach((r, row) => {
                 r.forEach((x, col) => {
                     if (x) {
-                        fillRect(
+                        fr(
                             round(col * GRID_SIZE * MINIMAP_SCALE),
                             round(row * GRID_SIZE * MINIMAP_SCALE),
                             round(MINIMAP_SCALE * GRID_SIZE),
@@ -101,7 +101,7 @@ class GameplayWorld extends World {
             R.fillStyle = '#fff';
             R.strokeStyle = '#000';
             R.globalAlpha = 0.2;
-            fillRect(
+            fr(
                 ~~(V.x * MINIMAP_SCALE),
                 ~~(V.y * MINIMAP_SCALE),
                 ~~(CANVAS_WIDTH * MINIMAP_SCALE),
@@ -120,7 +120,7 @@ class GameplayWorld extends World {
             W.units
                 .forEach(c => {
                     R.fillStyle = c.team.body;
-                    fillRect(c.x * MINIMAP_SCALE - 1, c.y * MINIMAP_SCALE - 1, 2, 2);
+                    fr(c.x * MINIMAP_SCALE - 1, c.y * MINIMAP_SCALE - 1, 2, 2);
                 });
 
             W.beacons
@@ -143,7 +143,7 @@ class GameplayWorld extends World {
             translate(CANVAS_WIDTH / 2, CANVAS_HEIGHT - HUD_HEIGHT);
 
             R.fillStyle = G.hudGradient;
-            fillRect(-CANVAS_WIDTH / 2, 0, CANVAS_WIDTH, HUD_HEIGHT);
+            fr(-CANVAS_WIDTH / 2, 0, CANVAS_WIDTH, HUD_HEIGHT);
 
             R.fillStyle = G.hudBg;
             R.strokeStyle = '#000';
@@ -162,10 +162,10 @@ class GameplayWorld extends World {
                 const w = (5 + value * 10) * sign;
 
                 R.fillStyle = '#000';
-                fillRect(x + 2, y + 2, w, HUD_SCORE_CELL_SIZE * 5);
+                fr(x + 2, y + 2, w, HUD_SCORE_CELL_SIZE * 5);
 
                 R.fillStyle = color;
-                fillRect(x, y, w, HUD_SCORE_CELL_SIZE * 5);
+                fr(x, y, w, HUD_SCORE_CELL_SIZE * 5);
 
                 drawCenteredText('' + value, x + w + sign * 15, y, HUD_SCORE_CELL_SIZE, color, true);
             }

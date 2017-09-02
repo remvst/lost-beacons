@@ -140,7 +140,7 @@ class Beacon {
                     if (
                         dist(this, center) < dist(this, {'x': this.x + cos(angle) * BEACON_CONQUER_RADIUS, 'y': this.y + sin(angle) * BEACON_CONQUER_RADIUS})
                     ) {
-                        fillRect(center.x - GRID_SIZE / 2, center.y - GRID_SIZE / 2, GRID_SIZE, GRID_SIZE);
+                        fr(center.x - GRID_SIZE / 2, center.y - GRID_SIZE / 2, GRID_SIZE, GRID_SIZE);
                     }
                 }
             }
@@ -149,8 +149,8 @@ class Beacon {
         translate(this.x, this.y);
 
         R.fillStyle = '#000';
-        fillRect(-BEACON_BASE_RADIUS / 2, -BEACON_BASE_THICKNESS / 2, BEACON_BASE_RADIUS, BEACON_BASE_THICKNESS);
-        fillRect(-BEACON_BASE_THICKNESS / 2, -BEACON_BASE_RADIUS / 2, BEACON_BASE_THICKNESS, BEACON_BASE_RADIUS);
+        fr(-BEACON_BASE_RADIUS / 2, -BEACON_BASE_THICKNESS / 2, BEACON_BASE_RADIUS, BEACON_BASE_THICKNESS);
+        fr(-BEACON_BASE_THICKNESS / 2, -BEACON_BASE_RADIUS / 2, BEACON_BASE_THICKNESS, BEACON_BASE_RADIUS);
 
         const s = (G.t % BEACON_CENTER_PERIOD) / BEACON_CENTER_PERIOD;
 
@@ -213,7 +213,7 @@ class Beacon {
             } else {
                 // Border
                 R.fillStyle = PLAYER_TEAM.beacon; // only the player ever needs to click the button
-                fillRect(
+                fr(
                     buttonBounds.x,
                     buttonBounds.y,
                     buttonBounds.width,
@@ -222,7 +222,7 @@ class Beacon {
 
                 // Bottom part (with reflection)
                 R.fillStyle = '#444';
-                fillRect(
+                fr(
                     buttonBounds.x + BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS,
                     buttonBounds.y + BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS,
                     buttonBounds.width - 2 * BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS,
@@ -231,7 +231,7 @@ class Beacon {
 
                 // Top part (no reflection)
                 R.fillStyle = '#000';
-                fillRect(
+                fr(
                     buttonBounds.x + BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS,
                     buttonBounds.y + BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS,
                     buttonBounds.width - 2 * BEACON_REINFORCEMENTS_BUTTON_BORDER_THICKNESS,
@@ -268,7 +268,7 @@ class Beacon {
         if (maxOwned && maxOwned < 1) {
             R.globalAlpha = 1;
             R.fillStyle = '#000';
-            fillRect(
+            fr(
                 evaluate(-BEACON_GAUGE_WIDTH / 2) - 1,
                 -BEACON_GAUGE_RADIUS - 1,
                 evaluate(BEACON_GAUGE_WIDTH + 2),
@@ -276,7 +276,7 @@ class Beacon {
             );
 
             R.fillStyle = '#0f0';
-            fillRect(
+            fr(
                 evaluate(-BEACON_GAUGE_WIDTH / 2) * this.playerTeamOwned,
                 -BEACON_GAUGE_RADIUS,
                 BEACON_GAUGE_WIDTH * this.playerTeamOwned,
@@ -284,7 +284,7 @@ class Beacon {
             );
 
             R.fillStyle = '#f00';
-            fillRect(
+            fr(
                 evaluate(-BEACON_GAUGE_WIDTH / 2) * this.enemyTeamOwned,
                 -BEACON_GAUGE_RADIUS,
                 BEACON_GAUGE_WIDTH * this.enemyTeamOwned,
@@ -341,7 +341,7 @@ class Beacon {
                             isBetween(center.x - GRID_SIZE / 2, this.x + cos(angle) * effect.radius, center.x + GRID_SIZE / 2) &&
                             isBetween(center.y - GRID_SIZE / 2, this.y + sin(angle) * effect.radius, center.y + GRID_SIZE / 2)
                         ) {
-                            fillRect(center.x - GRID_SIZE / 2, center.y - GRID_SIZE / 2, GRID_SIZE, GRID_SIZE);
+                            fr(center.x - GRID_SIZE / 2, center.y - GRID_SIZE / 2, GRID_SIZE, GRID_SIZE);
                         }
                     }
                 }

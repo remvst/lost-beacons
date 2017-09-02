@@ -29,7 +29,7 @@ class SelectHelp {
         R.strokeStyle = '#0f0';
         R.fillStyle = 'rgba(0,255,0,0.1)';
         R.lineWidth = 1;
-        fillRect(
+        fr(
             0,
             0,
             this.cursor.x,

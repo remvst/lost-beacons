@@ -95,7 +95,7 @@ class World {
 
             // Grid on the floor
             R.fillStyle = G.floorPattern;
-            fillRect(V.x, V.y, CANVAS_WIDTH, CANVAS_HEIGHT);
+            fr(V.x, V.y, CANVAS_WIDTH, CANVAS_HEIGHT);
 
             // Renderables (units, particles...)
             W.renderables.forEach(e => e.render && wrap(() => e.render()));
@@ -118,7 +118,7 @@ class World {
             wrap(() => {
                 R.globalAlpha = W.flashAlpha;
                 R.fillStyle = '#fff';
-                fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+                fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
             });
         }
 
@@ -127,14 +127,14 @@ class World {
         }
 
         R.fillStyle = 'rgba(255,255,255,.15)';
-        fillRect(0, ~~(G.t * 100) % CANVAS_HEIGHT * 1.5, CANVAS_WIDTH, 0.5);
+        fr(0, ~~(G.t * 100) % CANVAS_HEIGHT * 1.5, CANVAS_WIDTH, 0.5);
 
         R.fillStyle = 'rgba(255,255,255,.02)';
-        fillRect(0, ~~(G.t * 50) % CANVAS_HEIGHT * 1.5 - 100, CANVAS_WIDTH, 100);
+        fr(0, ~~(G.t * 50) % CANVAS_HEIGHT * 1.5 - 100, CANVAS_WIDTH, 100);
 
 
         R.fillStyle = G.gridPattern;
-        fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         if (W.renderMinimap) {
             W.renderMinimap();
