@@ -68,7 +68,7 @@ class Reach extends Behavior {
             R.globalAlpha = 0.3;
             beginPath();
             R.strokeStyle = this.unit.team.body;
-            R.lineWidth = 2;
+            R.lineWidth = 1;
             moveTo(this.unit.x, this.unit.y);
             this.path.forEach(step => lineTo(step.x, step.y));
             stroke();

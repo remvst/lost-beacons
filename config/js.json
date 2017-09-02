@@ -52,5 +52,6 @@
     "src/js/keyboard.js",
     "src/js/mouse.js",
     "src/js/game.js",
-    "src/js/main.js"
+    "src/js/main.js",
+    "src/js/music-test.js"
 ]
