@@ -18,6 +18,7 @@ class Beacon {
         this.nextParticle = 0;
 
         this.nextReinforcements = 0;
+        this.reinforcementsSize = 0;
 
         this.indicator = new Indicator(this);
     }
@@ -84,6 +85,7 @@ class Beacon {
             this.conqueredAnimation();
 
             this.nextReinforcements = this.team.reinforcementsInterval;
+            this.reinforcementsSize = 0;
 
             if (newOwner == PLAYER_TEAM) {
                 this.indicator.indicate(nomangle('beacon captured'), this.team.beacon);
@@ -95,12 +97,14 @@ class Beacon {
         }
 
         if ((this.nextReinforcements -= e) < 0) {
+            this.reinforcementsSize++;
             if (this.team == ENEMY_TEAM) {
                 // Enemies spawn reinforcements automatically
                 this.reinforcements();
             } else if (this.team == PLAYER_TEAM) {
                 // Player needs to click a button
                 this.indicator.indicate(nomangle('reinforcements ready'), PLAYER_TEAM.beacon, 9999);
+                this.nextReinforcements = this.team.reinforcementsInterval;
             }
         }
     }
@@ -108,17 +112,21 @@ class Beacon {
     reinforcements() {
         this.nextReinforcements = this.team.reinforcementsInterval;
 
-        const unit = new Unit();
-        unit.x = this.x;
-        unit.y = this.y;
-        unit.team = this.team;
-        W.add(unit, CYCLABLE | RENDERABLE | UNIT);
+        for (let i = 0 ; i < this.reinforcementsSize ; i++) {
+            const unit = new Unit();
+            unit.x = this.x;
+            unit.y = this.y;
+            unit.team = this.team;
+            W.add(unit, CYCLABLE | RENDERABLE | UNIT);
 
-        unit.setBehavior(this.team.behavior(this));
+            unit.setBehavior(this.team.behavior(this));
 
-        if (this.team == ENEMY_TEAM) {
-            this.indicator.indicate(nomangle('enemy reinforcements'), this.team.beacon);
+            if (this.team == ENEMY_TEAM) {
+                this.indicator.indicate(nomangle('enemy reinforcements'), this.team.beacon);
+            }
         }
+
+        this.reinforcementsSize = 0;
     }
 
     render() {
@@ -179,7 +187,7 @@ class Beacon {
 
     inReinforcementsButton(position) {
         const bounds = this.reinforcementsButtonBounds();
-        return this.nextReinforcements < 0 && this.team == PLAYER_TEAM &&
+        return this.reinforcementsSize > 0 && this.team == PLAYER_TEAM &&
             isBetween(bounds.x, position.x, bounds.x + bounds.width) &&
             isBetween(bounds.y, position.y, bounds.y + bounds.height);
     }
@@ -207,7 +215,7 @@ class Beacon {
         if (this.team != NEUTRAL_TEAM && W instanceof GameplayWorld) {
             const buttonBounds = this.reinforcementsButtonBounds();
 
-            if (this.nextReinforcements > 0) {
+            if (this.reinforcementsSize == 0) {
                 drawCenteredText(REINFORCEMENTS_STRING, this.x, buttonBounds.y, BEACON_REINFORCEMENTS_BUTTON_CELL_SIZE, this.team.beacon, true);
                 drawCenteredText(formatTime(this.nextReinforcements), this.x, buttonBounds.y + 14, BEACON_REINFORCEMENTS_BUTTON_CELL_SIZE, this.team.beacon, true);
             } else {
