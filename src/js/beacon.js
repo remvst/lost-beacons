@@ -100,7 +100,7 @@ class Beacon {
                 this.reinforcements();
             } else if (this.team == PLAYER_TEAM) {
                 // Player needs to click a button
-                this.indicator.indicate(nomangle('reinforcements ready'), PLAYER_TEAM.beacon);
+                this.indicator.indicate(nomangle('reinforcements ready'), PLAYER_TEAM.beacon, 9999);
             }
         }
     }

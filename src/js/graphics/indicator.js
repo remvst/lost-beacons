@@ -3,22 +3,24 @@ class Indicator {
     constructor(target) {
         this.target = target;
         // Owner will set color and label
+        this.indicateDuration = 0;
     }
 
-    indicate(label, color) {
+    indicate(label, color, duration = 4) {
         if (label != this.label) {
             this.indicateTime = G.t;
         }
 
         this.label = label;
         this.color = color;
+        this.indicateDuration = duration;
     }
 
     postRender() {
         const t = G.t - (this.indicateTime || -99);
         const radius = CANVAS_WIDTH / 2 - INDICATOR_MARGIN;
 
-        if (t > 4 || dist(this.target, V.center) < radius) {
+        if (t > this.indicateDuration || dist(this.target, V.center) < radius) {
             return;
         }
 
