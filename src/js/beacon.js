@@ -104,14 +104,13 @@ class Beacon {
             } else if (this.team == PLAYER_TEAM) {
                 // Player needs to click a button
                 this.indicator.indicate(nomangle('reinforcements ready'), PLAYER_TEAM.beacon, 9999);
-                this.nextReinforcements = this.team.reinforcementsInterval;
             }
+
+            this.nextReinforcements = this.team.reinforcementsInterval;
         }
     }
 
     reinforcements() {
-        this.nextReinforcements = this.team.reinforcementsInterval;
-
         for (let i = 0 ; i < this.reinforcementsSize ; i++) {
             const unit = new Unit();
             unit.x = this.x;
