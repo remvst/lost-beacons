@@ -205,6 +205,7 @@ class Beacon {
     maybeClick(position) {
         if (this.inReinforcementsButton(position)) {
             this.reinforcements();
+            this.indicator.clear();
             return true;
         }
     }

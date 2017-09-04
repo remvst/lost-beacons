@@ -16,6 +16,10 @@ class Indicator {
         this.indicateDuration = duration;
     }
 
+    clear() {
+        this.indicateDuration = 0;
+    }
+
     postRender() {
         const t = G.t - (this.indicateTime || -99);
         const radius = CANVAS_WIDTH / 2 - INDICATOR_MARGIN;
