@@ -33,11 +33,12 @@ class GameplayWorld extends World {
         const endCheck = {
             'cycle': () => {
                 const playerUnits = W.units.filter(unit => unit.team == PLAYER_TEAM).length;
+                const enemyUnits = W.units.filter(unit => unit.team == ENEMY_TEAM).length;
                 const playerBeacons = W.beacons.filter(beacon => beacon.team == PLAYER_TEAM).length;
                 const enemyBeacons = W.beacons.filter(beacon => beacon.team == ENEMY_TEAM).length;
 
                 // End if someone captured all beacons OR if the player is completely dead
-                if (!playerUnits || max(enemyBeacons, playerBeacons) == W.beacons.length) {
+                if (!playerUnits || max(enemyBeacons, playerBeacons) == W.beacons.length || !enemyBeacons && !enemyUnits) {
                     W.remove(endCheck);
                     this.gameOver(!enemyBeacons);
                 }
