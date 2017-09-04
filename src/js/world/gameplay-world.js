@@ -120,7 +120,7 @@ class GameplayWorld extends World {
             W.units
                 .forEach(c => {
                     R.fillStyle = c.team.body;
-                    fr(c.x * MINIMAP_SCALE - 1, c.y * MINIMAP_SCALE - 1, 2, 2);
+                    fr(c.x * MINIMAP_SCALE - 2, c.y * MINIMAP_SCALE - 2, 4, 4);
                 });
 
             W.beacons
