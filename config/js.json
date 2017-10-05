@@ -40,6 +40,7 @@
 
     "src/js/world/world.js",
     "src/js/world/menu-world.js",
+    "src/js/world/level-world.js",
     "src/js/world/gameplay-world.js",
     "src/js/world/camera.js",
     "src/js/world/polygon.js",
