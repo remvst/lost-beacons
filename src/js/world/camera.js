@@ -8,6 +8,10 @@ class Camera {
     }
 
     cycle(e) {
+        if (!mouseInWindow) {
+            return;
+        }
+
         const p = {'x': 0, 'y': 0};
 
         if (w.down[37] || w.down[65] || w.down[81]) {
