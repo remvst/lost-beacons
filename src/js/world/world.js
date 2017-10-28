@@ -361,7 +361,7 @@ class World {
             cast = dHorizontal < dVertical ? castHorizontal : castVertical;
         }
 
-        return maxDistance && (!cast || dist(start, cast)) > maxDistance
+        return maxDistance && (!cast || dist(start, cast) > maxDistance)
             ? {
                 'x': start.x + cos(angle) * maxDistance,
                 'y': start.y + sin(angle) * maxDistance
