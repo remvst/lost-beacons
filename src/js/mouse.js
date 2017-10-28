@@ -4,6 +4,7 @@ let MOUSE_POSITION = {
 };
 
 let draggingMinimap = false;
+let mouseInWindow = true;
 
 function eventCoords(e) {
     let r = C.getBoundingClientRect();
@@ -24,6 +25,7 @@ function followMinimap() {
 }
 
 onmousedown = e => {
+    mouseInWindow = true;
     MOUSE_POSITION = eventCoords(e);
 
     // Assuming the minimap is a square
@@ -48,6 +50,7 @@ onmousedown = e => {
 };
 
 onmousemove = e => {
+    mouseInWindow = true;
     MOUSE_POSITION = eventCoords(e);
 
     if (draggingMinimap) {
@@ -62,6 +65,7 @@ onmousemove = e => {
 };
 
 onmouseup = () => {
+    mouseInWindow = true;
     draggingMinimap = false;
     if (G.cursor.downPosition) {
         G.cursor.up({
@@ -73,4 +77,8 @@ onmouseup = () => {
 
 oncontextmenu = e => {
     e.preventDefault();
+};
+
+onmouseout = onblur = () => {
+    mouseInWindow = false;
 };

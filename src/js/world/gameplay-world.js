@@ -52,6 +52,10 @@ class GameplayWorld extends World {
         ]);
     }
 
+    togglePause() {
+        W.paused = !W.paused;
+    }
+
     pauseAndAnnounce(s, callback) {
         const cyclables = W.cyclables.slice(0);
         W.cyclables = [];
@@ -182,7 +186,7 @@ class GameplayWorld extends World {
             gauge(HUD_GAUGE_GAP / 2, 40, G.unitsScore(ENEMY_TEAM), G.unitsScore(ENEMY_TEAM) / maxUnits * 100, 1, '#f00');
         });
 
-        drawCenteredText(nomangle('wasd/arrows: move the camera  -  left click: select units  -  right click: send units'), CANVAS_WIDTH / 2, 10, 2, '#888');
+        drawCenteredText(nomangle('wasd/arrows: move the camera  -  left click: select units  -  right click: send units  -  p: pause the game'), CANVAS_WIDTH / 2, 10, 2, '#888');
     }
 
     gameOver(win) {

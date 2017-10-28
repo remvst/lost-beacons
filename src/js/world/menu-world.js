@@ -116,7 +116,9 @@ class MenuWorld extends World {
     launch() {
         interp(W, 'textAlpha', 1, 0, 0.5, 0, 0, () => {
             delayed(() => W.animatePolygons(1, 0), 500);
-            interp(W, 'flashAlpha', 0, 1, 1, 0.5, 0, () => G.launch(GameplayWorld));
+
+            const didFirstLevel = TimeData.timeForLevelIndex(1);
+            interp(W, 'flashAlpha', 0, 1, 1, 0.5, 0, () => G.launch(didFirstLevel ? LevelWorld : GameplayWorld));
         });
     }
 

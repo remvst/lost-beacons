@@ -139,6 +139,16 @@ class World {
         if (W.renderMinimap) {
             W.renderMinimap();
         }
+
+        if (W.paused) {
+            wrap(() => {
+                R.fillStyle = 'rgba(0,0,0,0.5)';
+                fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+                drawCenteredText(nomangle('game paused'), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 10 * 5 - 20, 10, '#fff', true);
+                drawCenteredText(nomangle('press p to resume'), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 20, 5, '#fff', true);
+            });
+        }
     }
 
     get width() {
@@ -176,7 +186,15 @@ class World {
         W.beacons.remove(element);
     }
 
+    togglePause() {
+        // only for GameplayWorld
+    }
+
     cycle(e) {
+        if (W.paused) {
+            return;
+        }
+
         W.t += e;
         W.cyclables.slice().forEach(x => x.cycle(e));
     }
